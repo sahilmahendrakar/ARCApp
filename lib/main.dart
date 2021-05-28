@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'custom_color_scheme.dart';
 
 void main() {
   runApp(MyApp());
@@ -6,22 +7,28 @@ void main() {
 
 class MyApp extends StatelessWidget {
   // This widget is the root of your application.
+
+  final ColorScheme colorScheme = ColorScheme(
+    primary: Color.fromARGB(255, 100, 151, 131),
+    primaryVariant: Color.fromARGB(255, 148, 179, 150),
+    secondary: Color.fromARGB(255, 38, 118, 125),
+    secondaryVariant: Color.fromARGB(255, 23, 74, 77),
+    onBackground: Color.fromARGB(255, 234, 239, 231),
+    background: Colors.white,
+    surface: Color.fromARGB(255, 247, 193, 98),
+    error: Color.fromARGB(255, 252, 117, 149),
+    onError: Color.fromARGB(255, 252, 117, 149),
+    onPrimary: Color.fromARGB(255, 234, 239, 231),
+    onSecondary: Color.fromARGB(255, 234, 239, 231),
+    onSurface: Color.fromARGB(255, 247, 193, 98),
+    brightness: Brightness.light,
+  );
+
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'Flutter Demo',
-      theme: ThemeData(
-        // This is the theme of your application.
-        //
-        // Try running your application with "flutter run". You'll see the
-        // application has a blue toolbar. Then, without quitting the app, try
-        // changing the primarySwatch below to Colors.green and then invoke
-        // "hot reload" (press "r" in the console where you ran "flutter run",
-        // or simply save your changes to "hot reload" in a Flutter IDE).
-        // Notice that the counter didn't reset back to zero; the application
-        // is not restarted.
-        primarySwatch: Colors.blue,
-      ),
+      theme: ThemeData.from(colorScheme: colorScheme),
       home: MyHomePage(title: 'Flutter Demo Home Page'),
     );
   }
