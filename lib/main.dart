@@ -1,3 +1,4 @@
+import 'package:arc_app/constants.dart';
 import 'package:flutter/material.dart';
 
 void main() {
@@ -27,7 +28,15 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'Flutter Demo',
-      theme: ThemeData.from(colorScheme: colorScheme),
+      theme: ThemeData(
+        scaffoldBackgroundColor: Colors.white,
+        fontFamily: "Roboto",
+        textTheme: TextTheme(
+          bodyText1: TextStyle(color: kTextColor),
+          bodyText2: TextStyle(color: kTextColor),
+        ),
+        visualDensity: VisualDensity.adaptivePlatformDensity,
+      ),
       home: MyHomePage(title: 'Flutter Demo Home Page'),
     );
   }
