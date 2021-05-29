@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'custom_color_scheme.dart';
+import '../components/custom_color_scheme.dart';
 
 void main() {
   runApp(MyApp());
