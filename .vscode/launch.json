@@ -8,7 +8,7 @@
             "name": "ARCApp",
             "request": "launch",
             "type": "dart", 
-            "program": "lib/screens/main.dart"
+            "program": "lib/main.dart"
         }
     ]
 }
