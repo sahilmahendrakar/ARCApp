@@ -1,6 +1,8 @@
 import 'package:arc_app/constants.dart';
 import 'package:arc_app/size_config.dart';
 import 'package:flutter/material.dart';
+import 'package:arc_app/screens/login/log_in_screen.dart';
+import 'package:arc_app/screens/Sign up/sign_up_screen.dart';
 
 class Body extends StatefulWidget {
   @override
@@ -56,14 +58,26 @@ class _BodyState extends State<Body> {
                           children: <Widget>[
                             ElevatedButton(
                                 style: style,
-                                onPressed: () {},
+                                onPressed: () {
+                                  Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                        builder: (context) => LogInScreen()),
+                                  );
+                                },
                                 child: const Text("LOG IN")),
                             SizedBox(
                               height: getProportionateScreenHeight(30),
                             ),
                             ElevatedButton(
                                 style: style,
-                                onPressed: () {},
+                                onPressed: () {
+                                  Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                        builder: (context) => SignUpScreen()),
+                                  );
+                                },
                                 child: const Text("SIGN UP"))
                           ],
                         ),
