@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "215859559762",
+    "project_id": "arc-app-bcda0",
+    "storage_bucket": "arc-app-bcda0.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:215859559762:android:73ac7fcbd7b5ae7e220e8b",
+        "android_client_info": {
+          "package_name": "com.example.arc_app"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "215859559762-cjuhsgltl5q283jlbmg6vcvua5h72rjv.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.arc_app",
+            "certificate_hash": "e569077be09418dc72dbacdbe26475622139aad6"
+          }
+        },
+        {
+          "client_id": "215859559762-jbs8e8f42vfproasbipoaafvb54m50if.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCD4HivTE3QuQzbkfk2MUn46Yoz3ROkg-o"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "215859559762-jbs8e8f42vfproasbipoaafvb54m50if.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
