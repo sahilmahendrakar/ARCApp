@@ -2,9 +2,12 @@ import 'package:arc_app/constants.dart';
 import 'package:arc_app/screens/Landing/landing_screen.dart';
 import 'package:arc_app/screens/Login/log_in_screen.dart';
 import 'package:arc_app/screens/Sign%20up/sign_up_screen.dart';
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 
-void main() {
+Future<void> main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp();
   runApp(MyApp());
 }
 
