@@ -15,13 +15,13 @@ class SignUpScreen extends StatelessWidget {
                     image: AssetImage('assets/images/background.jpg'),
                     fit: BoxFit.cover)),
             child: SafeArea(
-                child: SingleChildScrollView(
-              child: Column(
-                children: [
-                  Center(
-                      child: Padding(
-                          padding: EdgeInsets.all(
-                              getProportionateScreenHeight(30.0)),
+                child: Center(
+                  child: SingleChildScrollView(
+              child: Padding(
+                padding: EdgeInsets.all(getProportionateScreenHeight(30.0)),
+                child: Column(
+                    children: [
+                      Center(
                           child: Padding(
                             padding: EdgeInsets.fromLTRB(
                                 getProportionateScreenWidth(0),
@@ -45,10 +45,12 @@ class SignUpScreen extends StatelessWidget {
                                     )
                                   ]),
                             ),
-                          ))),
-                  SignUpCard()
-                ],
+                          )),
+                      SignUpCard()
+                    ],
+                ),
               ),
-            ))));
+            ),
+                ))));
   }
 }
