@@ -1,14 +1,17 @@
+import 'package:arc_app/auth/authentication_service.dart';
 import 'package:arc_app/size_config.dart';
 import 'package:flutter/widgets.dart';
 import 'package:arc_app/constants.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
-class SignUpCard extends StatefulWidget {
-  @override
-  _SignUpCardState createState() => _SignUpCardState();
-}
+class SignUpCard extends StatelessWidget {
+  final TextEditingController emailController = TextEditingController();
+  final TextEditingController passwordController = TextEditingController();
+  final TextEditingController studyIdController = TextEditingController();
+  final TextEditingController confirmPasswordController = TextEditingController();
+  final TextEditingController usernameController = TextEditingController();
 
-class _SignUpCardState extends State<SignUpCard> {
   @override
   Widget build(BuildContext context) {
     return Card(
@@ -29,6 +32,27 @@ class _SignUpCardState extends State<SignUpCard> {
                       getProportionateScreenHeight(20)),
                   child: Column(mainAxisSize: MainAxisSize.min, children: [
                     TextField(
+                      controller: emailController,
+                      decoration: InputDecoration(
+                          filled: true,
+                          fillColor: Colors.black12.withAlpha(15),
+                          labelText: "Email"),
+                    ),
+                    Padding(
+                        padding:
+                            EdgeInsets.all(getProportionateScreenWidth(15.0))),
+                    TextField(
+                      controller: usernameController,
+                      decoration: InputDecoration(
+                          filled: true,
+                          fillColor: Colors.black12.withAlpha(15),
+                          labelText: "Username"),
+                    ),
+                    Padding(
+                        padding:
+                            EdgeInsets.all(getProportionateScreenWidth(15.0))),
+                    TextField(
+                      controller: studyIdController,
                       decoration: InputDecoration(
                           filled: true,
                           fillColor: Colors.black12.withAlpha(15),
@@ -38,6 +62,7 @@ class _SignUpCardState extends State<SignUpCard> {
                         padding:
                             EdgeInsets.all(getProportionateScreenWidth(15.0))),
                     TextField(
+                      controller: passwordController,
                       obscureText: true,
                       decoration: InputDecoration(
                           filled: true,
@@ -48,6 +73,7 @@ class _SignUpCardState extends State<SignUpCard> {
                         padding:
                             EdgeInsets.all(getProportionateScreenWidth(15.0))),
                     TextField(
+                      controller: confirmPasswordController, //TODO: add validation
                       obscureText: true,
                       decoration: InputDecoration(
                           filled: true,
@@ -57,17 +83,19 @@ class _SignUpCardState extends State<SignUpCard> {
                     Padding(
                         padding:
                             EdgeInsets.all(getProportionateScreenWidth(15.0))),
-                    TextField(
-                      decoration: InputDecoration(
-                          filled: true,
-                          fillColor: Colors.black12.withAlpha(15),
-                          labelText: "Username"),
-                    ),
-                    Padding(
-                        padding:
-                            EdgeInsets.all(getProportionateScreenWidth(15.0))),
                     TextButton(
-                      onPressed: () {},
+                      onPressed: () {
+                        context
+                          .read<AuthenticationService>()
+                          .signUp(
+                              email: emailController.text,
+                              password: passwordController.text)
+                          .then((success) {
+                        if (success) {
+                          Navigator.pop(context);
+                        }
+                      });
+                      },
                       child: Padding(
                         padding: EdgeInsets.symmetric(
                             vertical: getProportionateScreenHeight(2.0),
