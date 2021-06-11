@@ -89,7 +89,8 @@ class SignUpCard extends StatelessWidget {
                           .read<AuthenticationService>()
                           .signUp(
                               email: emailController.text,
-                              password: passwordController.text)
+                              password: passwordController.text,
+                              username: usernameController.text)
                           .then((success) {
                         if (success) {
                           Navigator.pop(context);
