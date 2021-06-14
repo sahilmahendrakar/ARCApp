@@ -15,37 +15,39 @@ class LogInScreen extends StatelessWidget {
               fit: BoxFit.cover)),
       child: SafeArea(
           child: Center(
-              child: Padding(
-        padding: EdgeInsets.all(getProportionateScreenHeight(30.0)),
-        child: Column(
-          mainAxisSize: MainAxisSize.min,
-          children: <Widget>[
-            Container(
+              child: SingleChildScrollView(
                 child: Padding(
-                  padding: EdgeInsets.fromLTRB(
-                      getProportionateScreenWidth(0),
-                      getProportionateScreenHeight(100.0),
-                      getProportionateScreenWidth(0),
-                      getProportionateScreenHeight(20.0)),
-                  child: Text("Log in to your account",
-                      style: TextStyle(
-                          color: Colors.white,
-                          fontSize: 30.0,
-                          fontWeight: FontWeight.bold,
-                          shadows: <Shadow>[
-                            Shadow(
-                              offset: Offset(getProportionateScreenWidth(0),
-                                  getProportionateScreenHeight(4)),
-                              blurRadius: getProportionateScreenWidth(35.0),
-                              color: Color.fromARGB(255, 0, 0, 0),
-                            )
-                          ])),
-                )),
-                Padding(padding: EdgeInsets.all(getProportionateScreenHeight(20.0))),
-            LogInCard()
-          ],
-        ),
-      ))),
+                      padding: EdgeInsets.all(getProportionateScreenHeight(30.0)),
+                      child: Column(
+                        mainAxisSize: MainAxisSize.min,
+                        children: <Widget>[
+                          Container(
+                  child: Padding(
+                    padding: EdgeInsets.fromLTRB(
+                        getProportionateScreenWidth(0),
+                        getProportionateScreenHeight(100.0),
+                        getProportionateScreenWidth(0),
+                        getProportionateScreenHeight(20.0)),
+                    child: Text("Log in to your account",
+                        style: TextStyle(
+                            color: Colors.white,
+                            fontSize: 30.0,
+                            fontWeight: FontWeight.bold,
+                            shadows: <Shadow>[
+                              Shadow(
+                                offset: Offset(getProportionateScreenWidth(0),
+                                    getProportionateScreenHeight(4)),
+                                blurRadius: getProportionateScreenWidth(35.0),
+                                color: Color.fromARGB(255, 0, 0, 0),
+                              )
+                            ])),
+                  )),
+                  Padding(padding: EdgeInsets.all(getProportionateScreenHeight(20.0))),
+                          LogInCard()
+                        ],
+                      ),
+                    ),
+              ))),
     ));
   }
 }
