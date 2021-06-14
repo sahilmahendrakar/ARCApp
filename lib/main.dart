@@ -2,9 +2,19 @@ import 'package:arc_app/constants.dart';
 import 'package:arc_app/routes.dart';
 import 'package:arc_app/screens/Dashboard/dashboard_screen.dart';
 import 'package:arc_app/screens/Landing/landing_screen.dart';
+import 'package:arc_app/screens/Login/log_in_screen.dart';
+import 'package:arc_app/screens/Sign%20up/sign_up_screen.dart';
+import 'package:arc_app/screens/home.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'auth/authentication_service.dart';
+import 'package:arc_app/size_config.dart';
 
-void main() {
+Future<void> main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp();
   runApp(MyApp());
 }
 
@@ -29,8 +39,19 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      debugShowCheckedModeBanner: false,
+    return MultiProvider(
+        providers: [
+          Provider<AuthenticationService>(
+            create: (_) => AuthenticationService(FirebaseAuth.instance),
+          ),
+          StreamProvider(
+            create: (context) =>
+                context.read<AuthenticationService>().authStateChanges,
+            initialData: null,
+          )
+        ],
+        child: MaterialApp(
+          debugShowCheckedModeBanner: false,
       title: 'ARC app',
       theme: ThemeData(
         scaffoldBackgroundColor: Colors.white,
@@ -53,5 +74,24 @@ class MyApp extends StatelessWidget {
       initialRoute: LandingScreen.routeName,
       routes: routes,
     );
+  }
+}
+
+class AuthenticationWrapper extends StatelessWidget {
+  const AuthenticationWrapper({
+    Key? key,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    SizeConfig().init(context);
+    final firebaseUser = context.watch<User?>();
+
+    if (firebaseUser != null) {
+      print(firebaseUser.displayName);
+      return Home();
+    }
+
+    return LandingScreen();
   }
 }

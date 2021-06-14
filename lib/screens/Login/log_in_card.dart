@@ -1,14 +1,15 @@
+import 'package:arc_app/auth/authentication_service.dart';
+import 'package:arc_app/screens/home.dart';
 import 'package:flutter/widgets.dart';
 import 'package:arc_app/constants.dart';
 import 'package:flutter/material.dart';
 import 'package:arc_app/size_config.dart';
+import 'package:provider/provider.dart';
 
-class LogInCard extends StatefulWidget {
-  @override
-  _LogInCardState createState() => _LogInCardState();
-}
+class LogInCard extends StatelessWidget {
+  final TextEditingController emailController = TextEditingController();
+  final TextEditingController passwordController = TextEditingController();
 
-class _LogInCardState extends State<LogInCard> {
   @override
   Widget build(BuildContext context) {
     return Card(
@@ -30,24 +31,40 @@ class _LogInCardState extends State<LogInCard> {
                 mainAxisSize: MainAxisSize.min,
                 children: [
                   TextField(
+                    controller: emailController,
                     decoration: InputDecoration(
                         filled: true,
                         fillColor: Colors.black12.withAlpha(15),
-                        labelText: "Username or Study ID"),
+                        labelText: "Email"),
                   ),
                   Padding(
                       padding:
                           EdgeInsets.all(getProportionateScreenHeight(15.0))),
                   TextField(
+                    controller: passwordController,
                     obscureText: true,
                     decoration: InputDecoration(
                         filled: true,
                         fillColor: Colors.black12.withAlpha(15),
                         labelText: "Password"),
                   ),
-                  Padding(padding: const EdgeInsets.all(15.0)),
+                  Padding(
+                      padding:
+                          EdgeInsets.all(getProportionateScreenHeight(15.0))),
                   TextButton(
-                    onPressed: () {},
+                    //check return value of signin to see if successful, and push route
+                    onPressed: () {
+                      context
+                          .read<AuthenticationService>()
+                          .signIn(
+                              email: emailController.text,
+                              password: passwordController.text)
+                          .then((success) {
+                        if (success) {
+                          Navigator.pop(context);
+                        }
+                      });
+                    },
                     child: Padding(
                       padding: EdgeInsets.symmetric(
                           vertical: getProportionateScreenHeight(2.0),

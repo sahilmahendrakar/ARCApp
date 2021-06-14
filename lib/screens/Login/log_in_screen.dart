@@ -20,8 +20,7 @@ class LogInScreen extends StatelessWidget {
         child: Column(
           mainAxisSize: MainAxisSize.min,
           children: <Widget>[
-            Expanded(
-                flex: 3,
+            Container(
                 child: Padding(
                   padding: EdgeInsets.fromLTRB(
                       getProportionateScreenWidth(0),
@@ -42,6 +41,7 @@ class LogInScreen extends StatelessWidget {
                             )
                           ])),
                 )),
+                Padding(padding: EdgeInsets.all(getProportionateScreenHeight(20.0))),
             LogInCard()
           ],
         ),
