@@ -1,5 +1,6 @@
 import 'package:arc_app/constants.dart';
 import 'package:arc_app/routes.dart';
+import 'package:arc_app/screens/Dashboard/dashboard_screen.dart';
 import 'package:arc_app/screens/Landing/landing_screen.dart';
 import 'package:flutter/material.dart';
 

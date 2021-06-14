@@ -1,38 +1,35 @@
 import 'package:flutter/material.dart';
 
-class Dashboard extends StatefulWidget {
+class DashboardBody extends StatefulWidget {
   @override
   _DashboardState createState() => _DashboardState();
 }
 
-class _DashboardState extends State<Dashboard> {
+class _DashboardState extends State<DashboardBody> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text("ARC"),
-        elevation: .1
-      ),
+      appBar: AppBar(title: Text("ARC"), elevation: .1),
       body: Container(
         padding: EdgeInsets.symmetric(vertical: 20.0, horizontal: 2.0),
         child: GridView.count(
           crossAxisCount: 2,
           padding: EdgeInsets.all(3.0),
           children: <Widget>[
-            ActivitiesItem ("Ordbog", Icons.book),
-            ActivitiesItem ("Alphabet", Icons.alarm),
-            ActivitiesItem ("Alphabet", Icons.alarm),
-            ActivitiesItem("Alphabet", Icons.alarm),
-            ActivitiesItem("Alphabet", Icons.alarm),
-            ActivitiesItem("Alphabet", Icons.alarm)
+            activitiesItem("Ordbog", Icons.book),
+            activitiesItem("Alphabet", Icons.alarm),
+            activitiesItem("Alphabet", Icons.alarm),
+            activitiesItem("Alphabet", Icons.alarm),
+            activitiesItem("Alphabet", Icons.alarm),
+            activitiesItem("Alphabet", Icons.alarm)
           ],
         ),
       ),
-      );
+    );
   }
 }
 
-Card ActivitiesItem (String title, IconData icon) {
+Card activitiesItem(String title, IconData icon) {
   return Card(
       elevation: 1.0,
       margin: new EdgeInsets.all(8.0),
@@ -48,15 +45,14 @@ Card ActivitiesItem (String title, IconData icon) {
               SizedBox(height: 50.0),
               Center(
                   child: Icon(
-                    icon,
-                    size: 40.0,
-                    color: Colors.black,
-                  )),
+                icon,
+                size: 40.0,
+                color: Colors.black,
+              )),
               SizedBox(height: 20.0),
               new Center(
                 child: new Text(title,
-                    style:
-                    new TextStyle(fontSize: 18.0, color: Colors.black)),
+                    style: new TextStyle(fontSize: 18.0, color: Colors.black)),
               )
             ],
           ),
