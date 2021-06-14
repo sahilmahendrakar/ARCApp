@@ -1,4 +1,3 @@
-import 'package:arc_app/constants.dart';
 import 'package:arc_app/screens/Sign%20up/sign_up_card.dart';
 import 'package:arc_app/size_config.dart';
 import 'package:flutter/material.dart';

@@ -1,11 +1,9 @@
-import 'package:arc_app/constants.dart';
 import 'package:arc_app/screens/Login/log_in_card.dart';
-import 'package:arc_app/screens/Sign%20up/sign_up_card.dart';
 import 'package:arc_app/size_config.dart';
 import 'package:flutter/material.dart';
 
 class LogInScreen extends StatelessWidget {
-  static String routeName = "/sign_up";
+  static String routeName = "/log_in";
 
   @override
   Widget build(BuildContext context) {
