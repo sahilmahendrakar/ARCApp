@@ -1,3 +1,4 @@
+import 'package:arc_app/auth/authentication_wrapper.dart';
 import 'package:arc_app/screens/Dashboard/dashboard_screen.dart';
 import 'package:arc_app/screens/Landing/landing_screen.dart';
 import 'package:flutter/widgets.dart';
@@ -12,4 +13,5 @@ final Map<String, WidgetBuilder> routes = {
   SignUpScreen.routeName: (context) => SignUpScreen(),
   LogInScreen.routeName: (context) => LogInScreen(),
   Dashboard.routeName: (context) => Dashboard(),
+  AuthenticationWrapper.routeName: (context) => AuthenticationWrapper(),
 };

@@ -1,3 +1,4 @@
+import 'package:arc_app/auth/authentication_wrapper.dart';
 import 'package:arc_app/constants.dart';
 import 'package:arc_app/routes.dart';
 import 'package:arc_app/screens/Dashboard/dashboard_screen.dart';
@@ -55,7 +56,8 @@ class MyApp extends StatelessWidget {
       title: 'ARC app',
       theme: ThemeData(
         scaffoldBackgroundColor: Colors.white,
-        colorScheme: colorScheme,
+        primaryColor: colorScheme.primary,
+        accentColor: colorScheme.secondary,
         inputDecorationTheme: InputDecorationTheme(
             //labelStyle: TextStyle(color: colorScheme.primary),
             enabledBorder: UnderlineInputBorder(
@@ -71,27 +73,8 @@ class MyApp extends StatelessWidget {
         ),
         visualDensity: VisualDensity.adaptivePlatformDensity,
       ),
-      initialRoute: LandingScreen.routeName,
+      initialRoute: AuthenticationWrapper.routeName,
       routes: routes,
-    );
-  }
-}
-
-class AuthenticationWrapper extends StatelessWidget {
-  const AuthenticationWrapper({
-    Key? key,
-  }) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    SizeConfig().init(context);
-    final firebaseUser = context.watch<User?>();
-
-    if (firebaseUser != null) {
-      print(firebaseUser.displayName);
-      return Home();
-    }
-
-    return LandingScreen();
+    ));
   }
 }
