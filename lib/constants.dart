@@ -16,5 +16,6 @@ const primaryGradient = LinearGradient(
 );
 
 const kTextColor = pureBlack;
+const mTextColor = pureWhite;
 
 const kAnimationDuration = Duration(milliseconds: 200);

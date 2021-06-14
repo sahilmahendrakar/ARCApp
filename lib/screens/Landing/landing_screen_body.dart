@@ -1,15 +1,15 @@
 import 'package:arc_app/constants.dart';
 import 'package:arc_app/size_config.dart';
 import 'package:flutter/material.dart';
-import 'package:arc_app/screens/login/log_in_screen.dart';
 import 'package:arc_app/screens/Sign up/sign_up_screen.dart';
+import 'package:arc_app/screens/Login/log_in_screen.dart';
 
-class Body extends StatefulWidget {
+class LandingScreenBody extends StatefulWidget {
   @override
-  _BodyState createState() => _BodyState();
+  _LandingScreenBodyState createState() => _LandingScreenBodyState();
 }
 
-class _BodyState extends State<Body> {
+class _LandingScreenBodyState extends State<LandingScreenBody> {
   @override
   Widget build(BuildContext context) {
     final ButtonStyle style = ElevatedButton.styleFrom(
@@ -18,7 +18,8 @@ class _BodyState extends State<Body> {
             getProportionateScreenWidth(235), getProportionateScreenHeight(70)),
         textStyle: TextStyle(
             fontSize: getProportionateScreenWidth(20),
-            fontWeight: FontWeight.bold),
+            fontWeight: FontWeight.bold,
+            color: pureWhite),
         shadowColor: Colors.black,
         elevation: 15,
         shape: RoundedRectangleBorder(
@@ -59,11 +60,8 @@ class _BodyState extends State<Body> {
                             ElevatedButton(
                                 style: style,
                                 onPressed: () {
-                                  Navigator.push(
-                                    context,
-                                    MaterialPageRoute(
-                                        builder: (context) => LogInScreen()),
-                                  );
+                                  Navigator.pushNamed(
+                                      context, LogInScreen.routeName);
                                 },
                                 child: const Text("LOG IN")),
                             SizedBox(
@@ -72,11 +70,8 @@ class _BodyState extends State<Body> {
                             ElevatedButton(
                                 style: style,
                                 onPressed: () {
-                                  Navigator.push(
-                                    context,
-                                    MaterialPageRoute(
-                                        builder: (context) => SignUpScreen()),
-                                  );
+                                  Navigator.pushNamed(
+                                      context, SignUpScreen.routeName);
                                 },
                                 child: const Text("SIGN UP"))
                           ],

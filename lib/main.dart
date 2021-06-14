@@ -1,7 +1,6 @@
 import 'package:arc_app/constants.dart';
+import 'package:arc_app/routes.dart';
 import 'package:arc_app/screens/Landing/landing_screen.dart';
-import 'package:arc_app/screens/Login/log_in_screen.dart';
-import 'package:arc_app/screens/Sign%20up/sign_up_screen.dart';
 import 'package:flutter/material.dart';
 
 void main() {
@@ -31,11 +30,10 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      title: 'Flutter Demo',
+      title: 'ARC app',
       theme: ThemeData(
         scaffoldBackgroundColor: Colors.white,
-        primaryColor: colorScheme.primary,
-        accentColor: colorScheme.secondary,
+        colorScheme: colorScheme,
         inputDecorationTheme: InputDecorationTheme(
             //labelStyle: TextStyle(color: colorScheme.primary),
             enabledBorder: UnderlineInputBorder(
@@ -47,11 +45,12 @@ class MyApp extends StatelessWidget {
         fontFamily: "Roboto",
         textTheme: TextTheme(
           bodyText1: TextStyle(color: kTextColor),
-          bodyText2: TextStyle(color: kTextColor),
+          bodyText2: TextStyle(color: mTextColor),
         ),
         visualDensity: VisualDensity.adaptivePlatformDensity,
       ),
-      home: LandingScreen(),
+      initialRoute: LandingScreen.routeName,
+      routes: routes,
     );
   }
 }
