@@ -1,5 +1,6 @@
 //This is temporary, just for testing firebase authentication
 import 'package:arc_app/auth/authentication_service.dart';
+import 'package:arc_app/screens/settings/settings_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -12,6 +13,10 @@ class Home extends StatelessWidget {
             mainAxisSize: MainAxisSize.min,
         children: [
           Text("Home"),
+          ElevatedButton(onPressed: () {
+              Navigator.pushNamed(
+                context, SettingsScreen.routeName);
+            }, child: Text("Settings")),
           ElevatedButton(onPressed: () {
             context.read<AuthenticationService>().signOut();
           },
