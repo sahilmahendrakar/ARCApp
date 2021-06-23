@@ -34,6 +34,8 @@ dependencies:
   flutter_svg: ^0.17.4    #help us to use SVG in our app 
   provider: ^5.0.0        #for State management 
 
+  settings_ui: ^1.0.0
+
 dev_dependencies:
   flutter_test:
     sdk: flutter

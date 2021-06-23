@@ -6,6 +6,7 @@ import 'package:arc_app/screens/Landing/landing_screen.dart';
 import 'package:arc_app/screens/Login/log_in_screen.dart';
 import 'package:arc_app/screens/Sign%20up/sign_up_screen.dart';
 import 'package:arc_app/screens/home.dart';
+import 'package:arc_app/screens/settings/settings_screen.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
@@ -69,7 +70,7 @@ class MyApp extends StatelessWidget {
         fontFamily: "Roboto",
         textTheme: TextTheme(
           bodyText1: TextStyle(color: kTextColor),
-          bodyText2: TextStyle(color: mTextColor),
+          bodyText2: TextStyle(color: kTextColor),
         ),
         visualDensity: VisualDensity.adaptivePlatformDensity,
       ),
