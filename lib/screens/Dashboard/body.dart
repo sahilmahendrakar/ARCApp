@@ -8,22 +8,19 @@ class DashboardBody extends StatefulWidget {
 class _DashboardState extends State<DashboardBody> {
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(title: Text("ARC"), elevation: .1),
-      body: Container(
-        padding: EdgeInsets.symmetric(vertical: 20.0, horizontal: 2.0),
-        child: GridView.count(
-          crossAxisCount: 2,
-          padding: EdgeInsets.all(3.0),
-          children: <Widget>[
-            activitiesItem("Ordbog", Icons.book),
-            activitiesItem("Alphabet", Icons.alarm),
-            activitiesItem("Alphabet", Icons.alarm),
-            activitiesItem("Alphabet", Icons.alarm),
-            activitiesItem("Alphabet", Icons.alarm),
-            activitiesItem("Alphabet", Icons.alarm)
-          ],
-        ),
+    return Container(
+      padding: EdgeInsets.symmetric(vertical: 20.0, horizontal: 2.0),
+      child: GridView.count(
+        crossAxisCount: 2,
+        padding: EdgeInsets.all(3.0),
+        children: <Widget>[
+          activitiesItem("Ordbog", Icons.book),
+          activitiesItem("Alphabet", Icons.alarm),
+          activitiesItem("Alphabet", Icons.alarm),
+          activitiesItem("Alphabet", Icons.alarm),
+          activitiesItem("Alphabet", Icons.alarm),
+          activitiesItem("Alphabet", Icons.alarm)
+        ],
       ),
     );
   }
