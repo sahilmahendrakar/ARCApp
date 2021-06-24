@@ -1,9 +1,11 @@
 import 'package:arc_app/auth/authentication_service.dart';
 import 'package:arc_app/size_config.dart';
+import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/widgets.dart';
 import 'package:arc_app/constants.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 
 class SignUpCard extends StatefulWidget {
   @override
@@ -20,8 +22,12 @@ class _SignUpCardState extends State<SignUpCard> {
 
   final signUpFormKey = GlobalKey<FormState>();
 
+  final fb = FirebaseDatabase.instance;
+
   @override
   Widget build(BuildContext context) {
+    final ref = fb.reference();
+
     return Card(
         elevation: getProportionateScreenHeight(25.0),
         shape: RoundedRectangleBorder(
@@ -134,6 +140,12 @@ class _SignUpCardState extends State<SignUpCard> {
                                     username: usernameController.text)
                                 .then((success) {
                               if (success) {
+                                User user = FirebaseAuth.instance.currentUser!;
+                                print("User created with uid: " + user.uid);
+                                ref
+                                    .child(user.uid)
+                                    .child("study-id")
+                                    .set(studyIdController.text);
                                 Navigator.pop(context);
                               }
                             });
