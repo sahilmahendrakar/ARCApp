@@ -1,6 +1,3 @@
-
-
-import 'package:arc_app/screens/Dashboard/dashboard_screen.dart';
 import 'package:arc_app/screens/Landing/landing_screen.dart';
 import 'package:arc_app/size_config.dart';
 import 'package:firebase_auth/firebase_auth.dart';

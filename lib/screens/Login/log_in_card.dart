@@ -1,5 +1,4 @@
 import 'package:arc_app/auth/authentication_service.dart';
-import 'package:arc_app/screens/home.dart';
 import 'package:flutter/widgets.dart';
 import 'package:arc_app/constants.dart';
 import 'package:flutter/material.dart';

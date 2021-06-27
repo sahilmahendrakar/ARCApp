@@ -1,10 +1,8 @@
 //This is temporary, just for testing firebase authentication
-import 'package:arc_app/auth/authentication_service.dart';
 import 'package:arc_app/constants.dart';
 import 'package:arc_app/screens/Dashboard/dashboard_screen.dart';
 import 'package:arc_app/screens/settings/settings_screen.dart';
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
 
 class Home extends StatefulWidget {
   @override
@@ -66,12 +64,12 @@ class _HomeState extends State<Home> {
         },
       ),
       bottomNavigationBar: Container(
-        decoration: BoxDecoration(
-          boxShadow: [BoxShadow(
+        decoration: BoxDecoration(boxShadow: [
+          BoxShadow(
             color: Colors.black12,
             blurRadius: 5.0,
-          )]
-        ),
+          )
+        ]),
         child: BottomNavigationBar(
           onTap: onTabTapped,
           currentIndex: _selectedIndex,

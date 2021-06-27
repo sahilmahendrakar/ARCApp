@@ -1,18 +1,11 @@
 import 'package:arc_app/auth/authentication_wrapper.dart';
 import 'package:arc_app/constants.dart';
 import 'package:arc_app/routes.dart';
-import 'package:arc_app/screens/Dashboard/dashboard_screen.dart';
-import 'package:arc_app/screens/Landing/landing_screen.dart';
-import 'package:arc_app/screens/Login/log_in_screen.dart';
-import 'package:arc_app/screens/Sign%20up/sign_up_screen.dart';
-import 'package:arc_app/screens/home.dart';
-import 'package:arc_app/screens/settings/settings_screen.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'auth/authentication_service.dart';
-import 'package:arc_app/size_config.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -54,28 +47,28 @@ class MyApp extends StatelessWidget {
         ],
         child: MaterialApp(
           debugShowCheckedModeBanner: false,
-      title: 'ARC app',
-      theme: ThemeData(
-        scaffoldBackgroundColor: Colors.white,
-        primaryColor: colorScheme.primary,
-        accentColor: colorScheme.secondary,
-        inputDecorationTheme: InputDecorationTheme(
-            //labelStyle: TextStyle(color: colorScheme.primary),
-            enabledBorder: UnderlineInputBorder(
-                borderSide: BorderSide(color: colorScheme.primary)),
-            focusedBorder: UnderlineInputBorder(
-                borderSide: BorderSide(color: colorScheme.primary)),
-            border: UnderlineInputBorder(
-                borderSide: BorderSide(color: colorScheme.primary))),
-        fontFamily: "Roboto",
-        textTheme: TextTheme(
-          bodyText1: TextStyle(color: kTextColor),
-          bodyText2: TextStyle(color: kTextColor),
-        ),
-        visualDensity: VisualDensity.adaptivePlatformDensity,
-      ),
-      initialRoute: AuthenticationWrapper.routeName,
-      routes: routes,
-    ));
+          title: 'ARC app',
+          theme: ThemeData(
+            scaffoldBackgroundColor: Colors.white,
+            primaryColor: colorScheme.primary,
+            accentColor: colorScheme.secondary,
+            inputDecorationTheme: InputDecorationTheme(
+                //labelStyle: TextStyle(color: colorScheme.primary),
+                enabledBorder: UnderlineInputBorder(
+                    borderSide: BorderSide(color: colorScheme.primary)),
+                focusedBorder: UnderlineInputBorder(
+                    borderSide: BorderSide(color: colorScheme.primary)),
+                border: UnderlineInputBorder(
+                    borderSide: BorderSide(color: colorScheme.primary))),
+            fontFamily: "Roboto",
+            textTheme: TextTheme(
+              bodyText1: TextStyle(color: kTextColor),
+              bodyText2: TextStyle(color: kTextColor),
+            ),
+            visualDensity: VisualDensity.adaptivePlatformDensity,
+          ),
+          initialRoute: AuthenticationWrapper.routeName,
+          routes: routes,
+        ));
   }
 }
