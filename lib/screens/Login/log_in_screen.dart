@@ -1,3 +1,4 @@
+import 'package:arc_app/screens/CBT/cbt_start_screen.dart';
 import 'package:arc_app/screens/Login/log_in_card.dart';
 import 'package:arc_app/size_config.dart';
 import 'package:flutter/material.dart';
@@ -48,6 +49,9 @@ class LogInScreen extends StatelessWidget {
                       ),
                     ),
               ))),
-    ));
+    ),
+    floatingActionButton: FloatingActionButton(onPressed: () { Navigator.pushNamed(
+        context, CBTStartScreen.routeName); },
+    child:Text('CBT')),);
   }
 }

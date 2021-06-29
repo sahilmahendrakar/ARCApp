@@ -46,19 +46,16 @@ class CBTStartScreen extends StatelessWidget {
                 Navigator.push(context,
                     MaterialPageRoute(builder: (context) => CBTEmotions()));
               },
-              child: Padding(
-                padding: EdgeInsets.symmetric(
-                    vertical: getProportionateScreenHeight(2.0),
-                    horizontal: getProportionateScreenWidth(25)),
-                child: Text(
+              child: Text(
                   'START',
-                  style: TextStyle(fontSize: getProportionateScreenWidth(16.0)),
+                  style: TextStyle(fontSize: getProportionateScreenWidth(20.0)),
                 ),
-              ),
               style: TextButton.styleFrom(
                   primary: darkestBlue,
                   backgroundColor: pureWhite,
-                  shape: StadiumBorder()),
+                  shape: StadiumBorder(),
+                  fixedSize: Size(
+                      getProportionateScreenWidth(150), getProportionateScreenHeight(50)),),
             ),
             Container(
               padding: EdgeInsets.only(top: getProportionateScreenHeight(16)),
