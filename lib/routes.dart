@@ -6,7 +6,6 @@ import 'package:arc_app/screens/settings/settings_screen.dart';
 import 'package:flutter/widgets.dart';
 import 'package:arc_app/screens/Login/log_in_screen.dart';
 import 'package:arc_app/screens/Sign up/sign_up_screen.dart';
-import 'package:arc_app/screens/CBT/cbt_start_screen.dart';
 
 // We use name route
 // All our routes will be available here
