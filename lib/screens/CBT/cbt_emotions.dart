@@ -8,40 +8,7 @@ class CBTEmotions extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      //appBar: AppBar(
-      // title: Text('Emotions'),
-      // ),
-      body: EmotionBody(),
-      bottomNavigationBar: BottomNavigationBar(
-        items: [
-          BottomNavigationBarItem(
-              icon: Padding(
-                padding:
-                    EdgeInsets.only(right: getProportionateScreenWidth(100)),
-                child: IconButton(
-                  icon: Icon(Icons.arrow_back),
-                  onPressed: () {
-                    Navigator.pop(context);
-                  },
-                ),
-              ),
-              label: ""),
-          BottomNavigationBarItem(
-              icon: Padding(
-                padding:
-                    EdgeInsets.only(left: getProportionateScreenWidth(100)),
-                child: IconButton(
-                  icon: Icon(Icons.arrow_forward),
-                  onPressed: () {},
-                ),
-              ),
-              label: "")
-        ],
-        backgroundColor: Colors.transparent,
-        elevation: 0,
-      ),
-    );
+    return Scaffold(body: EmotionBody());
   }
 }
 
@@ -63,6 +30,7 @@ class _EmotionBodyState extends State<EmotionBody> {
     'Embarrassment',
     'Other:    '
   ];
+  String error = '';
   Set<Emotion> checkedEmotions = {};
   Set<Emotion> emotions = {};
   final TextEditingController otherController = TextEditingController();
@@ -74,30 +42,38 @@ class _EmotionBodyState extends State<EmotionBody> {
   @override
   Widget build(BuildContext context) {
     return SafeArea(
-      child: Container(
-        alignment: Alignment(0, -0.5),
-        padding: EdgeInsets.all(16),
-        child: ListView(children: [
-          Container(
-              child: Text(
-                'What unpleasant emotion(s) are you feeling?',
-                style: TextStyle(
-                    fontSize: getProportionateScreenWidth(18),
-                    fontWeight: FontWeight.w600,
-                    color: darkestBlue),
-              ),
-              padding: EdgeInsets.symmetric(
-                  vertical: getProportionateScreenHeight(0))),
-          Column(children: buildEmotions()),
-          Container(
-            child: sliderInstructions(),
-            padding: EdgeInsets.fromLTRB(0, getProportionateScreenHeight(32), 0,
-                getProportionateScreenHeight(16)),
-          ),
-          Column(children: updateSliders()),
-        ]),
+        child: Stack(children: [
+      Container(
+        padding: EdgeInsets.symmetric(
+            horizontal: getProportionateScreenWidth(16),
+            vertical: getProportionateScreenHeight(16)),
+        child: ListView(
+          children: [
+            Container(
+                child: Text(
+                  'What unpleasant emotion(s) are you feeling?',
+                  style: TextStyle(
+                      fontSize: getProportionateScreenWidth(20),
+                      fontWeight: FontWeight.w600,
+                      color: darkestBlue),
+                  textAlign: TextAlign.center,
+                ),
+                padding: EdgeInsets.symmetric(
+                    vertical: getProportionateScreenHeight(0))),
+            Column(children: buildEmotions()),
+            Container(
+              child: sliderInstructions(),
+              padding: EdgeInsets.fromLTRB(0, getProportionateScreenHeight(32),
+                  0, getProportionateScreenHeight(16)),
+            ),
+            Column(children: buildSliders()),
+            Container(height: getProportionateScreenHeight(64))
+          ],
+          shrinkWrap: true,
+        ),
       ),
-    );
+      navigationArrows(),
+    ]));
   }
 
   List<Widget> buildEmotions() {
@@ -114,12 +90,42 @@ class _EmotionBodyState extends State<EmotionBody> {
               checkedEmotions.add(e);
             else
               checkedEmotions.remove(e);
+            error = '';
             //updateSliders();
           });
         },
       ));
     }
     return emotionCheckboxes;
+  }
+
+  List<Widget> buildSliders() {
+    List<Widget> sliders = [];
+    for (Emotion e in checkedEmotions) {
+      sliders.add(Column(children: [
+        Container(
+          alignment: Alignment(-1, 0),
+          padding: EdgeInsets.only(left: getProportionateScreenWidth(16)),
+          child: Text(
+            sliderText(e),
+            style: TextStyle(
+              fontSize: getProportionateScreenWidth(16),
+              color: primary,
+              fontWeight: FontWeight.bold,
+            ),
+          ),
+        ),
+        Container(
+            padding: EdgeInsets.fromLTRB(
+                getProportionateScreenWidth(16),
+                0,
+                getProportionateScreenWidth(16),
+                getProportionateScreenHeight(8)),
+            child: EmotionSlider(e)),
+      ]));
+    }
+
+    return sliders;
   }
 
   Widget checkboxText(Emotion e) {
@@ -159,41 +165,63 @@ class _EmotionBodyState extends State<EmotionBody> {
             fontWeight: FontWeight.w600));
   }
 
-  String sliderText(Emotion e) {
-    if (e.name == 'Other:    ') return otherController.text;
-    return e.name;
-  }
-
   Widget sliderInstructions() {
     if (checkedEmotions.isEmpty) return Text('');
     return Text(
-      'Rate the intensity of each emotion (0-10)',
+      'On a scale of 0-10, how intense is each emotion?',
       style: TextStyle(
-          fontSize: getProportionateScreenWidth(18),
+          fontSize: getProportionateScreenWidth(20),
           fontWeight: FontWeight.w600,
           color: darkestBlue),
+      textAlign: TextAlign.center,
     );
   }
 
-  //this is one way --> could also create a class with string and boolean
-  //and change boolean value according to check and cycle through all
-  //the values in this function (if this causes them to go in order
-  //of being checked, that might change it so it orders according to
-  //box order, but that's really just personal preference)
-  List<Widget> updateSliders() {
-    List<Widget> sliders = [];
-    for (Emotion e in checkedEmotions) {
-      sliders.add(Column(children: [
-        Text(sliderText(e),
-              style: TextStyle(
-                  fontSize: getProportionateScreenWidth(16),
-                  color: primary,
-                  fontWeight: FontWeight.bold)),
-        EmotionSlider(e),
-      ]));
-    }
+  String sliderText(Emotion e) {
+    if (e.name == 'Other:    ' && otherController.text != '')
+      return otherController.text;
+    else if (e.name == 'Other:    ') return 'Other';
+    return e.name;
+  }
 
-    return sliders;
+  Widget navigationArrows() {
+    return Container(
+      padding: EdgeInsets.symmetric(
+          horizontal: getProportionateScreenWidth(8),
+          vertical: getProportionateScreenHeight(8)),
+      child: Column(children: [
+        Spacer(),
+        Row(children: [
+          IconButton(
+              iconSize: 36,
+              icon: Icon(Icons.arrow_back_ios),
+              onPressed: () {
+                Navigator.pop(context);
+              },
+              color: tertiary),
+          Expanded(
+              child: Text(error,
+                  textAlign: TextAlign.center,
+                  style: TextStyle(
+                      fontSize: getProportionateScreenWidth(14),
+                      color: Colors.red))),
+          IconButton(
+              iconSize: 36,
+              icon: Icon(Icons.arrow_forward_ios),
+              onPressed: () {
+                if (checkedEmotions.isEmpty) {
+                  error = 'Please select an emotion';
+                  setState(() {});
+                  return;
+                }
+
+                //Navigator.push(context,
+                //MaterialPageRoute(builder: (context) => CBTSituation()));
+              },
+              color: tertiary)
+        ])
+      ]),
+    );
   }
 }
 
@@ -235,55 +263,3 @@ class _EmotionSliderState extends State<EmotionSlider> {
     );
   }
 }
-/**
-class EmotionCheckbox extends StatefulWidget{
-  final Emotion e;
-  EmotionCheckbox(this.e, {Key? key}) : super(key: key);
-
-  @override
-  State<StatefulWidget> createState() => _EmotionCheckboxState(e);
-
-}
-
-class _EmotionCheckboxState extends State<EmotionCheckbox>{
-  Emotion e;
-  _EmotionCheckboxState(this.e);
-  @override
-  Widget build(BuildContext context) {
-    return CheckboxListTile(
-      title: checkboxText(e),
-      value: e.isChecked,
-      dense: true,
-      onChanged: (bool? value) {
-        setState(() {
-          e.isChecked = value!;
-          if (e.isChecked)
-            _EmotionBodyState.checkedEmotions.add(e);
-          else
-            _EmotionBodyState.checkedEmotions.remove(e);
-          //updateSliders();
-        });
-      },
-    );
-  }
-
-  Widget checkboxText(Emotion e) {
-    if (e.name == 'Other:    ')
-      return Row(children: [
-        Text('Other:    ',
-            style: TextStyle(fontSize: getProportionateScreenWidth(16))),
-        Expanded(
-            child: TextField(
-              onTap: () {
-                setState(() {
-                  e.isChecked = true;
-                });
-              },
-              enableInteractiveSelection: true,
-            ))
-      ]);
-    return Text(e.name,
-        style: TextStyle(fontSize: getProportionateScreenWidth(16)));
-  }
-}
-    */
