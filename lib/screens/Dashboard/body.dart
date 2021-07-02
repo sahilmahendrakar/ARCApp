@@ -9,7 +9,7 @@ class DashboardBody extends StatefulWidget {
 class _DashboardState extends State<DashboardBody> {
   Container Activities(String activity_type, Color box_color, Color text_color) {
     return Container(
-      height: 150,
+      height: 135,
       width: 100,
       child: Align(
         alignment: Alignment.center,
@@ -81,54 +81,92 @@ class _DashboardState extends State<DashboardBody> {
         floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
       body: Container(
         margin: EdgeInsets.symmetric(vertical: 20.0),
-        padding: EdgeInsets.symmetric(vertical: 100.0, horizontal: 25.0),
-        child: SingleChildScrollView(
-          scrollDirection: Axis.horizontal,
-          child: Row(
-            children: <Widget>[
-              Activities("Deep Breathing", primary, pureWhite),
-              SizedBox(width: 10),
-              Activities("Walk", primary, pureWhite),
-              SizedBox(width: 10),
-              Activities("Meditate", primary, pureWhite),
-              SizedBox(width: 10),
-              Activities("CBT", primary, pureWhite)
-
-            ],
-          ),
-          )
-        ),
-    );
-}
-}
-
-Card activitiesItem(String title, IconData icon) {
-  return Card(
-      elevation: 1.0,
-      margin: new EdgeInsets.all(8.0),
-      child: Container(
-        decoration: BoxDecoration(color: Color.fromRGBO(220, 220, 220, 1.0)),
-        child: new InkWell(
-          onTap: () {},
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.stretch,
-            mainAxisSize: MainAxisSize.min,
-            verticalDirection: VerticalDirection.down,
-            children: <Widget>[
-              SizedBox(height: 50.0),
-              Center(
-                  child: Icon(
-                    icon,
-                    size: 40.0,
-                    color: Colors.black,
-                  )),
-              SizedBox(height: 20.0),
-              new Center(
-                child: new Text(title,
-                    style: new TextStyle(fontSize: 18.0, color: Colors.black)),
+        padding: EdgeInsets.symmetric(vertical: 25.0, horizontal: 25.0),
+        child: Column(
+          children: <Widget>[
+          Align(
+            alignment: Alignment.topLeft,
+            child:Text(
+            "Activities",
+              style: TextStyle(
+                color: secondary,
+                fontSize: 35,
+                fontWeight: FontWeight.bold,
               )
-            ],
+            ),
           ),
-        ),
-      ));
+            SingleChildScrollView(
+              scrollDirection: Axis.horizontal,
+                child: Row(
+                    children: <Widget>[
+
+                      Activities("Deep Breathing", primary, pureWhite),
+                      SizedBox(width: 10),
+                      Activities("Walk", primary, pureWhite),
+                      SizedBox(width: 10),
+                      Activities("Meditate", primary, pureWhite),
+                      SizedBox(width: 10),
+                      Activities("CBT", primary, pureWhite)
+                    ]
+                ),
+            ),
+            SizedBox(height: 30),
+            Align(
+              alignment: Alignment.topLeft,
+              child: Text(
+                  "Resources",
+                  textAlign: TextAlign.left,
+                  style: TextStyle(
+                    color: secondary,
+                    fontSize: 35,
+                    fontWeight: FontWeight.bold,
+                  )
+              ),
+            ),
+            SingleChildScrollView(
+              scrollDirection: Axis.horizontal,
+              child: Row(
+                  children: <Widget>[
+
+                    Activities("Call 911", quarternary, primary),
+                    SizedBox(width: 10),
+                    Activities("Contact a Friend", quarternary, primary),
+                    SizedBox(width: 10),
+                    Activities("Emergency Contact", quarternary, primary),
+                    SizedBox(width: 10),
+                    Activities("Contact a Professional", quarternary, primary)
+                  ]
+              ),
+            ),
+            SizedBox(height: 30),
+            Align(
+              alignment: Alignment.topLeft,
+              child: RichText(
+                text: TextSpan(
+                  children: [
+                    TextSpan(
+                        text: "View Today's Data ",
+                        style: TextStyle(
+                          color: secondary,
+                          fontSize: 20,
+                          fontWeight: FontWeight.bold,
+                        )
+                    ),
+                    WidgetSpan(
+                      child: Icon(Icons.arrow_right_alt_sharp, size: 20, color: secondary),
+                    ),
+                  ],
+                ),
+              )
+
+            )
+
+          ]
+
+        )
+
+
+          ),
+          );
+}
 }
