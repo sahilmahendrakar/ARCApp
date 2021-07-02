@@ -1,6 +1,6 @@
 import 'package:arc_app/size_config.dart';
 import 'package:flutter/material.dart';
-//import 'CBTSituation.dart';
+import 'package:arc_app/screens/CBT/cbt_situation.dart';
 import 'package:arc_app/constants.dart';
 
 class CBTEmotions extends StatelessWidget {
@@ -215,8 +215,8 @@ class _EmotionBodyState extends State<EmotionBody> {
                   return;
                 }
 
-                //Navigator.push(context,
-                //MaterialPageRoute(builder: (context) => CBTSituation()));
+                Navigator.push(context,
+                MaterialPageRoute(builder: (context) => CBTSituation()));
               },
               color: tertiary)
         ])
