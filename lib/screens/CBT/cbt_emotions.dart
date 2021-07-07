@@ -105,7 +105,7 @@ class _EmotionBodyState extends State<EmotionBody> {
       sliders.add(Column(children: [
         Container(
           alignment: Alignment(-1, 0),
-          padding: EdgeInsets.only(left: getProportionateScreenWidth(16)),
+          padding: EdgeInsets.only(left: getProportionateScreenWidth(0)),
           child: Text(
             sliderText(e),
             style: TextStyle(
@@ -117,7 +117,7 @@ class _EmotionBodyState extends State<EmotionBody> {
         ),
         Container(
             padding: EdgeInsets.fromLTRB(
-                getProportionateScreenWidth(16),
+                getProportionateScreenWidth(0),
                 0,
                 getProportionateScreenWidth(16),
                 getProportionateScreenHeight(8)),

@@ -3,111 +3,163 @@ import 'package:flutter/material.dart';
 //import 'CBTDistortions.dart';
 import 'package:arc_app/constants.dart';
 
-class CBTEmotions extends StatelessWidget {
-  CBTEmotions({Key? key}) : super(key: key);
+class CBTThoughts extends StatelessWidget {
+  CBTThoughts({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(body: EmotionBody());
+    return Scaffold(body: ThoughtsBody());
   }
 }
 
-class EmotionBody extends StatefulWidget {
-  const EmotionBody({Key? key}) : super(key: key);
+class ThoughtsBody extends StatefulWidget {
+  const ThoughtsBody({Key? key}) : super(key: key);
 
   @override
-  _EmotionBodyState createState() => _EmotionBodyState();
+  _ThoughtsBodyState createState() => _ThoughtsBodyState();
 }
 
-class _EmotionBodyState extends State<EmotionBody> {
-  final List<String> emotionNames = [
-    'Fear',
-    'Sadness',
-    'Anger',
-    'Guilt',
-    'Irritation',
-    'Disgust',
-    'Embarrassment',
-    'Other:    '
-  ];
+class _ThoughtsBodyState extends State<ThoughtsBody> {
+  final formKey = GlobalKey<FormState>();
+
   String error = '';
-  Set<Emotion> checkedEmotions = {};
-  Set<Emotion> emotions = {};
-  final TextEditingController otherController = TextEditingController();
-
-  _EmotionBodyState() {
-    for (String name in emotionNames) emotions.add(Emotion(name));
-  }
+  List<Thought> thoughts = [Thought()];
 
   @override
   Widget build(BuildContext context) {
-    return SafeArea(
-        child: Stack(children: [
-          Container(
-            padding: EdgeInsets.symmetric(
-                horizontal: getProportionateScreenWidth(16),
-                vertical: getProportionateScreenHeight(16)),
-            child: ListView(
-              children: [
-                Container(
-                    child: Text(
-                      'What unpleasant emotion(s) are you feeling?',
-                      style: TextStyle(
-                          fontSize: getProportionateScreenWidth(20),
-                          fontWeight: FontWeight.w600,
-                          color: darkestBlue),
-                      textAlign: TextAlign.center,
-                    ),
-                    padding: EdgeInsets.symmetric(
-                        vertical: getProportionateScreenHeight(0))),
-                Column(children: buildEmotions()),
-                Container(
-                  child: sliderInstructions(),
-                  padding: EdgeInsets.fromLTRB(0, getProportionateScreenHeight(32),
-                      0, getProportionateScreenHeight(16)),
-                ),
-                Column(children: buildSliders()),
-                Container(height: getProportionateScreenHeight(64))
-              ],
-              shrinkWrap: true,
-            ),
+    return Form(
+      key: formKey,
+      child: SafeArea(
+          child: Stack(children: [
+        Container(
+          padding: EdgeInsets.symmetric(
+              horizontal: getProportionateScreenWidth(16),
+              vertical: getProportionateScreenHeight(16)),
+          child: ListView(
+            children: [
+              Container(
+                  child: Text(
+                    'What thought(s) and/or image(s) went through your mind?',
+                    style: TextStyle(
+                        fontSize: getProportionateScreenWidth(20),
+                        fontWeight: FontWeight.w600,
+                        color: darkestBlue),
+                    textAlign: TextAlign.center,
+                  ),
+                  padding: EdgeInsets.symmetric(
+                      vertical: getProportionateScreenHeight(0))),
+              Column(children: buildThoughts()),
+              plusButton(),
+              Container(
+                child: sliderInstructions(),
+                padding: EdgeInsets.fromLTRB(
+                    0,
+                    getProportionateScreenHeight(16),
+                    0,
+                    getProportionateScreenHeight(16)),
+              ),
+              Column(children: buildSliders()),
+              Container(height: getProportionateScreenHeight(64))
+            ],
+            shrinkWrap: true,
           ),
-          navigationArrows(),
-        ]));
+        ),
+        navigationArrows(),
+      ])),
+    );
   }
 
-  List<Widget> buildEmotions() {
-    List<Widget> emotionCheckboxes = [];
-    for (Emotion e in emotions) {
-      emotionCheckboxes.add(CheckboxListTile(
-        title: checkboxText(e),
-        value: e.isChecked,
-        dense: true,
-        onChanged: (bool? value) {
-          setState(() {
-            e.isChecked = value!;
-            if (e.isChecked)
-              checkedEmotions.add(e);
-            else
-              checkedEmotions.remove(e);
-            error = '';
-            //updateSliders();
-          });
-        },
+  List<Widget> buildThoughts() {
+    if (thoughts.length == 1)
+      return [
+        Theme(
+          data: Theme.of(context).copyWith(
+              textSelectionTheme: TextSelectionThemeData(
+                  selectionColor: tertiary, selectionHandleColor: secondary)),
+          child: Container(
+            padding:
+                EdgeInsets.only(top: getProportionateScreenHeight(16)),
+            child: Column(
+              children: [
+                //Text('Thought', style: TextStyle(fontSize: getProportionateScreenWidth(16),color: primary,fontWeight: FontWeight.w600,)),
+                TextFormField(
+                  controller: thoughts[0].controller,
+                  decoration: InputDecoration(labelText: 'Thought 1', labelStyle: TextStyle(color: secondary,fontWeight: FontWeight.w600 ), hintText: 'Enter here...', hintStyle: TextStyle(color: tertiary)),
+                  validator: (value) {
+                    if (value == null || value.isEmpty)
+                      return 'Please enter a thought';
+                    return null;
+                  },
+                  enableInteractiveSelection: true,
+                  maxLines: null,
+                  onEditingComplete: () {
+                    setState(() {});
+                  },
+                  cursorColor: secondary,
+                  style: TextStyle(color: primary),
+          ),]
+            ),
+        )
+        )];
+
+    List<Widget> thoughtBoxes = [];
+    int ct = 1;
+    for (Thought t in thoughts) {
+      thoughtBoxes.add(Theme(
+        data: Theme.of(context).copyWith(
+            textSelectionTheme: TextSelectionThemeData(
+                selectionColor: tertiary, selectionHandleColor: secondary)),
+        child: Container(
+          padding:
+              EdgeInsets.only(top: getProportionateScreenHeight(16)),
+          child: Column(
+            children: [
+             // Text('Thought $ct', style: TextStyle(fontSize: getProportionateScreenWidth(16), color: primary,fontWeight: FontWeight.w600,)),
+              Row(children: [
+              Expanded(
+                child: TextFormField(
+                  controller: t.controller,
+                  decoration: InputDecoration(labelText: 'Thought $ct', labelStyle: TextStyle(color: secondary, fontWeight: FontWeight.w600), hintText: 'Enter here...', hintStyle: TextStyle(color: tertiary)),
+                  maxLines: null,
+                  onEditingComplete: () {
+                    setState(() {});
+                  },
+                  validator: (value) {
+                    if (value == null || value.isEmpty)
+                      return 'Please enter a thought (or remove box)';
+                    return null;
+                  },
+                  enableInteractiveSelection: true,
+                  cursorColor: secondary,
+                  style: TextStyle(color: primary),
+                ),
+              ),
+              IconButton(
+                  icon: Icon(Icons.remove_circle_outline),
+                  onPressed: () {
+                    thoughts.remove(t);
+                    setState(() {});
+                  },
+                  color: secondary)
+            ]),]
+          ),
+        ),
       ));
+      ct++;
     }
-    return emotionCheckboxes;
+    return thoughtBoxes;
   }
 
   List<Widget> buildSliders() {
     List<Widget> sliders = [];
-    for (Emotion e in checkedEmotions) {
+    int ct = 1;
+    for (Thought t in thoughts) {
       sliders.add(Column(children: [
         Container(
           alignment: Alignment(-1, 0),
-          padding: EdgeInsets.only(left: getProportionateScreenWidth(16)),
+          padding: EdgeInsets.only(left: getProportionateScreenWidth(0)),
           child: Text(
-            sliderText(e),
+            sliderText(t, ct++),
             style: TextStyle(
               fontSize: getProportionateScreenWidth(16),
               color: primary,
@@ -117,58 +169,21 @@ class _EmotionBodyState extends State<EmotionBody> {
         ),
         Container(
             padding: EdgeInsets.fromLTRB(
-                getProportionateScreenWidth(16),
+                getProportionateScreenWidth(0),
                 0,
                 getProportionateScreenWidth(16),
                 getProportionateScreenHeight(8)),
-            child: EmotionSlider(e)),
+            child: ThoughtSlider(t)),
       ]));
     }
 
     return sliders;
   }
 
-  Widget checkboxText(Emotion e) {
-    if (e.name == 'Other:    ')
-      return Row(children: [
-        Text('Other:    ',
-            style: TextStyle(
-                fontSize: getProportionateScreenWidth(15),
-                color: primary,
-                fontWeight: FontWeight.w600)),
-        Expanded(
-            child: Theme(
-              data: Theme.of(context).copyWith(
-                  textSelectionTheme: TextSelectionThemeData(
-                      selectionColor: tertiary, selectionHandleColor: secondary)),
-              child: TextField(
-                controller: otherController,
-                onTap: () {
-                  setState(() {
-                    e.isChecked = true;
-                    checkedEmotions.add(e);
-                  });
-                },
-                onChanged: (String value) {
-                  setState(() {});
-                },
-                enableInteractiveSelection: true,
-                cursorColor: secondary,
-                style: TextStyle(color: darkestBlue),
-              ),
-            ))
-      ]);
-    return Text(e.name,
-        style: TextStyle(
-            fontSize: getProportionateScreenWidth(15),
-            color: primary,
-            fontWeight: FontWeight.w600));
-  }
-
   Widget sliderInstructions() {
-    if (checkedEmotions.isEmpty) return Text('');
+    if (thoughts.isEmpty) return Text('');
     return Text(
-      'On a scale of 0-10, how intense is each emotion?',
+      'On a scale of 0-10, how much do you believe each thought?',
       style: TextStyle(
           fontSize: getProportionateScreenWidth(20),
           fontWeight: FontWeight.w600,
@@ -177,11 +192,9 @@ class _EmotionBodyState extends State<EmotionBody> {
     );
   }
 
-  String sliderText(Emotion e) {
-    if (e.name == 'Other:    ' && otherController.text != '')
-      return otherController.text;
-    else if (e.name == 'Other:    ') return 'Other';
-    return e.name;
+  String sliderText(Thought t, int num) {
+    if (t.controller.text == '') return 'Thought $num';
+    return t.controller.text;
   }
 
   Widget navigationArrows() {
@@ -210,57 +223,66 @@ class _EmotionBodyState extends State<EmotionBody> {
               icon: Icon(Icons.arrow_forward_ios),
               onPressed: () {
                 //potentially change to handle potential errors on this page, or use text form field for that
-                if (checkedEmotions.isEmpty) {
-                  error = 'Please select an emotion';
-                  setState(() {});
-                  return;
+                if (formKey.currentState!.validate()) {
+                  //Navigator.push(context,
+                  //MaterialPageRoute(builder: (context) => CBTDistortions(thoughts)));
                 }
-
-                //Navigator.push(context,
-                //MaterialPageRoute(builder: (context) => CBTDistortions()));
               },
               color: tertiary)
         ])
       ]),
     );
   }
+
+  Widget plusButton() {
+    return Row(children: [
+      Spacer(),
+      IconButton(
+        iconSize: 48,
+        onPressed: () {
+          thoughts.add(Thought());
+          setState(() {});
+        },
+        icon: Icon(Icons.add_circle),
+        color: secondary,
+      )
+    ]);
+  }
 }
 
-class Emotion {
-  String name;
-  bool isChecked = false;
-  double currentEmotionValue = 5;
-
-  Emotion(this.name);
+class Thought {
+  TextEditingController controller = TextEditingController();
+  double currentThoughtValue = 5;
 }
 
-class EmotionSlider extends StatefulWidget {
-  final Emotion e;
-  EmotionSlider(this.e, {Key? key}) : super(key: key);
+class ThoughtSlider extends StatefulWidget {
+  final Thought t;
+  ThoughtSlider(this.t, {Key? key}) : super(key: key);
 
   @override
-  State<StatefulWidget> createState() => _EmotionSliderState(e);
+  State<StatefulWidget> createState() => _ThoughtSliderState(t);
 }
 
-class _EmotionSliderState extends State<EmotionSlider> {
-  Emotion e;
-  _EmotionSliderState(this.e);
+class _ThoughtSliderState extends State<ThoughtSlider> {
+  Thought t;
+  _ThoughtSliderState(this.t);
 
   @override
   Widget build(BuildContext context) {
     return Slider(
       onChanged: (double value) {
         setState(() {
-          e.currentEmotionValue = value;
+          t.currentThoughtValue = value;
         });
       },
-      value: e.currentEmotionValue,
+      value: t.currentThoughtValue,
       min: 0,
       max: 10,
       divisions: 10,
-      label: e.currentEmotionValue.round().toString(),
+      label: t.currentThoughtValue.round().toString(),
       activeColor: secondary,
       inactiveColor: Colors.grey[350],
     );
   }
 }
+

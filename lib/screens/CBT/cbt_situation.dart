@@ -2,6 +2,7 @@
 import 'package:flutter/material.dart';
 import 'package:arc_app/constants.dart';
 import '../../size_config.dart';
+import 'cbt_thoughts.dart';
 
 class CBTSituation extends StatelessWidget {
   CBTSituation({Key? key}) : super(key: key);
@@ -10,38 +11,6 @@ class CBTSituation extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       body: SensationBody(),
-      bottomNavigationBar: BottomNavigationBar(
-        items: [
-          BottomNavigationBarItem(
-              icon: Padding(
-                padding:
-                    EdgeInsets.only(right: getProportionateScreenWidth(100)),
-                child: IconButton(
-                  icon: Icon(Icons.arrow_back),
-                  onPressed: () {
-                    Navigator.pop(context);
-                  },
-                ),
-              ),
-              label: ""),
-          BottomNavigationBarItem(
-              icon: Padding(
-                padding:
-                    EdgeInsets.only(left: getProportionateScreenWidth(100)),
-                child: IconButton(
-                  icon: Icon(Icons.arrow_forward),
-                  onPressed: () {
-                  //  Navigator.push(
-                  //      context,
-                  //     MaterialPageRoute(builder: (context) => CBTSituation()));
-                  },
-                ),
-              ),
-              label: "")
-        ],
-        backgroundColor: Colors.transparent,
-        elevation: 0,
-      ),
     );
   }
 }
@@ -78,56 +47,59 @@ class _SensationBody extends State<SensationBody>{
         @override
         Widget build(BuildContext context){
            return SafeArea(
-               child:Container (
-                   alignment:Alignment(0,-0.5),
-                   padding:EdgeInsets.all(16),
-                   child:ListView(children: [
-                       new Container(
-                                      child: Text('What event,daydream, or recollection led to the unpleasant emotion?',
-                                                         style: TextStyle( fontSize: getProportionateScreenWidth(18),
-                                                                           fontWeight: FontWeight.w600,
-                                                                           color: darkestBlue)),),
-                       SizedBox(height: 10),
-                       new Container(
-                                      child: Padding(
-                                        padding:EdgeInsets.all(3.0),
+               child:Stack(
+                 children: [Container (
+                     alignment:Alignment(0,-0.5),
+                     padding:EdgeInsets.all(16),
+                     child:ListView(children: [
+                         new Container(
+                                        child: Text('What event,daydream, or recollection led to the unpleasant emotion?',
+                                                           style: TextStyle( fontSize: getProportionateScreenWidth(18),
+                                                                             fontWeight: FontWeight.w600,
+                                                                             color: darkestBlue)),),
+                         SizedBox(height: 10),
+                         new Container(
+                                        child: Padding(
+                                          padding:EdgeInsets.all(3.0),
 
-                                        child:TextField(
-                                           textAlignVertical:TextAlignVertical.top,
-                                           
-                                           decoration:InputDecoration(
-                                            border:InputBorder.none,
-                                            focusedBorder: OutlineInputBorder(
-                                              borderSide:BorderSide(color:darkestBlue, width:3),
-                                            ),
-                                            enabledBorder:OutlineInputBorder(
+                                          child:TextField(
+                                             textAlignVertical:TextAlignVertical.top,
 
-                                             borderSide:const BorderSide(color:darkestBlue,width:3),),
-                                             //contentPadding:EdgeInsets.only(left:0, top:0),
-                                             hintText:'Please enter here...',
+                                             decoration:InputDecoration(
+                                              border:InputBorder.none,
+                                              focusedBorder: OutlineInputBorder(
+                                                borderSide:BorderSide(color:darkestBlue, width:3),
+                                              ),
+                                              enabledBorder:OutlineInputBorder(
 
-                                             contentPadding: EdgeInsets.symmetric(vertical: 70.0),
+                                               borderSide:const BorderSide(color:darkestBlue,width:3),),
+                                               //contentPadding:EdgeInsets.only(left:0, top:0),
+                                               hintText:'Please enter here...',
 
-                                             ),)
+                                               contentPadding: EdgeInsets.symmetric(vertical: 70.0),
+
+                                               ),)
 
 
-                                        ),
-                                        ),
-                       SizedBox(height: 20),
-                       Container(
-                                    child: Text(
-                                      'What (if any) distressing physical sensations did you have?',
-                                      style: TextStyle(
-                                          fontSize: getProportionateScreenWidth(18),
-                                          fontWeight: FontWeight.w600,
-                                          color: darkestBlue),
-                                    ),
-                                    padding: EdgeInsets.symmetric(
-                                        vertical: getProportionateScreenHeight(0))),
-                      Column( children: buildSensations()
-                      ),
+                                          ),
+                                          ),
+                         SizedBox(height: 20),
+                         Container(
+                                      child: Text(
+                                        'What (if any) distressing physical sensations did you have?',
+                                        style: TextStyle(
+                                            fontSize: getProportionateScreenWidth(18),
+                                            fontWeight: FontWeight.w600,
+                                            color: darkestBlue),
+                                      ),
+                                      padding: EdgeInsets.symmetric(
+                                          vertical: getProportionateScreenHeight(0))),
+                        Column( children: buildSensations()
+                        ),
 
-                   ]),
+                     ]),
+                 ),
+                 navigationArrows()]
                ),
          );
         }
@@ -188,6 +160,40 @@ class _SensationBody extends State<SensationBody>{
                     color: primary,
                     fontWeight: FontWeight.w600));
           }
+
+       Widget navigationArrows() {
+         return Container(
+           padding: EdgeInsets.symmetric(
+               horizontal: getProportionateScreenWidth(8),
+               vertical: getProportionateScreenHeight(8)),
+           child: Column(children: [
+             Spacer(),
+             Row(children: [
+               IconButton(
+                   iconSize: 36,
+                   icon: Icon(Icons.arrow_back_ios),
+                   onPressed: () {
+                     Navigator.pop(context);
+                   },
+                   color: tertiary),
+               Expanded(
+                   child: Text('',
+                       textAlign: TextAlign.center,
+                       style: TextStyle(
+                           fontSize: getProportionateScreenWidth(14),
+                           color: Colors.red))),
+               IconButton(
+                   iconSize: 36,
+                   icon: Icon(Icons.arrow_forward_ios),
+                   onPressed: () {
+                     Navigator.push(context,
+                         MaterialPageRoute(builder: (context) => CBTThoughts()));
+                   },
+                   color: tertiary)
+             ])
+           ]),
+         );
+       }
 }
 
 class Sensation {
