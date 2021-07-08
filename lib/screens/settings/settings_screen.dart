@@ -15,9 +15,13 @@ class SettingsScreen extends StatefulWidget {
   _SettingsScreenState createState() => _SettingsScreenState();
 }
 
+//TODO: Use future builder while loading data
 class _SettingsScreenState extends State<SettingsScreen> {
   bool doNotDisturb = false;
   String studyId = '0';
+  String emergencyContact = "None";
+  String trustedSupport = "None";
+
   final fb = FirebaseDatabase.instance;
 
   @override
@@ -26,9 +30,25 @@ class _SettingsScreenState extends State<SettingsScreen> {
     final ref = fb.reference();
     User user = FirebaseAuth.instance.currentUser!;
     ref.child(user.uid).child("study-id").once().then((data) {
-      setState(() {
-        studyId = data.value;
-      });
+      if (data.value != null) {
+        setState(() {
+          studyId = data.value;
+        });
+      }
+    });
+    ref.child(user.uid).child("emergency-contact").once().then((data) {
+      if (data.value != null) {
+        setState(() {
+          emergencyContact = data.value;
+        });
+      }
+    });
+    ref.child(user.uid).child("trusted-support").once().then((data) {
+      if (data.value != null) {
+        setState(() {
+          trustedSupport = data.value;
+        });
+      }
     });
   }
 
@@ -84,24 +104,30 @@ class _SettingsScreenState extends State<SettingsScreen> {
                     tiles: [
                       SettingsTile(
                         title: 'Emergency Contact',
-                        subtitle: '123-456-7890',
+                        subtitle: emergencyContact,
                       ),
                       SettingsTile(
                         title: 'Trusted Support',
-                        subtitle: '123-456-7890',
+                        subtitle: trustedSupport,
                       ),
                     ],
                   ),
                   CustomSection(
                       child: Padding(
-                        padding: EdgeInsets.all(getProportionateScreenHeight(20)),
-                        child: Center(
-                    child: ElevatedButton(
+                    padding: EdgeInsets.all(getProportionateScreenHeight(20)),
+                    child: Center(
+                      child: ElevatedButton(
                         style: TextButton.styleFrom(
-                          backgroundColor: primary,
-                            primary: Colors.white, shape: StadiumBorder()),
-                        child: Padding(padding: EdgeInsets.fromLTRB(getProportionateScreenWidth(20), getProportionateScreenHeight(10), getProportionateScreenHeight(20), getProportionateScreenWidth(10)),
-                        child: Text("Sign Out")),
+                            backgroundColor: primary,
+                            primary: Colors.white,
+                            shape: StadiumBorder()),
+                        child: Padding(
+                            padding: EdgeInsets.fromLTRB(
+                                getProportionateScreenWidth(20),
+                                getProportionateScreenHeight(10),
+                                getProportionateScreenHeight(20),
+                                getProportionateScreenWidth(10)),
+                            child: Text("Sign Out")),
                         onPressed: () {
                           context
                               .read<AuthenticationService>()
@@ -110,9 +136,9 @@ class _SettingsScreenState extends State<SettingsScreen> {
                             Navigator.pop(context);
                           });
                         },
+                      ),
                     ),
-                  ),
-                      ))
+                  ))
                 ],
               ),
             ),
