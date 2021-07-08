@@ -1,25 +1,32 @@
+//import 'package:arc_app/screens/Dashboard/dashboard_screen.dart';
 import 'package:arc_app/size_config.dart';
 import 'package:flutter/material.dart';
-import 'package:arc_app/screens/CBT/cbt_situation.dart';
 import 'package:arc_app/constants.dart';
+import 'package:arc_app/screens/CBT/cbt_thoughts.dart';
+import 'package:arc_app/screens/CBT/cbt_emotions.dart';
 
-class CBTEmotions extends StatelessWidget {
-  CBTEmotions({Key? key}) : super(key: key);
+class CBTOutcome extends StatelessWidget {
+  final List<String> thoughts;
+  CBTOutcome(this.thoughts, {Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(body: EmotionBody());
+    return Scaffold(body: OutcomeBody(thoughts));
   }
 }
 
-class EmotionBody extends StatefulWidget {
-  const EmotionBody({Key? key}) : super(key: key);
+class OutcomeBody extends StatefulWidget {
+  final List<String> thoughts;
+
+  const OutcomeBody(this.thoughts, {Key? key}) : super(key: key);
 
   @override
-  _EmotionBodyState createState() => _EmotionBodyState();
+  _OutcomeBodyState createState() => _OutcomeBodyState(thoughts);
 }
 
-class _EmotionBodyState extends State<EmotionBody> {
+class _OutcomeBodyState extends State<OutcomeBody> {
+  final List<String> thoughtText;
+   final List<Thought> thoughts = [];
   final List<String> emotionNames = [
     'Fear',
     'Sadness',
@@ -35,8 +42,9 @@ class _EmotionBodyState extends State<EmotionBody> {
   Set<Emotion> emotions = {};
   final TextEditingController otherController = TextEditingController();
 
-  _EmotionBodyState() {
+  _OutcomeBodyState(this.thoughtText) {
     for (String name in emotionNames) emotions.add(Emotion(name));
+    for (String t in thoughtText) thoughts.add(Thought(t));
   }
 
   @override
@@ -49,14 +57,30 @@ class _EmotionBodyState extends State<EmotionBody> {
             vertical: getProportionateScreenHeight(16)),
         child: ListView(
           children: [
-            Text(
-                  'What unpleasant emotion(s) are you feeling?',
+            Container(
+              child: Text(
+                'On a scale of 0-10, how much do you now believe each thought?',
+                style: TextStyle(
+                    fontSize: getProportionateScreenWidth(20),
+                    fontWeight: FontWeight.w600,
+                    color: darkestBlue),
+                textAlign: TextAlign.center,
+              ),
+              padding: EdgeInsets.fromLTRB(0, getProportionateScreenHeight(16),
+                  0, getProportionateScreenHeight(16)),
+            ),
+            Column(children: buildThoughtSliders()),
+            Container(
+                child: Text(
+                  'What emotion(s) do you feel now?',
                   style: TextStyle(
                       fontSize: getProportionateScreenWidth(20),
                       fontWeight: FontWeight.w600,
                       color: darkestBlue),
                   textAlign: TextAlign.center,
                 ),
+                padding:
+                    EdgeInsets.only(top: getProportionateScreenHeight(16))),
             Column(children: buildEmotions()),
             Container(
               padding: EdgeInsets.only(top: getProportionateScreenHeight(8)),
@@ -71,8 +95,32 @@ class _EmotionBodyState extends State<EmotionBody> {
               padding: EdgeInsets.fromLTRB(0, getProportionateScreenHeight(8),
                   0, getProportionateScreenHeight(16)),
             ),
-            Column(children: buildSliders()),
-            Container(height: getProportionateScreenHeight(64))
+            Column(children: buildEmotionSliders()),
+            Container(height: getProportionateScreenHeight(64)),
+            Padding(
+              padding: EdgeInsets.symmetric(
+                  horizontal: getProportionateScreenWidth(100)),
+              child: ElevatedButton(
+                onPressed: () {
+                  if (checkedEmotions.isEmpty) {
+                    error = 'Please select an emotion';
+                    setState(() {});
+                    return;
+                  }
+                  //Navigator.popUntil(context,ModalRoute.withName(Dashboard.routeName));
+                },
+                child: Text(
+                  'FINISH',
+                  style: TextStyle(fontSize: getProportionateScreenWidth(20.0)),
+                ),
+                style: TextButton.styleFrom(
+                    primary: pureWhite,
+                    backgroundColor: darkestBlue,
+                    shape: StadiumBorder(),
+                    minimumSize: Size(getProportionateScreenWidth(150),
+                        getProportionateScreenHeight(50))),
+              ),
+            ),
           ],
           shrinkWrap: true,
         ),
@@ -103,7 +151,7 @@ class _EmotionBodyState extends State<EmotionBody> {
     return emotionCheckboxes;
   }
 
-  List<Widget> buildSliders() {
+  List<Widget> buildEmotionSliders() {
     List<Widget> sliders = [];
     for (Emotion e in checkedEmotions) {
       sliders.add(Column(children: [
@@ -122,10 +170,39 @@ class _EmotionBodyState extends State<EmotionBody> {
         Container(
             padding: EdgeInsets.fromLTRB(
                 getProportionateScreenWidth(0),
-                0,
+                getProportionateScreenHeight(0),
                 getProportionateScreenWidth(16),
                 getProportionateScreenHeight(8)),
             child: EmotionSlider(e)),
+      ]));
+    }
+
+    return sliders;
+  }
+
+  List<Widget> buildThoughtSliders() {
+    List<Widget> sliders = [];
+    for (Thought t in thoughts) {
+      sliders.add(Column(children: [
+        Container(
+          alignment: Alignment(-1, 0),
+          padding: EdgeInsets.only(left: getProportionateScreenWidth(0)),
+          child: Text(
+            t.thought!,
+            style: TextStyle(
+              fontSize: getProportionateScreenWidth(16),
+              color: primary,
+              fontWeight: FontWeight.bold,
+            ),
+          ),
+        ),
+        Container(
+            padding: EdgeInsets.fromLTRB(
+                getProportionateScreenWidth(0),
+                0,
+                getProportionateScreenWidth(16),
+                getProportionateScreenHeight(8)),
+            child: ThoughtSlider(t)),
       ]));
     }
 
@@ -203,62 +280,8 @@ class _EmotionBodyState extends State<EmotionBody> {
                 Navigator.pop(context);
               },
               color: tertiary),
-          Spacer(),
-          IconButton(
-              iconSize: getProportionateScreenHeight(36),
-              icon: Icon(Icons.arrow_forward_ios),
-              onPressed: () {
-                if (checkedEmotions.isEmpty) {
-                  error = 'Please select an emotion';
-                  setState(() {});
-                  return;
-                }
-
-                Navigator.push(context,
-                MaterialPageRoute(builder: (context) => CBTSituation()));
-              },
-              color: tertiary)
         ])
       ]),
-    );
-  }
-}
-
-class Emotion {
-  String name;
-  bool isChecked = false;
-  double currentEmotionValue = 5;
-
-  Emotion(this.name);
-}
-
-class EmotionSlider extends StatefulWidget {
-  final Emotion e;
-  EmotionSlider(this.e, {Key? key}) : super(key: key);
-
-  @override
-  State<StatefulWidget> createState() => _EmotionSliderState(e);
-}
-
-class _EmotionSliderState extends State<EmotionSlider> {
-  Emotion e;
-  _EmotionSliderState(this.e);
-
-  @override
-  Widget build(BuildContext context) {
-    return Slider(
-      onChanged: (double value) {
-        setState(() {
-          e.currentEmotionValue = value;
-        });
-      },
-      value: e.currentEmotionValue,
-      min: 0,
-      max: 10,
-      divisions: 10,
-      label: e.currentEmotionValue.round().toString(),
-      activeColor: secondary,
-      inactiveColor: Colors.grey[350],
     );
   }
 }

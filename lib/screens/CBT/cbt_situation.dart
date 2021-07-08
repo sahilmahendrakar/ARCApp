@@ -170,20 +170,15 @@ class _SensationBody extends State<SensationBody>{
              Spacer(),
              Row(children: [
                IconButton(
-                   iconSize: 36,
+                   iconSize: getProportionateScreenHeight(36),
                    icon: Icon(Icons.arrow_back_ios),
                    onPressed: () {
                      Navigator.pop(context);
                    },
                    color: tertiary),
-               Expanded(
-                   child: Text('',
-                       textAlign: TextAlign.center,
-                       style: TextStyle(
-                           fontSize: getProportionateScreenWidth(14),
-                           color: Colors.red))),
+               Spacer(),
                IconButton(
-                   iconSize: 36,
+                   iconSize: getProportionateScreenHeight(36),
                    icon: Icon(Icons.arrow_forward_ios),
                    onPressed: () {
                      Navigator.push(context,

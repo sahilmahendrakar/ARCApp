@@ -1,11 +1,12 @@
 import 'package:arc_app/size_config.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-//import 'CBTOutcome.dart';
 import 'package:arc_app/constants.dart';
+import 'cbt_outcome.dart';
 import 'cbt_thoughts.dart';
 
 class CBTResponse extends StatelessWidget {
-  final List<Thought> thoughts;
+  final List<String> thoughts;
   CBTResponse(this.thoughts, {Key? key}) : super(key: key);
 
   @override
@@ -15,7 +16,7 @@ class CBTResponse extends StatelessWidget {
 }
 
 class ResponseBody extends StatefulWidget {
-  final List<Thought> thoughts;
+  final List<String> thoughts;
 
   const ResponseBody(this.thoughts, {Key? key}) : super(key: key);
 
@@ -25,11 +26,12 @@ class ResponseBody extends StatefulWidget {
 
 class _ResponseBodyState extends State<ResponseBody> {
   final formKey = GlobalKey<FormState>();
-  final List<Thought> thoughts;
+  final List<String> thoughts;
   final List<Thought> responses = [];
+  bool open = false;
 
   _ResponseBodyState(this.thoughts) {
-    for (Thought t in thoughts) responses.add(Thought());
+    for (String t in thoughts) responses.add(Thought(t));
   }
 
   @override
@@ -55,6 +57,7 @@ class _ResponseBodyState extends State<ResponseBody> {
                   ),
                   padding: EdgeInsets.symmetric(
                       vertical: getProportionateScreenHeight(0))),
+              guidingQuestions(),
               Column(children: buildThoughts()),
               Container(
                 child: sliderInstructions(),
@@ -75,9 +78,61 @@ class _ResponseBodyState extends State<ResponseBody> {
     );
   }
 
+  Widget guidingQuestions() {
+    if (open) {
+      return Column(children: [
+        SizedBox(
+          height: getProportionateScreenHeight(30),
+          child: Row(crossAxisAlignment: CrossAxisAlignment.end, children: [
+            Text('Questions to help guide your response(s)',
+                style: TextStyle(
+                    color: Colors.grey,
+                    fontSize: getProportionateScreenWidth(14),
+                    fontWeight: FontWeight.w600)),
+            IconButton(
+                color: Colors.grey,
+                iconSize: (getProportionateScreenHeight(24)),
+                onPressed: () {
+                  open = false;
+                  setState(() {});
+                },
+                icon: Icon(Icons.remove))
+          ]),
+        ),
+        Container(
+          alignment: Alignment(-1, 0),
+          padding: EdgeInsets.only(left: getProportionateScreenWidth(16)),
+          child: Text(
+              '• Insert question here?\n'
+              '• Insert another question here?\n'
+              '• More questions here?',
+              style: TextStyle(
+                  color: Colors.grey,
+                  fontSize: getProportionateScreenWidth(14))),
+        )
+      ]);
+    }
+    return SizedBox(
+        height: getProportionateScreenHeight(30),
+        child: Row(crossAxisAlignment: CrossAxisAlignment.end, children: [
+          Text('Questions to help guide your response(s)',
+              style: TextStyle(
+                  color: Colors.grey,
+                  fontSize: getProportionateScreenWidth(14),
+                  fontWeight: FontWeight.w600)),
+          IconButton(
+              color: Colors.grey,
+              iconSize: (getProportionateScreenHeight(24)),
+              onPressed: () {
+                open = true;
+                setState(() {});
+              },
+              icon: Icon(Icons.add_circle))
+        ]));
+  }
+
   List<Widget> buildThoughts() {
     List<Widget> responseBoxes = [];
-    int ct = 0;
     for (Thought r in responses) {
       responseBoxes.add(Theme(
         data: Theme.of(context).copyWith(
@@ -88,7 +143,7 @@ class _ResponseBodyState extends State<ResponseBody> {
           child: Column(children: [
             Container(
                 alignment: Alignment(-1, 0),
-                child: Text(thoughts[ct++].controller.text,
+                child: Text(r.thought!,
                     style: TextStyle(
                       fontSize: getProportionateScreenWidth(16),
                       color: secondary,
@@ -175,26 +230,23 @@ class _ResponseBodyState extends State<ResponseBody> {
         Spacer(),
         Row(children: [
           IconButton(
-              iconSize: 36,
+              iconSize: getProportionateScreenHeight(36),
               icon: Icon(Icons.arrow_back_ios),
               onPressed: () {
                 Navigator.pop(context);
               },
               color: tertiary),
-          Expanded(
-              child: Text('',
-                  textAlign: TextAlign.center,
-                  style: TextStyle(
-                      fontSize: getProportionateScreenWidth(14),
-                      color: Colors.red))),
+          Spacer(),
           IconButton(
-              iconSize: 36,
+              iconSize: getProportionateScreenHeight(36),
               icon: Icon(Icons.arrow_forward_ios),
               onPressed: () {
                 //potentially change to handle potential errors on this page, or use text form field for that
                 if (formKey.currentState!.validate()) {
-                  //Navigator.push(context,
-                  //MaterialPageRoute(builder: (context) => CBTOutcome()));
+                  Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => CBTOutcome(thoughts)));
                 }
               },
               color: tertiary)

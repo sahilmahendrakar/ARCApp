@@ -73,18 +73,21 @@ class _ThoughtsBodyState extends State<ThoughtsBody> {
     if (thoughts.length == 1)
       return [
         Theme(
-          data: Theme.of(context).copyWith(
-              textSelectionTheme: TextSelectionThemeData(
-                  selectionColor: tertiary, selectionHandleColor: secondary)),
-          child: Container(
-            padding:
-                EdgeInsets.only(top: getProportionateScreenHeight(16)),
-            child: Column(
-              children: [
+            data: Theme.of(context).copyWith(
+                textSelectionTheme: TextSelectionThemeData(
+                    selectionColor: tertiary, selectionHandleColor: secondary)),
+            child: Container(
+              padding: EdgeInsets.only(top: getProportionateScreenHeight(16)),
+              child: Column(children: [
                 //Text('Thought', style: TextStyle(fontSize: getProportionateScreenWidth(16),color: primary,fontWeight: FontWeight.w600,)),
                 TextFormField(
                   controller: thoughts[0].controller,
-                  decoration: InputDecoration(labelText: 'Thought 1', labelStyle: TextStyle(color: secondary,fontWeight: FontWeight.w600 ), hintText: 'Enter here...', hintStyle: TextStyle(color: tertiary)),
+                  decoration: InputDecoration(
+                      labelText: 'Thought 1',
+                      labelStyle: TextStyle(
+                          color: secondary, fontWeight: FontWeight.w600),
+                      hintText: 'Enter here...',
+                      hintStyle: TextStyle(color: tertiary)),
                   validator: (value) {
                     if (value == null || value.isEmpty)
                       return 'Please enter a thought';
@@ -97,10 +100,10 @@ class _ThoughtsBodyState extends State<ThoughtsBody> {
                   },
                   cursorColor: secondary,
                   style: TextStyle(color: primary),
-          ),]
-            ),
-        )
-        )];
+                ),
+              ]),
+            ))
+      ];
 
     List<Widget> thoughtBoxes = [];
     int ct = 1;
@@ -110,16 +113,18 @@ class _ThoughtsBodyState extends State<ThoughtsBody> {
             textSelectionTheme: TextSelectionThemeData(
                 selectionColor: tertiary, selectionHandleColor: secondary)),
         child: Container(
-          padding:
-              EdgeInsets.only(top: getProportionateScreenHeight(16)),
-          child: Column(
-            children: [
-             // Text('Thought $ct', style: TextStyle(fontSize: getProportionateScreenWidth(16), color: primary,fontWeight: FontWeight.w600,)),
-              Row(children: [
+          padding: EdgeInsets.only(top: getProportionateScreenHeight(16)),
+          child: Column(children: [
+            Row(children: [
               Expanded(
                 child: TextFormField(
                   controller: t.controller,
-                  decoration: InputDecoration(labelText: 'Thought $ct', labelStyle: TextStyle(color: secondary, fontWeight: FontWeight.w600), hintText: 'Enter here...', hintStyle: TextStyle(color: tertiary)),
+                  decoration: InputDecoration(
+                      labelText: 'Thought $ct',
+                      labelStyle: TextStyle(
+                          color: secondary, fontWeight: FontWeight.w600),
+                      hintText: 'Enter here...',
+                      hintStyle: TextStyle(color: tertiary)),
                   maxLines: null,
                   onEditingComplete: () {
                     setState(() {});
@@ -135,14 +140,15 @@ class _ThoughtsBodyState extends State<ThoughtsBody> {
                 ),
               ),
               IconButton(
+                  iconSize: getProportionateScreenHeight(24),
                   icon: Icon(Icons.remove_circle_outline),
                   onPressed: () {
                     thoughts.remove(t);
                     setState(() {});
                   },
                   color: secondary)
-            ]),]
-          ),
+            ]),
+          ]),
         ),
       ));
       ct++;
@@ -206,26 +212,30 @@ class _ThoughtsBodyState extends State<ThoughtsBody> {
         Spacer(),
         Row(children: [
           IconButton(
-              iconSize: 36,
+              iconSize: getProportionateScreenHeight(36),
               icon: Icon(Icons.arrow_back_ios),
               onPressed: () {
                 Navigator.pop(context);
               },
               color: tertiary),
-          Expanded(
-              child: Text(error,
-                  textAlign: TextAlign.center,
-                  style: TextStyle(
-                      fontSize: getProportionateScreenWidth(14),
-                      color: Colors.red))),
+          Spacer(),
           IconButton(
-              iconSize: 36,
+              iconSize: getProportionateScreenHeight(36),
               icon: Icon(Icons.arrow_forward_ios),
               onPressed: () {
                 //potentially change to handle potential errors on this page, or use text form field for that
                 if (formKey.currentState!.validate()) {
-                  //Navigator.push(context,
-                  //MaterialPageRoute(builder: (context) => CBTDistortions(thoughts)));
+                 // Navigator.push(
+                    //  context,
+                      //MaterialPageRoute(
+                      //    builder: (context) {
+                     //       List<String> temp = [];
+                       //     for (Thought t in thoughts)
+                        //        temp.add(t.controller.text);
+                      //      return CBTDistortions(temp);
+                       //   }
+               // ))
+                  ;
                 }
               },
               color: tertiary)
@@ -238,7 +248,7 @@ class _ThoughtsBodyState extends State<ThoughtsBody> {
     return Row(children: [
       Spacer(),
       IconButton(
-        iconSize: 48,
+        iconSize: getProportionateScreenHeight(40),
         onPressed: () {
           thoughts.add(Thought());
           setState(() {});
@@ -251,8 +261,10 @@ class _ThoughtsBodyState extends State<ThoughtsBody> {
 }
 
 class Thought {
+  Thought([this.thought]);
   TextEditingController controller = TextEditingController();
   double currentThoughtValue = 5;
+  String? thought;
 }
 
 class ThoughtSlider extends StatefulWidget {
@@ -285,4 +297,3 @@ class _ThoughtSliderState extends State<ThoughtSlider> {
     );
   }
 }
-

@@ -55,7 +55,7 @@ class CBTStartScreen extends StatelessWidget {
                   backgroundColor: pureWhite,
                   shape: StadiumBorder(),
                   fixedSize: Size(
-                      getProportionateScreenWidth(150), getProportionateScreenHeight(50)),),
+                      getProportionateScreenWidth(150), getProportionateScreenHeight(50))),
             ),
             Container(
               padding: EdgeInsets.only(top: getProportionateScreenHeight(16)),
