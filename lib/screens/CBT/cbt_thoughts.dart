@@ -1,6 +1,7 @@
 import 'package:arc_app/size_config.dart';
 import 'package:flutter/material.dart';
-import 'package:arc_app/screens/CBT/cbt_distortions2.dart';
+//import 'CBTDistortions.dart';
+import 'package:arc_app/screens/CBT/cbt_thoughtdistortions.dart';
 import 'package:arc_app/constants.dart';
 
 class CBTThoughts extends StatelessWidget {
@@ -225,11 +226,17 @@ class _ThoughtsBodyState extends State<ThoughtsBody> {
               onPressed: () {
                 //potentially change to handle potential errors on this page, or use text form field for that
                 if (formKey.currentState!.validate()) {
-                  Navigator.push(context, MaterialPageRoute(builder: (context) {
-                    List<String> temp = [];
-                    for (Thought t in thoughts) temp.add(t.controller.text);
-                    return CBTDistortions(temp);
-                  }));
+                 Navigator.push(
+                     context,
+                      MaterialPageRoute(
+                          builder: (context) {
+                           List<String> temp = [];
+                            for (Thought t in thoughts)
+                                temp.add(t.controller.text);
+                              return ThoughtDistortions(temp);
+                         }
+                ))
+                  ;
                 }
               },
               color: tertiary)
