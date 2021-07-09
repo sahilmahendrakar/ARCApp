@@ -1,7 +1,9 @@
 import 'package:arc_app/size_config.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:arc_app/screens/CBT/cbt_situation.dart';
+import 'package:arc_app/screens/CBT/cbt_situation2.dart';
 import 'package:arc_app/constants.dart';
+import 'package:firebase_database/firebase_database.dart';
 
 class CBTEmotions extends StatelessWidget {
   CBTEmotions({Key? key}) : super(key: key);
@@ -34,6 +36,7 @@ class _EmotionBodyState extends State<EmotionBody> {
   Set<Emotion> checkedEmotions = {};
   Set<Emotion> emotions = {};
   final TextEditingController otherController = TextEditingController();
+  final fb = FirebaseDatabase.instance;
 
   _EmotionBodyState() {
     for (String name in emotionNames) emotions.add(Emotion(name));
@@ -41,6 +44,8 @@ class _EmotionBodyState extends State<EmotionBody> {
 
   @override
   Widget build(BuildContext context) {
+    final ref = fb.reference();
+
     return SafeArea(
         child: Stack(children: [
       Container(
@@ -213,6 +218,12 @@ class _EmotionBodyState extends State<EmotionBody> {
                   setState(() {});
                   return;
                 }
+                //  User user = FirebaseAuth.instance.currentUser!;
+                 // ref
+                   //   .child(user.uid)
+                 //     .child("emotion-data")
+                //      .child(new DateTime.now().toString())
+                 //     .set();
 
                 Navigator.push(context,
                 MaterialPageRoute(builder: (context) => CBTSituation()));

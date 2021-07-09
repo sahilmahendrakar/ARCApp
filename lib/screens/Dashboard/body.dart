@@ -1,4 +1,5 @@
 import 'package:arc_app/constants.dart';
+import 'package:arc_app/screens/CBT/cbt_start_screen.dart';
 import 'package:flutter/material.dart';
 
 class DashboardBody extends StatefulWidget {
@@ -99,7 +100,12 @@ class _DashboardState extends State<DashboardBody> {
                     SizedBox(width: 10),
                     activities("Meditate", primary, pureWhite),
                     SizedBox(width: 10),
-                    activities("CBT", primary, pureWhite)
+                    GestureDetector(
+                        onTap: () {
+                          Navigator.pushNamed(
+                              context, CBTStartScreen.routeName);
+                        },
+                        child: activities("CBT", primary, pureWhite))
                   ]),
                 ),
                 SizedBox(height: 30),

@@ -1,4 +1,4 @@
-//import 'package:arc_app/screens/Dashboard/dashboard_screen.dart';
+import 'package:arc_app/screens/Dashboard/dashboard_screen.dart';
 import 'package:arc_app/size_config.dart';
 import 'package:flutter/material.dart';
 import 'package:arc_app/constants.dart';
@@ -97,30 +97,7 @@ class _OutcomeBodyState extends State<OutcomeBody> {
             ),
             Column(children: buildEmotionSliders()),
             Container(height: getProportionateScreenHeight(64)),
-            Padding(
-              padding: EdgeInsets.symmetric(
-                  horizontal: getProportionateScreenWidth(100)),
-              child: ElevatedButton(
-                onPressed: () {
-                  if (checkedEmotions.isEmpty) {
-                    error = 'Please select an emotion';
-                    setState(() {});
-                    return;
-                  }
-                  //Navigator.popUntil(context,ModalRoute.withName(Dashboard.routeName));
-                },
-                child: Text(
-                  'FINISH',
-                  style: TextStyle(fontSize: getProportionateScreenWidth(20.0)),
-                ),
-                style: TextButton.styleFrom(
-                    primary: pureWhite,
-                    backgroundColor: darkestBlue,
-                    shape: StadiumBorder(),
-                    minimumSize: Size(getProportionateScreenWidth(150),
-                        getProportionateScreenHeight(50))),
-              ),
-            ),
+            submitButton(),
           ],
           shrinkWrap: true,
         ),
@@ -282,6 +259,39 @@ class _OutcomeBodyState extends State<OutcomeBody> {
               color: tertiary),
         ])
       ]),
+    );
+  }
+
+  Widget submitButton() {
+    return Padding(
+      padding: EdgeInsets.symmetric(
+          horizontal: getProportionateScreenWidth(100)),
+      child: ElevatedButton(
+        onPressed: () {
+          if (checkedEmotions.isEmpty) {
+            error = 'Please select an emotion';
+            setState(() {});
+            return;
+          }
+
+          //store emotion info to database here
+
+          //probably also need some communication with the rest of the app that cbt
+          //was completed for timeline
+
+          Navigator.popUntil(context,ModalRoute.withName(Dashboard.routeName));
+        },
+        child: Text(
+          'FINISH',
+          style: TextStyle(fontSize: getProportionateScreenWidth(20.0)),
+        ),
+        style: TextButton.styleFrom(
+            primary: pureWhite,
+            backgroundColor: darkestBlue,
+            shape: StadiumBorder(),
+            minimumSize: Size(getProportionateScreenWidth(150),
+                getProportionateScreenHeight(50))),
+      ),
     );
   }
 }
