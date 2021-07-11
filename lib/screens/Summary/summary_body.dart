@@ -1,4 +1,3 @@
-import 'dart:ffi';
 import 'dart:core';
 
 import 'package:arc_app/constants.dart';
@@ -42,8 +41,9 @@ class _SummaryState extends State<SummaryBody> {
           ),
           moodItem(context, 8.5, 1.5),
           stressItem(context, 52, 18),
-          summaryItem(context, darkestBlue, "Heart", "79 bpm", "Good", "0", 0,
-              brightYellow),
+          heartItem(context, 71, 0),
+          // summaryItem(context, darkestBlue, "Heart", "79 bpm", "Good", "0", 0,
+          //     brightYellow),
           summaryItem(context, secondary, "Sleep", "5h 41m", "Bad", "2h 31m",
               -1, brightPink)
         ],
@@ -178,6 +178,7 @@ GestureDetector moodItem(BuildContext context, double value, double change) {
   String valueString = value.toStringAsFixed(1) + "/10";
 
   // Set status
+  // TODO: check scale for mood with Dr. Davis
   String status;
   if (value < 4.0) {
     status = "Bad";
@@ -243,5 +244,69 @@ GestureDetector stressItem(BuildContext context, double value, double change) {
   }
 
   return summaryItem(context, secondary, "Stress", valueString, status,
+      changeString, direction, arrowColor);
+}
+
+GestureDetector heartItem(context, double value, double change) {
+  // Configure value
+  String valueString = value.round().toString() + " bpm";
+
+  // Set direction and arrowColor if there is no change
+  int direction;
+  Color arrowColor = brightYellow;
+
+  if (change < 0) {
+    direction = -1;
+  } else if (change > 0) {
+    direction = 1;
+  } else {
+    direction = 0;
+  }
+
+  // Set status and arrowColor for when there is change
+  // TODO: check scale for heart rate with Dr. Davis
+  String status;
+
+  if (value < 40) {
+    status = "Bad";
+    if (change < 0) {
+      arrowColor = brightPink;
+    } else if (change > 0) {
+      arrowColor = tertiary;
+    }
+  } else if (value < 60) {
+    status = "Okay";
+    if (change < 0) {
+      arrowColor = brightPink;
+    } else if (change > 0) {
+      arrowColor = tertiary;
+    }
+  } else if (value < 80) {
+    status = "Good";
+    if (change < 0) {
+      arrowColor = tertiary;
+    } else if (change > 0) {
+      arrowColor = tertiary;
+    }
+  } else if (value < 100) {
+    status = "Okay";
+    if (change < 0) {
+      arrowColor = tertiary;
+    } else if (change > 0) {
+      arrowColor = brightPink;
+    }
+  } else {
+    status = "Bad";
+    if (change < 0) {
+      arrowColor = tertiary;
+    } else if (change > 0) {
+      arrowColor = brightPink;
+    }
+  }
+
+  // Set change
+  String changeString = change.abs().round().toString();
+
+  return summaryItem(context, darkestBlue, "Heart", valueString, status,
       changeString, direction, arrowColor);
 }
