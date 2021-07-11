@@ -42,10 +42,7 @@ class _SummaryState extends State<SummaryBody> {
           moodItem(context, 8.5, 1.5),
           stressItem(context, 52, 18),
           heartItem(context, 71, 0),
-          // summaryItem(context, darkestBlue, "Heart", "79 bpm", "Good", "0", 0,
-          //     brightYellow),
-          summaryItem(context, secondary, "Sleep", "5h 41m", "Bad", "2h 31m",
-              -1, brightPink)
+          sleepItem(context, 20460, -9060),
         ],
       ),
     );
@@ -308,5 +305,79 @@ GestureDetector heartItem(context, double value, double change) {
   String changeString = change.abs().round().toString();
 
   return summaryItem(context, darkestBlue, "Heart", valueString, status,
+      changeString, direction, arrowColor);
+}
+
+GestureDetector sleepItem(context, double value, double change) {
+  // Configure value
+  int hours = (value / 3600).floor();
+  int minutes = ((value % 3600) / 60).round();
+  String valueString = hours.toString() + "h " + minutes.toString() + "m";
+
+  // Set direction and arrowColor if there is no change
+  int direction;
+  Color arrowColor = brightYellow;
+
+  if (change < 0) {
+    direction = -1;
+  } else if (change > 0) {
+    direction = 1;
+  } else {
+    direction = 0;
+  }
+
+  // Set status and arrowColor for when there is change
+  // TODO: check scale for sleep with Dr. Davis
+  String status;
+
+  if (value < 25200) {
+    // Less than 7 hours of sleep
+    status = "Bad";
+    if (change < 0) {
+      arrowColor = brightPink;
+    } else if (change > 0) {
+      arrowColor = tertiary;
+    }
+  } else if (value < 28800) {
+    // Between 7 and 8 hours of sleep
+    status = "Okay";
+    if (change < 0) {
+      arrowColor = brightPink;
+    } else if (change > 0) {
+      arrowColor = tertiary;
+    }
+  } else if (value < 36000) {
+    // Between 8 to 10 hours of sleep
+    status = "Good";
+    if (change < 0) {
+      arrowColor = tertiary;
+    } else if (change > 0) {
+      arrowColor = tertiary;
+    }
+  } else if (value < 43200) {
+    // Between 10 to 12 hours of sleep
+    status = "Okay";
+    if (change < 0) {
+      arrowColor = tertiary;
+    } else if (change > 0) {
+      arrowColor = brightPink;
+    }
+  } else {
+    // More than 12 hours of sleep
+    status = "Bad";
+    if (change < 0) {
+      arrowColor = tertiary;
+    } else if (change > 0) {
+      arrowColor = brightPink;
+    }
+  }
+
+  // Set change
+  int deltaHours = (change.abs() / 3600).floor();
+  int deltaMinutes = ((change.abs() % 3600) / 60).round();
+  String changeString =
+      deltaHours.toString() + "h " + deltaMinutes.toString() + "m";
+
+  return summaryItem(context, secondary, "Sleep", valueString, status,
       changeString, direction, arrowColor);
 }
