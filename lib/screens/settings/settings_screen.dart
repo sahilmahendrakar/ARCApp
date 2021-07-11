@@ -1,5 +1,9 @@
 import 'package:arc_app/auth/authentication_service.dart';
 import 'package:arc_app/constants.dart';
+import 'package:arc_app/screens/settings/emergency_contact_screen.dart';
+import 'package:arc_app/screens/settings/studyid_screen.dart';
+import 'package:arc_app/screens/settings/trusted_support_screen.dart';
+import 'package:arc_app/screens/settings/username_screen.dart';
 import 'package:arc_app/size_config.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_database/firebase_database.dart';
@@ -29,26 +33,15 @@ class _SettingsScreenState extends State<SettingsScreen> {
     super.initState();
     final ref = fb.reference();
     User user = FirebaseAuth.instance.currentUser!;
-    ref.child(user.uid).child("study-id").once().then((data) {
-      if (data.value != null) {
-        setState(() {
-          studyId = data.value;
-        });
-      }
-    });
-    ref.child(user.uid).child("emergency-contact").once().then((data) {
-      if (data.value != null) {
-        setState(() {
-          emergencyContact = data.value;
-        });
-      }
-    });
-    ref.child(user.uid).child("trusted-support").once().then((data) {
-      if (data.value != null) {
-        setState(() {
-          trustedSupport = data.value;
-        });
-      }
+    //Using on value instead of once() so it updates when value is changed
+    ref.child(user.uid).onValue.listen((event) {
+      DataSnapshot data = event.snapshot;
+      setState(() {
+        //The ?? performs null checking
+        studyId = data.value["study-id"] ?? 0;
+        emergencyContact = data.value["emergency-contact"] ?? "None";
+        trustedSupport = data.value["trusted-support"] ?? "None";
+      });
     });
   }
 
@@ -70,12 +63,27 @@ class _SettingsScreenState extends State<SettingsScreen> {
                       SettingsTile(
                         title: 'Username',
                         subtitle: user.displayName,
-                        onPressed: (context) {},
+                        onPressed: (context) {
+                          Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) =>
+                                      UsernameSettingsScreen())).then((value) {
+                            //forces page to reload when popped back, allowing values to update
+                            setState(() {});
+                          });
+                        },
                       ),
                       SettingsTile(
                         title: 'Study ID',
                         subtitle: studyId,
-                        onPressed: (context) {},
+                        onPressed: (context) {
+                          Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) =>
+                                      StudyIdSettingsScreen()));
+                        },
                       ),
                       SettingsTile(
                         title: 'Password',
@@ -105,10 +113,22 @@ class _SettingsScreenState extends State<SettingsScreen> {
                       SettingsTile(
                         title: 'Emergency Contact',
                         subtitle: emergencyContact,
+                        onPressed: (context) {
+                          Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) => EmergencyContactSettingsScreen()));
+                        },
                       ),
                       SettingsTile(
                         title: 'Trusted Support',
                         subtitle: trustedSupport,
+                        onPressed: (context) {
+                          Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) => TrustedSupportSettingsScreen()));
+                        },
                       ),
                     ],
                   ),
