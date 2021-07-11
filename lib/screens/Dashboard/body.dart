@@ -1,4 +1,6 @@
 import 'package:arc_app/constants.dart';
+import 'package:arc_app/screens/Dashboard/dashboard_screen.dart';
+import 'package:arc_app/screens/Summary/summary_screen.dart';
 import 'package:flutter/material.dart';
 
 class DashboardBody extends StatefulWidget {
@@ -68,13 +70,18 @@ class _DashboardState extends State<DashboardBody> {
           IconButton(
               icon: Icon(Icons.assignment),
               color: darkestBlue,
-              onPressed: () {}),
+              onPressed: () {
+                Navigator.pushNamed(context, SummaryScreen.routeName);
+              }),
           IconButton(
               icon: Icon(Icons.settings), color: darkestBlue, onPressed: () {})
         ]),
       ),
-      floatingActionButton:
-          FloatingActionButton(child: Icon(Icons.home), onPressed: () {}),
+      floatingActionButton: FloatingActionButton(
+          child: Icon(Icons.home),
+          onPressed: () {
+            Navigator.pushNamed(context, Dashboard.routeName);
+          }),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
       body: SingleChildScrollView(
           child: Container(
