@@ -1,3 +1,6 @@
+import 'dart:ffi';
+import 'dart:core';
+
 import 'package:arc_app/constants.dart';
 import 'package:arc_app/screens/Dashboard/dashboard_screen.dart';
 import 'package:flutter/material.dart';
@@ -37,8 +40,7 @@ class _SummaryState extends State<SummaryBody> {
               ),
             ),
           ),
-          summaryItem(context, darkestBlue, "Mood", "6.5/10", "Good", "1.5", 1,
-              tertiary),
+          moodItem(context, 8.5, 1.5),
           summaryItem(context, secondary, "Stress", "52 units", "Okay", "18", 1,
               brightPink),
           summaryItem(context, darkestBlue, "Heart", "79 bpm", "Good", "0", 0,
@@ -170,4 +172,42 @@ GestureDetector summaryItem(
                           ]),
                     ]))),
       ));
+}
+
+GestureDetector moodItem(BuildContext context, double value, double change) {
+  // summaryItem(context, darkestBlue, "Mood", "6.5/10", "Good", "1.5", 1, tertiary),
+
+  // Configure value
+  String valueString = value.toStringAsFixed(1) + "/10";
+
+  // Set status
+  String status;
+  if (value < 4.0) {
+    status = "Bad";
+  } else if (value < 7.0) {
+    status = "Okay";
+  } else {
+    status = "Good";
+  }
+
+  // Set change
+  String changeString = change.abs().toStringAsFixed(1);
+
+  // Set direction and arrowColor
+  int direction;
+  Color arrowColor;
+
+  if (change < 0) {
+    direction = -1;
+    arrowColor = brightPink;
+  } else if (change > 0) {
+    direction = 1;
+    arrowColor = tertiary;
+  } else {
+    direction = 0;
+    arrowColor = brightYellow;
+  }
+
+  return summaryItem(context, darkestBlue, "Mood", valueString, status,
+      changeString, direction, arrowColor);
 }
