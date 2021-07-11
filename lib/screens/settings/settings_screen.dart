@@ -51,6 +51,13 @@ class _SettingsScreenState extends State<SettingsScreen> {
     return Scaffold(
         appBar: AppBar(
           title: Text("Settings"),
+          actions: [
+          IconButton(
+              onPressed: () {
+                Navigator.pushNamed(context, SettingsScreen.routeName);
+              },
+              icon: Icon(Icons.help))
+        ],
         ),
         body: Column(
           children: [
