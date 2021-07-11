@@ -1,6 +1,7 @@
 //This is temporary, just for testing firebase authentication
 import 'package:arc_app/constants.dart';
 import 'package:arc_app/screens/Dashboard/dashboard_screen.dart';
+import 'package:arc_app/screens/Summary/summary_screen.dart';
 import 'package:arc_app/screens/settings/settings_screen.dart';
 import 'package:flutter/material.dart';
 
@@ -52,11 +53,7 @@ class _HomeState extends State<Home> {
       ),
       body: PageView(
         controller: _pageController,
-        children: [
-          Placeholder(Colors.blue),
-          Dashboard(),
-          Placeholder(Colors.green)
-        ],
+        children: [Placeholder(Colors.blue), Dashboard(), SummaryScreen()],
         onPageChanged: (index) {
           setState(() {
             _selectedIndex = index;
