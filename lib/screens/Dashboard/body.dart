@@ -16,6 +16,7 @@ class _DashboardState extends State<DashboardBody> {
       child: Align(
         alignment: Alignment.center,
         child: Text(activityType,
+            textAlign: TextAlign.center,
             style: TextStyle(
                 fontSize: 16.0,
                 fontFamily: 'Roboto',
