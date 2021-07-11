@@ -41,8 +41,7 @@ class _SummaryState extends State<SummaryBody> {
             ),
           ),
           moodItem(context, 8.5, 1.5),
-          summaryItem(context, secondary, "Stress", "52 units", "Okay", "18", 1,
-              brightPink),
+          stressItem(context, 52, 18),
           summaryItem(context, darkestBlue, "Heart", "79 bpm", "Good", "0", 0,
               brightYellow),
           summaryItem(context, secondary, "Sleep", "5h 41m", "Bad", "2h 31m",
@@ -175,8 +174,6 @@ GestureDetector summaryItem(
 }
 
 GestureDetector moodItem(BuildContext context, double value, double change) {
-  // summaryItem(context, darkestBlue, "Mood", "6.5/10", "Good", "1.5", 1, tertiary),
-
   // Configure value
   String valueString = value.toStringAsFixed(1) + "/10";
 
@@ -209,5 +206,42 @@ GestureDetector moodItem(BuildContext context, double value, double change) {
   }
 
   return summaryItem(context, darkestBlue, "Mood", valueString, status,
+      changeString, direction, arrowColor);
+}
+
+GestureDetector stressItem(BuildContext context, double value, double change) {
+  // Configure value
+  // TODO: Change processing of stress data when more information is known
+  String valueString = value.round().toString() + " units";
+
+  // Set status
+  String status;
+  if (value < 50) {
+    status = "Good";
+  } else if (value < 75) {
+    status = "Okay";
+  } else {
+    status = "Bad";
+  }
+
+  // Set change
+  String changeString = change.abs().round().toString();
+
+  // Set direction and arrowColor
+  int direction;
+  Color arrowColor;
+
+  if (change < 0) {
+    direction = -1;
+    arrowColor = tertiary;
+  } else if (change > 0) {
+    direction = 1;
+    arrowColor = brightPink;
+  } else {
+    direction = 0;
+    arrowColor = brightYellow;
+  }
+
+  return summaryItem(context, secondary, "Stress", valueString, status,
       changeString, direction, arrowColor);
 }
