@@ -59,29 +59,30 @@ class _SensationBody extends State<SensationBody>{
                                                                              color: darkestBlue)),),
                          SizedBox(height: 10),
                          new Container(
-                                        child: Padding(
-                                          padding:EdgeInsets.all(3.0),
+                                        child: Column(children: [
+                                                               //Text('Thought', style: TextStyle(fontSize: getProportionateScreenWidth(16),color: primary,fontWeight: FontWeight.w600,)),
+                                                               TextFormField(
 
-                                          child:TextField(
-                                             textAlignVertical:TextAlignVertical.top,
-
-                                             decoration:InputDecoration(
-                                              border:InputBorder.none,
-                                              focusedBorder: OutlineInputBorder(
-                                                borderSide:BorderSide(color:darkestBlue, width:3),
-                                              ),
-                                              enabledBorder:OutlineInputBorder(
-
-                                               borderSide:const BorderSide(color:darkestBlue,width:3),),
-                                               //contentPadding:EdgeInsets.only(left:0, top:0),
-                                               hintText:'Please enter here...',
-
-                                               contentPadding: EdgeInsets.symmetric(vertical: 70.0),
-
-                                               ),)
-
-
-                                          ),
+                                                                 decoration: InputDecoration(
+                                                                    // labelText: 'Thought 1',
+                                                                     labelStyle: TextStyle(
+                                                                         color: secondary, fontWeight: FontWeight.w600),
+                                                                      hintText: 'Enter here...',
+                                                                      hintStyle: TextStyle(color: tertiary)),
+                                                                 validator: (value) {
+                                                                   if (value == null || value.isEmpty)
+                                                                     return 'Please enter a thought';
+                                                                   return null;
+                                                                 },
+                                                                 enableInteractiveSelection: true,
+                                                                 maxLines: null,
+                                                                 onEditingComplete: () {
+                                                                   setState(() {});
+                                                                 },
+                                                                 cursorColor: secondary,
+                                                                 style: TextStyle(color: primary),
+                                                               ),
+                                                             ]),
                                           ),
                          SizedBox(height: 20),
                          Container(
