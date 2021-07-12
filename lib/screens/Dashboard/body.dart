@@ -107,13 +107,13 @@ class _DashboardState extends State<DashboardBody> {
                     activities("Walk", primary, pureWhite),
                     SizedBox(width: 10),
                     activities("Meditate", primary, pureWhite),
+                    SizedBox(width: 10),
                     GestureDetector(
                         onTap: () {
                           Navigator.pushNamed(
                               context, CBTStartScreen.routeName);
                         },
-                        child: SizedBox(width: 10)),
-                    activities("CBT", primary, pureWhite)
+                        child: activities("CBT", primary, pureWhite))
                   ]),
                 ),
                 SizedBox(height: 30),
