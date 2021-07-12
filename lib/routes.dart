@@ -1,7 +1,7 @@
 import 'package:arc_app/auth/authentication_wrapper.dart';
-import 'package:arc_app/screens/CBT/cbt_start_screen.dart';
 import 'package:arc_app/screens/Dashboard/dashboard_screen.dart';
 import 'package:arc_app/screens/Landing/landing_screen.dart';
+import 'package:arc_app/screens/Summary/summary_screen.dart';
 import 'package:arc_app/screens/settings/settings_screen.dart';
 import 'package:flutter/widgets.dart';
 import 'package:arc_app/screens/Login/log_in_screen.dart';
@@ -17,5 +17,5 @@ final Map<String, WidgetBuilder> routes = {
   Dashboard.routeName: (context) => Dashboard(),
   AuthenticationWrapper.routeName: (context) => AuthenticationWrapper(),
   SettingsScreen.routeName: (context) => SettingsScreen(),
-  CBTStartScreen.routeName: (context) => CBTStartScreen()
+  SummaryScreen.routeName: (context) => SummaryScreen(),
 };
