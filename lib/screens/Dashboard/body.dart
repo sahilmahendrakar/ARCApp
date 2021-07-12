@@ -1,4 +1,5 @@
 import 'package:arc_app/constants.dart';
+import 'package:arc_app/screens/CBT/cbt_start_screen.dart';
 import 'package:arc_app/screens/Dashboard/dashboard_screen.dart';
 import 'package:arc_app/screens/Summary/summary_screen.dart';
 import 'package:flutter/material.dart';
@@ -106,7 +107,12 @@ class _DashboardState extends State<DashboardBody> {
                     activities("Walk", primary, pureWhite),
                     SizedBox(width: 10),
                     activities("Meditate", primary, pureWhite),
-                    SizedBox(width: 10),
+                    GestureDetector(
+                        onTap: () {
+                          Navigator.pushNamed(
+                              context, CBTStartScreen.routeName);
+                        },
+                        child: SizedBox(width: 10)),
                     activities("CBT", primary, pureWhite)
                   ]),
                 ),

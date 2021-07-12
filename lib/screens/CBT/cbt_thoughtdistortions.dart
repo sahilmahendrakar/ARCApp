@@ -6,23 +6,25 @@ import 'cbt_thoughts.dart';
 
 class ThoughtDistortions extends StatelessWidget {
   final List<String> thoughts;
-  ThoughtDistortions(this.thoughts, {Key? key}) : super(key: key);
+  final String dataKey;
+  ThoughtDistortions(this.thoughts, this.dataKey,{Key? key}) : super(key: key);
   @override
   Widget build(BuildContext context) {
     return Scaffold(
 
-      body: ThoughtDistortion(thoughts),
+      body: ThoughtDistortion(thoughts,dataKey),
 
     );
   }
 }
 class ThoughtDistortion extends StatefulWidget{
   final List<String> thoughts;
+  final String dataKey;
 
-  const ThoughtDistortion(this.thoughts, {Key? key}) : super(key: key);
+  const ThoughtDistortion(this.thoughts,this.dataKey, {Key? key}) : super(key: key);
 
     @override
-    _Distortions createState()=>_Distortions(thoughts);
+    _Distortions createState()=>_Distortions(thoughts,dataKey);
 }
 class _Distortions extends State<ThoughtDistortion>{
   /*Map<String, bool?> distortions= {
@@ -40,8 +42,9 @@ class _Distortions extends State<ThoughtDistortion>{
     "right":false };  */
   final List<String> thoughts;
   final List<Thought> responses = [];
+  final String dataKey;
 
-  _Distortions(this.thoughts) {
+  _Distortions(this.thoughts,this.dataKey) {
     for (String t in thoughts) responses.add(Thought(t));
   }
 
@@ -466,7 +469,7 @@ class _Distortions extends State<ThoughtDistortion>{
                    return;
                  };
 
-                 Navigator.push(context, MaterialPageRoute(builder: (context) => CBTResponse(thoughts)));
+                 Navigator.push(context, MaterialPageRoute(builder: (context) => CBTResponse(thoughts,dataKey)));
                },
                color: tertiary)
          ])

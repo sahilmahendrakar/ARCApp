@@ -5,22 +5,24 @@ import '../../size_config.dart';
 import 'cbt_thoughts.dart';
 
 class CBTSituation extends StatelessWidget {
-  CBTSituation({Key? key}) : super(key: key);
+  final String dataKey;
+  CBTSituation(this.dataKey,{Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: SensationBody(),
+      body: SensationBody(dataKey),
     );
   }
 }
 
 class SensationBody extends StatefulWidget{
-          SensationBody({Key? key}):super(key:key);
+  final String dataKey;
+          SensationBody(this.dataKey,{Key? key}):super(key:key);
 
 
           @override
-          _SensationBody createState()=>_SensationBody();
+          _SensationBody createState()=>_SensationBody(dataKey);
 }
 
 class _SensationBody extends State<SensationBody>{
@@ -38,8 +40,9 @@ class _SensationBody extends State<SensationBody>{
         Set<Sensation> checkedSensations = {};
         Set<Sensation> sensations = {};
         final TextEditingController otherController = TextEditingController();
+       final String dataKey;
 
-        _SensationBody() {
+        _SensationBody(this.dataKey) {
             for (String name in sensationNames) sensations.add(Sensation(name));
           }
 
@@ -182,7 +185,7 @@ class _SensationBody extends State<SensationBody>{
                    icon: Icon(Icons.arrow_forward_ios),
                    onPressed: () {
                      Navigator.push(context,
-                         MaterialPageRoute(builder: (context) => CBTThoughts()));
+                         MaterialPageRoute(builder: (context) => CBTThoughts(dataKey)));
                    },
                    color: tertiary)
              ])

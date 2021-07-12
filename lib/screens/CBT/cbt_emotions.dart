@@ -1,7 +1,7 @@
 import 'package:arc_app/size_config.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:arc_app/screens/CBT/cbt_situation2.dart';
+import 'package:arc_app/screens/CBT/cbt_situation.dart';
 import 'package:arc_app/constants.dart';
 import 'package:firebase_database/firebase_database.dart';
 
@@ -36,7 +36,8 @@ class _EmotionBodyState extends State<EmotionBody> {
   Set<Emotion> checkedEmotions = {};
   Set<Emotion> emotions = {};
   final TextEditingController otherController = TextEditingController();
-  final fb = FirebaseDatabase.instance;
+  final ref = FirebaseDatabase.instance.reference();
+  String? dataKey;
 
   _EmotionBodyState() {
     for (String name in emotionNames) emotions.add(Emotion(name));
@@ -44,7 +45,7 @@ class _EmotionBodyState extends State<EmotionBody> {
 
   @override
   Widget build(BuildContext context) {
-    final ref = fb.reference();
+
 
     return SafeArea(
         child: Stack(children: [
@@ -218,20 +219,33 @@ class _EmotionBodyState extends State<EmotionBody> {
                   setState(() {});
                   return;
                 }
-                //  User user = FirebaseAuth.instance.currentUser!;
-                 // ref
-                   //   .child(user.uid)
-                 //     .child("emotion-data")
-                //      .child(new DateTime.now().toString())
-                 //     .set();
+              //User user = FirebaseAuth.instance.currentUser!;
+               // Map<String,double> emotionData = new Map();
+             //   for(Emotion e in checkedEmotions)
+              //    {
+             //       emotionData[e.name] = e.currentEmotionValue;
+            //      }
+              if (dataKey == null)
+                  dataKey = ref.push().key;
+              //  ref.child(user.uid).child("emotion-data").child(dataKey!).child('before').set(emotionData);
+             //   ref.child(user.uid).child("emotion-data").child(dataKey!).child('beforeTime').set(DateTime.now().toString());
+
+
 
                 Navigator.push(context,
-                MaterialPageRoute(builder: (context) => CBTSituation()));
+                MaterialPageRoute(builder: (context) => CBTSituation(dataKey!)));
               },
               color: tertiary)
         ])
       ]),
     );
+  }
+
+  @override
+  void dispose()
+  {
+    otherController.dispose();
+    super.dispose();
   }
 }
 

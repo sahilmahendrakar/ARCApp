@@ -1,5 +1,7 @@
 import 'package:arc_app/screens/Dashboard/dashboard_screen.dart';
 import 'package:arc_app/size_config.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
 import 'package:arc_app/constants.dart';
 import 'package:arc_app/screens/CBT/cbt_thoughts.dart';
@@ -7,21 +9,23 @@ import 'package:arc_app/screens/CBT/cbt_emotions.dart';
 
 class CBTOutcome extends StatelessWidget {
   final List<String> thoughts;
-  CBTOutcome(this.thoughts, {Key? key}) : super(key: key);
+  final String dataKey;
+  CBTOutcome(this.thoughts, this.dataKey,{Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(body: OutcomeBody(thoughts));
+    return Scaffold(body: OutcomeBody(thoughts,dataKey));
   }
 }
 
 class OutcomeBody extends StatefulWidget {
   final List<String> thoughts;
+  final String dataKey;
 
-  const OutcomeBody(this.thoughts, {Key? key}) : super(key: key);
+  const OutcomeBody(this.thoughts, this.dataKey,{Key? key}) : super(key: key);
 
   @override
-  _OutcomeBodyState createState() => _OutcomeBodyState(thoughts);
+  _OutcomeBodyState createState() => _OutcomeBodyState(thoughts,dataKey);
 }
 
 class _OutcomeBodyState extends State<OutcomeBody> {
@@ -41,8 +45,10 @@ class _OutcomeBodyState extends State<OutcomeBody> {
   Set<Emotion> checkedEmotions = {};
   Set<Emotion> emotions = {};
   final TextEditingController otherController = TextEditingController();
+  final ref = FirebaseDatabase.instance.reference();
+  final String dataKey;
 
-  _OutcomeBodyState(this.thoughtText) {
+  _OutcomeBodyState(this.thoughtText,this.dataKey) {
     for (String name in emotionNames) emotions.add(Emotion(name));
     for (String t in thoughtText) thoughts.add(Thought(t));
   }
@@ -274,8 +280,15 @@ class _OutcomeBodyState extends State<OutcomeBody> {
             return;
           }
 
-          //store emotion info to database here
+          //User user = FirebaseAuth.instance.currentUser!;
+          //Map<String,double> emotionData = new Map();
+          //for(Emotion e in checkedEmotions)
+         // {
+         //   emotionData[e.name] = e.currentEmotionValue;
+          //}
 
+          //ref.child(user.uid).child("emotion-data").child(dataKey).child('after').set(emotionData);
+          //ref.child(user.uid).child("emotion-data").child(dataKey).child('afterTime').set(DateTime.now().toString());
           //probably also need some communication with the rest of the app that cbt
           //was completed for timeline
 
@@ -293,5 +306,12 @@ class _OutcomeBodyState extends State<OutcomeBody> {
                 getProportionateScreenHeight(50))),
       ),
     );
+  }
+
+  @override
+  void dispose()
+  {
+    otherController.dispose();
+    super.dispose();
   }
 }

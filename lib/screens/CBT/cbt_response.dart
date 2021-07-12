@@ -7,21 +7,23 @@ import 'cbt_thoughts.dart';
 
 class CBTResponse extends StatelessWidget {
   final List<String> thoughts;
-  CBTResponse(this.thoughts, {Key? key}) : super(key: key);
+  final String dataKey;
+  CBTResponse(this.thoughts, this.dataKey, {Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(body: ResponseBody(thoughts));
+    return Scaffold(body: ResponseBody(thoughts,dataKey));
   }
 }
 
 class ResponseBody extends StatefulWidget {
   final List<String> thoughts;
+  final String dataKey;
 
-  const ResponseBody(this.thoughts, {Key? key}) : super(key: key);
+  const ResponseBody(this.thoughts, this.dataKey,{Key? key}) : super(key: key);
 
   @override
-  _ResponseBodyState createState() => _ResponseBodyState(thoughts);
+  _ResponseBodyState createState() => _ResponseBodyState(thoughts,dataKey);
 }
 
 class _ResponseBodyState extends State<ResponseBody> {
@@ -29,8 +31,9 @@ class _ResponseBodyState extends State<ResponseBody> {
   final List<String> thoughts;
   final List<Thought> responses = [];
   bool open = false;
+  final String dataKey;
 
-  _ResponseBodyState(this.thoughts) {
+  _ResponseBodyState(this.thoughts,this.dataKey) {
     for (String t in thoughts) responses.add(Thought(t));
   }
 
@@ -124,6 +127,11 @@ class _ResponseBodyState extends State<ResponseBody> {
               color: Colors.grey,
               iconSize: (getProportionateScreenHeight(24)),
               onPressed: () {
+                //AlertDialog alert=AlertDialog( title:Text('Guiding Questions'), content: Text(
+                //    '•  Insert question here?\n'
+                 //       '•  Insert another question here?\n'
+                //        '•  More questions here?')  );
+               // showDialog(context:context,builder:(BuildContext context){ return alert;}, );
                 open = true;
                 setState(() {});
               },
@@ -246,12 +254,22 @@ class _ResponseBodyState extends State<ResponseBody> {
                   Navigator.push(
                       context,
                       MaterialPageRoute(
-                          builder: (context) => CBTOutcome(thoughts)));
+                          builder: (context) => CBTOutcome(thoughts,dataKey)));
                 }
               },
               color: tertiary)
         ])
       ]),
     );
+  }
+
+  @override
+  void dispose()
+  {
+    for(Thought t in responses)
+    {
+      t.dispose();
+    }
+    super.dispose();
   }
 }

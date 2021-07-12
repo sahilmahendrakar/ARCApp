@@ -1,27 +1,32 @@
 import 'package:arc_app/size_config.dart';
 import 'package:flutter/material.dart';
-//import 'CBTDistortions.dart';
 import 'package:arc_app/screens/CBT/cbt_thoughtdistortions.dart';
 import 'package:arc_app/constants.dart';
 
 class CBTThoughts extends StatelessWidget {
-  CBTThoughts({Key? key}) : super(key: key);
+  CBTThoughts(this.dataKey, {Key? key}) : super(key: key);
+  final String dataKey;
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(body: ThoughtsBody());
+    return Scaffold(body: ThoughtsBody(dataKey));
   }
 }
 
 class ThoughtsBody extends StatefulWidget {
-  const ThoughtsBody({Key? key}) : super(key: key);
+  final String dataKey;
+
+  const ThoughtsBody(this.dataKey, {Key? key}) : super(key: key);
 
   @override
-  _ThoughtsBodyState createState() => _ThoughtsBodyState();
+  _ThoughtsBodyState createState() => _ThoughtsBodyState(dataKey);
 }
 
 class _ThoughtsBodyState extends State<ThoughtsBody> {
   final formKey = GlobalKey<FormState>();
+  final String dataKey;
+
+  _ThoughtsBodyState(this.dataKey);
 
   String error = '';
   List<Thought> thoughts = [Thought()];
@@ -233,7 +238,7 @@ class _ThoughtsBodyState extends State<ThoughtsBody> {
                            List<String> temp = [];
                             for (Thought t in thoughts)
                                 temp.add(t.controller.text);
-                              return ThoughtDistortions(temp);
+                              return ThoughtDistortions(temp,dataKey);
                          }
                 ))
                   ;
@@ -259,6 +264,16 @@ class _ThoughtsBodyState extends State<ThoughtsBody> {
       )
     ]);
   }
+
+  @override
+  void dispose()
+  {
+    for(Thought t in thoughts)
+      {
+        t.dispose();
+      }
+    super.dispose();
+  }
 }
 
 class Thought {
@@ -266,6 +281,11 @@ class Thought {
   TextEditingController controller = TextEditingController();
   double currentThoughtValue = 5;
   String? thought;
+
+  void dispose()
+  {
+    controller.dispose();
+}
 }
 
 class ThoughtSlider extends StatefulWidget {
