@@ -7,6 +7,8 @@ import 'package:arc_app/constants.dart';
 import 'package:arc_app/screens/CBT/cbt_thoughts.dart';
 import 'package:arc_app/screens/CBT/cbt_emotions.dart';
 
+import 'cbt_exit.dart';
+
 class CBTOutcome extends StatelessWidget {
   final List<String> thoughts;
   final String dataKey;
@@ -139,7 +141,6 @@ class _OutcomeBodyState extends State<OutcomeBody> {
     for (Emotion e in checkedEmotions) {
       sliders.add(Column(children: [
         Container(
-          alignment: Alignment(-1, 0),
           padding: EdgeInsets.only(left: getProportionateScreenWidth(16)),
           child: Text(
             sliderText(e),
@@ -291,8 +292,8 @@ class _OutcomeBodyState extends State<OutcomeBody> {
           //ref.child(user.uid).child("emotion-data").child(dataKey).child('afterTime').set(DateTime.now().toString());
           //probably also need some communication with the rest of the app that cbt
           //was completed for timeline
-
-          Navigator.popUntil(context,ModalRoute.withName(Dashboard.routeName));
+          Navigator.push(context,
+              MaterialPageRoute(builder: (context) => CBTExit()));
         },
         child: Text(
           'FINISH',

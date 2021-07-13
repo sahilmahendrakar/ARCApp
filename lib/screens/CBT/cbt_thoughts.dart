@@ -168,7 +168,7 @@ class _ThoughtsBodyState extends State<ThoughtsBody> {
     for (Thought t in thoughts) {
       sliders.add(Column(children: [
         Container(
-          alignment: Alignment(-1, 0),
+          //alignment: Alignment(-1, 0),
           padding: EdgeInsets.only(left: getProportionateScreenWidth(0)),
           child: Text(
             sliderText(t, ct++),
@@ -183,7 +183,7 @@ class _ThoughtsBodyState extends State<ThoughtsBody> {
             padding: EdgeInsets.fromLTRB(
                 getProportionateScreenWidth(0),
                 0,
-                getProportionateScreenWidth(16),
+                getProportionateScreenWidth(0),
                 getProportionateScreenHeight(8)),
             child: ThoughtSlider(t)),
       ]));
@@ -251,6 +251,7 @@ class _ThoughtsBodyState extends State<ThoughtsBody> {
   }
 
   Widget plusButton() {
+    if(thoughts.length < 3)
     return Row(children: [
       Spacer(),
       IconButton(
@@ -263,6 +264,7 @@ class _ThoughtsBodyState extends State<ThoughtsBody> {
         color: secondary,
       )
     ]);
+    return SizedBox(height: getProportionateScreenHeight(16));
   }
 
   @override
@@ -302,19 +304,26 @@ class _ThoughtSliderState extends State<ThoughtSlider> {
 
   @override
   Widget build(BuildContext context) {
-    return Slider(
-      onChanged: (double value) {
-        setState(() {
-          t.currentThoughtValue = value;
-        });
-      },
-      value: t.currentThoughtValue,
-      min: 0,
-      max: 10,
-      divisions: 10,
-      label: t.currentThoughtValue.round().toString(),
-      activeColor: secondary,
-      inactiveColor: Colors.grey[350],
+    return Row(
+        children: [
+          Text('0', style: TextStyle(fontSize: getProportionateScreenWidth(14), color: darkestBlue)),
+          Expanded(
+            child: Slider(
+              onChanged: (double value) {
+                setState(() {
+                  t.currentThoughtValue = value;
+                });
+              },
+              value: t.currentThoughtValue,
+              min: 0,
+              max: 10,
+              divisions: 10,
+              label: t.currentThoughtValue.round().toString(),
+              activeColor: secondary,
+              inactiveColor: Colors.grey[350],
+            ),
+          ),
+          Text('10', style: TextStyle(fontSize: getProportionateScreenWidth(14), color: darkestBlue))]
     );
   }
 }

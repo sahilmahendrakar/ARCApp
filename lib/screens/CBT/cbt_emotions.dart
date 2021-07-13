@@ -114,7 +114,7 @@ class _EmotionBodyState extends State<EmotionBody> {
     for (Emotion e in checkedEmotions) {
       sliders.add(Column(children: [
         Container(
-          alignment: Alignment(-1, 0),
+          //alignment: Alignment(-1, 0),
           padding: EdgeInsets.only(left: getProportionateScreenWidth(16)),
           child: Text(
             sliderText(e),
@@ -129,7 +129,7 @@ class _EmotionBodyState extends State<EmotionBody> {
             padding: EdgeInsets.fromLTRB(
                 getProportionateScreenWidth(0),
                 0,
-                getProportionateScreenWidth(16),
+                getProportionateScreenWidth(0),
                 getProportionateScreenHeight(8)),
             child: EmotionSlider(e)),
       ]));
@@ -271,19 +271,26 @@ class _EmotionSliderState extends State<EmotionSlider> {
 
   @override
   Widget build(BuildContext context) {
-    return Slider(
-      onChanged: (double value) {
-        setState(() {
-          e.currentEmotionValue = value;
-        });
-      },
-      value: e.currentEmotionValue,
-      min: 0,
-      max: 10,
-      divisions: 10,
-      label: e.currentEmotionValue.round().toString(),
-      activeColor: secondary,
-      inactiveColor: Colors.grey[350],
+    return Row(
+      children: [
+        Text('0', style: TextStyle(fontSize: getProportionateScreenWidth(14), color: darkestBlue)),
+        Expanded(
+          child: Slider(
+          onChanged: (double value) {
+            setState(() {
+              e.currentEmotionValue = value;
+            });
+          },
+          value: e.currentEmotionValue,
+          min: 0,
+          max: 10,
+          divisions: 10,
+          label: e.currentEmotionValue.round().toString(),
+          activeColor: secondary,
+          inactiveColor: Colors.grey[350],
+      ),
+        ),
+      Text('10', style: TextStyle(fontSize: getProportionateScreenWidth(14), color: darkestBlue))]
     );
   }
 }

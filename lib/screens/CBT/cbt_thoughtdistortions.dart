@@ -155,7 +155,7 @@ class _Distortions extends State<ThoughtDistortion>{
              Container(
            child:
         Text(
-           'Select cognitive distortions',
+           'Which cognitive distortion(s) did you make?',
            style: TextStyle(
                fontSize: getProportionateScreenWidth(20),
                fontWeight: FontWeight.w600,
@@ -179,7 +179,8 @@ class _Distortions extends State<ThoughtDistortion>{
                  GestureDetector(
                    onTap:(){
                      AlertDialog alert=AlertDialog(
-                       title:Text('All Or Nothing: Looking at things in absolute, black-and-white categories'),
+                       title:Text('All Or Nothing'),
+                       content: Text('Looking at things in absolute, black-and-white categories')
                      );
                      showDialog(
                        context:context,
@@ -197,7 +198,8 @@ class _Distortions extends State<ThoughtDistortion>{
                  GestureDetector(
                    onTap:(){
                      AlertDialog alert=AlertDialog(
-                       title:Text('downplayer of positives: Insisting your accomplishments or strengths do not count'),
+                       title:Text('Downplayer of Positives'),
+                       content: Text('Insisting your accomplishments or strengths do not count')
                      );
                      showDialog(
                        context:context,
@@ -212,7 +214,8 @@ class _Distortions extends State<ThoughtDistortion>{
                  GestureDetector(
                    onTap:(){
                      AlertDialog alert=AlertDialog(
-                       title:Text('Conclusion jumper: Concluding that things are bad without good evidence'),
+                       title:Text('Conclusion jumper'),
+                       content:Text('Concluding that things are bad without good evidence')
                      );
                      showDialog(
                        context:context,
@@ -245,7 +248,8 @@ class _Distortions extends State<ThoughtDistortion>{
                  GestureDetector(
                    onTap:(){
                      AlertDialog alert=AlertDialog(
-                       title:Text('Mind Reader:Assuming people are reacting negatively to you without evidence'),
+                       title:Text('Mind Reader'),
+                       content:Text('Assuming people are reacting negatively to you without evidence')
                      );
                      showDialog(
                        context:context,
@@ -260,7 +264,8 @@ class _Distortions extends State<ThoughtDistortion>{
                  GestureDetector(
                    onTap:(){
                      AlertDialog alert=AlertDialog(
-                       title:Text('Fortune Teller:Predicting that thigs will turn out badly without a good basis'),
+                       title:Text('Fortune Teller'),
+                       content: Text('Predicting that things will turn out badly without a good basis')
                      );
                      showDialog(
                        context:context,
@@ -275,7 +280,8 @@ class _Distortions extends State<ThoughtDistortion>{
                  GestureDetector(
                    onTap:(){
                      AlertDialog alert=AlertDialog(
-                       title:Text('Emotional reasoner: Reasoning from how you feel: "I feel like and idiot, so I must be the one"'),
+                       title:Text('Emotional reasoner'),
+                       content: Text('Reasoning from how you feel: "I feel like and idiot, so I must be the one"')
                      );
                      showDialog(
                        context:context,
@@ -306,7 +312,8 @@ class _Distortions extends State<ThoughtDistortion>{
                  GestureDetector(
                    onTap:(){
                      AlertDialog alert=AlertDialog(
-                       title:Text('"Should" Statements: Criticizing yoursel or other people with "shoulds","musts", and "have-tos"),')
+                       title:Text('"Should" Statements'),
+                       content: Text('Criticizing yourself or other people with "shoulds","musts", and "have-tos")')
                      );
                      showDialog(
                        context:context,
@@ -321,7 +328,8 @@ class _Distortions extends State<ThoughtDistortion>{
                  GestureDetector(
                    onTap:(){
                      AlertDialog alert=AlertDialog(
-                       title:Text('Labeler:Instead of saying, "I made a mistake," telling yourself, "I am a loser"'),
+                       title:Text('Labeler'),
+                       content:Text('Instead of saying, "I made a mistake," telling yourself, "I am a loser"')
                      );
                      showDialog(
                        context:context,
@@ -336,8 +344,9 @@ class _Distortions extends State<ThoughtDistortion>{
                  GestureDetector(
                    onTap:(){
                      AlertDialog alert=AlertDialog(
-                       title:Text('Blamer:Blaming yourself for something you were not entirely responsible for, '
-                           'or blaming on others and overlooking the ways you contributed to a problem'),
+                       title:Text('Blamer'),
+                       content:Text('Blaming yourself for something you were not entirely responsible for, '
+                           'or blaming on others and overlooking the ways you contributed to a problem')
                      );
                      showDialog(
                        context:context,
@@ -371,8 +380,9 @@ class _Distortions extends State<ThoughtDistortion>{
                  GestureDetector(
                    onTap:(){
                      AlertDialog alert=AlertDialog(
-                       title:Text('Catastrophizing: Thinking the worst possible outcome and neglecting to consider positive or neutral outcomes '
-                           '(even though neutral outcomes might be more likely)'),
+                       title:Text('Catastrophizing'),
+                       content: Text('Thinking the worst possible outcome and neglecting to consider positive or neutral outcomes '
+                           '(even though neutral outcomes might be more likely)')
                      );
                      showDialog(
                        context:context,
@@ -387,7 +397,8 @@ class _Distortions extends State<ThoughtDistortion>{
                  GestureDetector(
                    onTap:(){
                      AlertDialog alert=AlertDialog(
-                       title:Text('Personalization: Seeing yourself as the cause of something you did not cause'),
+                       title:Text('Personalization'),
+                       content: Text('Seeing yourself as the cause of something you did not cause')
                      );
                      showDialog(
                        context:context,
@@ -447,7 +458,7 @@ class _Distortions extends State<ThoughtDistortion>{
          Spacer(),
          Row(children: [
            IconButton(
-               iconSize: 36,
+               iconSize: getProportionateScreenHeight(36),
                icon: Icon(Icons.arrow_back_ios),
                onPressed: () {
                  Navigator.pop(context);
@@ -460,11 +471,11 @@ class _Distortions extends State<ThoughtDistortion>{
                        fontSize: getProportionateScreenWidth(14),
                        color: Colors.red))),
            IconButton(
-               iconSize: 36,
+               iconSize: getProportionateScreenHeight(36),
                icon: Icon(Icons.arrow_forward_ios),
                onPressed: () {
                  if (checkedDistortions.isEmpty) {
-                   error = 'Please select corresponding distortions';
+                   error = 'Please select the distortion(s)';
                    setState(() {});
                    return;
                  };

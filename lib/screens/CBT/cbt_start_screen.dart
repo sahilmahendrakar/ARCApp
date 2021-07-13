@@ -60,7 +60,7 @@ class CBTStartScreen extends StatelessWidget {
             Container(
               padding: EdgeInsets.only(top: getProportionateScreenHeight(16)),
               child: Text(
-                  '**Disclaimer: these data are not actively being monitored. If you’re feeling like you need help, please reach out [provider]',
+                  '**Disclaimer: these data are not actively being monitored. If you’re feeling like you need help, please reach out to your healthcare provider. You can also reach out 24 hours a day, 7 days a week to NYC Well for counseling and mental health support via phone, text, or call. Their services can be accessed at https://nycwell.cityofnewyork.us/en/',
                   style: TextStyle(
                       fontSize: getProportionateScreenWidth(10),
                       color: Colors.grey)),
