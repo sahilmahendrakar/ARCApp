@@ -1,6 +1,7 @@
 import 'package:arc_app/auth/authentication_service.dart';
 import 'package:arc_app/constants.dart';
 import 'package:arc_app/screens/settings/emergency_contact_screen.dart';
+import 'package:arc_app/screens/settings/password_screen.dart';
 import 'package:arc_app/screens/settings/studyid_screen.dart';
 import 'package:arc_app/screens/settings/trusted_support_screen.dart';
 import 'package:arc_app/screens/settings/username_screen.dart';
@@ -52,12 +53,13 @@ class _SettingsScreenState extends State<SettingsScreen> {
         appBar: AppBar(
           title: Text("Settings"),
           actions: [
-          IconButton(
-              onPressed: () {
-                Navigator.pushNamed(context, SettingsScreen.routeName);
-              },
-              icon: Icon(Icons.help))
-        ],
+            IconButton(
+                onPressed: () {
+                  //Replace with help page
+                  Navigator.pushNamed(context, SettingsScreen.routeName);
+                },
+                icon: Icon(Icons.help))
+          ],
         ),
         body: Column(
           children: [
@@ -84,18 +86,25 @@ class _SettingsScreenState extends State<SettingsScreen> {
                       SettingsTile(
                         title: 'Study ID',
                         subtitle: studyId,
+                        // Uncomment code below to make study id editable
+                        // onPressed: (context) {
+                        //   Navigator.push(
+                        //       context,
+                        //       MaterialPageRoute(
+                        //           builder: (context) =>
+                        //               StudyIdSettingsScreen()));
+                        // },
+                      ),
+                      SettingsTile(
+                        title: 'Password',
+                        subtitle: '*********',
                         onPressed: (context) {
                           Navigator.push(
                               context,
                               MaterialPageRoute(
                                   builder: (context) =>
-                                      StudyIdSettingsScreen()));
+                                      PasswordSettingsScreen()));
                         },
-                      ),
-                      SettingsTile(
-                        title: 'Password',
-                        subtitle: '*********',
-                        onPressed: (context) {},
                       )
                     ],
                   ),
@@ -124,7 +133,8 @@ class _SettingsScreenState extends State<SettingsScreen> {
                           Navigator.push(
                               context,
                               MaterialPageRoute(
-                                  builder: (context) => EmergencyContactSettingsScreen()));
+                                  builder: (context) =>
+                                      EmergencyContactSettingsScreen()));
                         },
                       ),
                       SettingsTile(
@@ -134,7 +144,8 @@ class _SettingsScreenState extends State<SettingsScreen> {
                           Navigator.push(
                               context,
                               MaterialPageRoute(
-                                  builder: (context) => TrustedSupportSettingsScreen()));
+                                  builder: (context) =>
+                                      TrustedSupportSettingsScreen()));
                         },
                       ),
                     ],
