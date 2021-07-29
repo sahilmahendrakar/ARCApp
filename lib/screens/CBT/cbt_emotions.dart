@@ -26,10 +26,10 @@ class _EmotionBodyState extends State<EmotionBody> {
     'Fear',
     'Sadness',
     'Anger',
-    'Guilt',
-    'Irritation',
-    'Disgust',
-    'Embarrassment',
+    'Shame',
+    'Jealousy',
+    'Envy',
+    'Worthlessness',
     'Other:    '
   ];
   String error = '';
@@ -56,7 +56,7 @@ class _EmotionBodyState extends State<EmotionBody> {
         child: ListView(
           children: [
             Text(
-                  'What unpleasant emotion(s) are you feeling?',
+                  'What difficult feeling(s) are you experiencing?',
                   style: TextStyle(
                       fontSize: getProportionateScreenWidth(20),
                       fontWeight: FontWeight.w600,
@@ -178,7 +178,7 @@ class _EmotionBodyState extends State<EmotionBody> {
   Widget sliderInstructions() {
     if (checkedEmotions.isEmpty) return Text('');
     return Text(
-      'On a scale of 0-10, how intense is each emotion?',
+      'On a scale of 0-10, how intense is each feeling?',
       style: TextStyle(
           fontSize: getProportionateScreenWidth(20),
           fontWeight: FontWeight.w600,
@@ -215,20 +215,20 @@ class _EmotionBodyState extends State<EmotionBody> {
               icon: Icon(Icons.arrow_forward_ios),
               onPressed: () {
                 if (checkedEmotions.isEmpty) {
-                  error = 'Please select an emotion';
+                  error = 'Please select a feeling';
                   setState(() {});
                   return;
                 }
-              //User user = FirebaseAuth.instance.currentUser!;
-               // Map<String,double> emotionData = new Map();
-             //   for(Emotion e in checkedEmotions)
-              //    {
-             //       emotionData[e.name] = e.currentEmotionValue;
-            //      }
+              User user = FirebaseAuth.instance.currentUser!;
+                Map<String,double> emotionData = new Map();
+                for(Emotion e in checkedEmotions)
+                 {
+                    emotionData[e.name] = e.currentEmotionValue;
+                 }
               if (dataKey == null)
                   dataKey = ref.push().key;
-              //  ref.child(user.uid).child("emotion-data").child(dataKey!).child('before').set(emotionData);
-             //   ref.child(user.uid).child("emotion-data").child(dataKey!).child('beforeTime').set(DateTime.now().toString());
+              ref.child(user.uid).child("emotion-data:").child(dataKey!).child('before').set(emotionData);
+             ref.child(user.uid).child("emotion-data:").child(dataKey!).child('beforeTime').set(DateTime.now().toString());
 
 
 

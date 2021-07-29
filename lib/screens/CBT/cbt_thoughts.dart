@@ -45,7 +45,7 @@ class _ThoughtsBodyState extends State<ThoughtsBody> {
             children: [
               Container(
                   child: Text(
-                    'What thought(s) and/or image(s) went through your mind?',
+                    'What automatic thought(s) or image(s) went through your mind?',
                     style: TextStyle(
                         fontSize: getProportionateScreenWidth(20),
                         fontWeight: FontWeight.w600,

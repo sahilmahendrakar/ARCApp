@@ -25,13 +25,10 @@ class SensationBody extends StatefulWidget {
 
 class _SensationBody extends State<SensationBody> {
   final List<String> sensationNames = [
-    'Nausea',
-    'Headache',
-    'Insomnia',
-    'Fatigue',
+    'Nausea/Pit in stomach',
     'Shortness of breath',
     'Sweating',
-    'Chest pain',
+    'Chest pain/Racing heart',
     'Trembling/Shaking',
     'Other:    ',
   ];
@@ -91,7 +88,7 @@ class _SensationBody extends State<SensationBody> {
               SizedBox(height: getProportionateScreenHeight(20)),
               Container(
                   child: Text(
-                    'What (if any) distressing physical sensations did you have?',
+                    'What (if any) distressing physical feelings did you have?',
                     style: TextStyle(
                         fontSize: getProportionateScreenWidth(18),
                         fontWeight: FontWeight.w600,

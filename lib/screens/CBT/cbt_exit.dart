@@ -25,7 +25,7 @@ class CBTExit extends StatelessWidget {
                         height: getProportionateScreenHeight(250)),
             SizedBox(height: getProportionateScreenHeight(20)),
             Text(
-                  'Thank you for completing the CBT module!',
+                  'Thank you for completing the CBT-based module!',
                   textAlign: TextAlign.center,
                   style: TextStyle(
                       color: pureWhite,
@@ -35,7 +35,7 @@ class CBTExit extends StatelessWidget {
             SizedBox(height: getProportionateScreenHeight(40)),
 
             Text(
-                  'Please feel free to return to this module anytime you are feeling stressed, depressed, or anxious.',
+                  'Please feel free to return and complete the module again anytime you are feeling stressed, depressed, or anxious.',
                   textAlign: TextAlign.center,
                   style: TextStyle(
                       color: pureWhite,

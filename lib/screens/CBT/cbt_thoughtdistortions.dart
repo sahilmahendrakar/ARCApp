@@ -155,7 +155,7 @@ class _Distortions extends State<ThoughtDistortion>{
              Container(
            child:
         Text(
-           'Which cognitive distortion(s) did you make?',
+           'Select Cognitive Distortions:',
            style: TextStyle(
                fontSize: getProportionateScreenWidth(20),
                fontWeight: FontWeight.w600,
@@ -163,7 +163,21 @@ class _Distortions extends State<ThoughtDistortion>{
            textAlign: TextAlign.center,
 
          ),),
-        SizedBox(height:20),
+             SizedBox(height:getProportionateScreenHeight(4)),
+             Padding(
+               padding: EdgeInsets.symmetric(horizontal: getProportionateScreenWidth(13)),
+               child: Text(
+                     'Click on the picture of a cognitive distortion to read its description. If you think the '
+                     'distortion applies to your current thoughts, mark the box below it with a check mark.',
+                 style: TextStyle(
+                     fontSize: getProportionateScreenWidth(14),
+                     //fontWeight: FontWeight.w600,
+                     color: primary),
+                 textAlign: TextAlign.center,
+
+               ),
+             ),
+        SizedBox(height:getProportionateScreenHeight(20)),
        Container(
 
 
@@ -191,7 +205,7 @@ class _Distortions extends State<ThoughtDistortion>{
                    },
 
                    child: ClipRRect(
-                     borderRadius: BorderRadius.circular(25),
+                     //borderRadius: BorderRadius.circular(25),
                      child:
                   Image.asset('assets/images/allornoth.jpg', width: getProportionateScreenWidth(70),
                  height: getProportionateScreenHeight(70)), ),),

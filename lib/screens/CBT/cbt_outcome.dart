@@ -37,10 +37,14 @@ class _OutcomeBodyState extends State<OutcomeBody> {
     'Fear',
     'Sadness',
     'Anger',
-    'Guilt',
-    'Irritation',
-    'Disgust',
-    'Embarrassment',
+    'Shame',
+    'Jealousy',
+    'Envy',
+    'Worthlessness',
+    'Happiness',
+    'Calmness',
+    'Confidence',
+    'Surprise',
     'Other:    '
   ];
   String error = '';
@@ -281,15 +285,15 @@ class _OutcomeBodyState extends State<OutcomeBody> {
             return;
           }
 
-          //User user = FirebaseAuth.instance.currentUser!;
-          //Map<String,double> emotionData = new Map();
-          //for(Emotion e in checkedEmotions)
-         // {
-         //   emotionData[e.name] = e.currentEmotionValue;
-          //}
+          User user = FirebaseAuth.instance.currentUser!;
+          Map<String,double> emotionData = new Map();
+          for(Emotion e in checkedEmotions)
+          {
+           emotionData[e.name] = e.currentEmotionValue;
+          }
 
-          //ref.child(user.uid).child("emotion-data").child(dataKey).child('after').set(emotionData);
-          //ref.child(user.uid).child("emotion-data").child(dataKey).child('afterTime').set(DateTime.now().toString());
+          ref.child(user.uid).child("emotion-data:").child(dataKey).child('after').set(emotionData);
+          ref.child(user.uid).child("emotion-data:").child(dataKey).child('afterTime').set(DateTime.now().toString());
           //probably also need some communication with the rest of the app that cbt
           //was completed for timeline
           Navigator.push(context,

@@ -106,9 +106,13 @@ class _ResponseBodyState extends State<ResponseBody> {
           alignment: Alignment(-1, 0),
           padding: EdgeInsets.only(left: getProportionateScreenWidth(16)),
           child: Text(
-              '• Insert question here?\n'
-              '• Insert another question here?\n'
-              '• More questions here?',
+              '1) What is the evidence that the automatic thought is true? Not true?\n'
+              '2) Is there an alternative explanation?\n'
+              '3) What’s the worst that could happen? Could I live through it? What’s the best that could happen? '
+                  'What’s the most realistic outcome?\n'
+              '4) What’s the effect of my believing the automatic thought? What could be the effect of changing my thinking?\n'
+              '5) What should I do about it?\n'
+              '6) If ______ (friend’s name) was in the situation and had this thought, what would I tell them?',
               style: TextStyle(
                   color: Colors.grey,
                   fontSize: getProportionateScreenWidth(14))),
