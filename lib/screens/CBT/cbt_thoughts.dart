@@ -44,6 +44,39 @@ class _ThoughtsBodyState extends State<ThoughtsBody> {
           child: ListView(
             children: [
               Container(
+                child: Text(
+                    'What event, daydream, or recollection led to the unpleasant emotion?',
+                    style: TextStyle(
+                        fontSize: getProportionateScreenWidth(20),
+                        fontWeight: FontWeight.w600,
+                        color: darkestBlue)),
+              ),
+              SizedBox(height: getProportionateScreenHeight(8)),
+             Container(
+                child: Column(children: [
+                  TextFormField(
+                    decoration: InputDecoration(
+                        labelStyle: TextStyle(
+                            color: secondary, fontWeight: FontWeight.w600),
+                        hintText: 'Enter here...',
+                        hintStyle: TextStyle(color: tertiary)),
+                    validator: (value) {
+                      if (value == null || value.isEmpty)
+                        return 'Please enter the event/daydream etc.';
+                      return null;
+                    },
+                    enableInteractiveSelection: true,
+                    maxLines: null,
+                    onEditingComplete: () {
+                      setState(() {});
+                    },
+                    cursorColor: secondary,
+                    style: TextStyle(color: primary),
+                  ),
+                ]),
+              ),
+              SizedBox(height: getProportionateScreenHeight(40)),
+              Container(
                   child: Text(
                     'What automatic thought(s) or image(s) went through your mind?',
                     style: TextStyle(
@@ -83,7 +116,7 @@ class _ThoughtsBodyState extends State<ThoughtsBody> {
                 textSelectionTheme: TextSelectionThemeData(
                     selectionColor: tertiary, selectionHandleColor: secondary)),
             child: Container(
-              padding: EdgeInsets.only(top: getProportionateScreenHeight(16)),
+              padding: EdgeInsets.only(top: getProportionateScreenHeight(8)),
               child: Column(children: [
                 //Text('Thought', style: TextStyle(fontSize: getProportionateScreenWidth(16),color: primary,fontWeight: FontWeight.w600,)),
                 TextFormField(
@@ -251,7 +284,7 @@ class _ThoughtsBodyState extends State<ThoughtsBody> {
   }
 
   Widget plusButton() {
-    if(thoughts.length < 3)
+    if(thoughts.length < 2)
     return Row(children: [
       Spacer(),
       IconButton(

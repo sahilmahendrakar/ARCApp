@@ -47,6 +47,24 @@ class _OutcomeBodyState extends State<OutcomeBody> {
     'Surprise',
     'Other:    '
   ];
+
+  /**
+      final List<String> emotionNames = [
+      'Fear/Anxiety/Worry',
+      'Sadness',
+      'Loneliness',
+      'Helplessness/Hopelessness',
+      'Anger/Frustration',
+      'Shame/Guilt/Embarassment',
+      'Jealousy/Envy',
+      'Worthlessness',
+      'Happiness',
+      'Calmness',
+      'Confidence',
+      'Surprise',
+      'Other:    '
+      ];*/
+
   String error = '';
   Set<Emotion> checkedEmotions = {};
   Set<Emotion> emotions = {};

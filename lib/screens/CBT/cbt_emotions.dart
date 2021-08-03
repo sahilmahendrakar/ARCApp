@@ -1,7 +1,7 @@
 import 'package:arc_app/size_config.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:arc_app/screens/CBT/cbt_situation.dart';
+import 'package:arc_app/screens/CBT/cbt_sensations.dart';
 import 'package:arc_app/constants.dart';
 import 'package:firebase_database/firebase_database.dart';
 
@@ -30,8 +30,30 @@ class _EmotionBodyState extends State<EmotionBody> {
     'Jealousy',
     'Envy',
     'Worthlessness',
+    'Happiness',
+    'Calmness',
+    'Confidence',
+    'Surprise',
     'Other:    '
   ];
+
+  /**
+  final List<String> emotionNames = [
+    'Fear/Anxiety/Worry',
+    'Sadness',
+      'Loneliness',
+      'Helplessness/Hopelessness',
+    'Anger/Frustration',
+    'Shame/Guilt/Embarassment',
+    'Jealousy/Envy',
+    'Worthlessness',
+    'Happiness',
+    'Calmness',
+    'Confidence',
+    'Surprise',
+    'Other:    '
+  ];*/
+
   String error = '';
   Set<Emotion> checkedEmotions = {};
   Set<Emotion> emotions = {};
@@ -56,7 +78,7 @@ class _EmotionBodyState extends State<EmotionBody> {
         child: ListView(
           children: [
             Text(
-                  'What difficult feeling(s) are you experiencing?',
+                  'What feeling(s) are you experiencing?',
                   style: TextStyle(
                       fontSize: getProportionateScreenWidth(20),
                       fontWeight: FontWeight.w600,
