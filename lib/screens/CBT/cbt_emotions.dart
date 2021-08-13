@@ -25,35 +25,17 @@ class _EmotionBodyState extends State<EmotionBody> {
   final List<String> emotionNames = [
     'Fear',
     'Sadness',
+    'Loneliness',
     'Anger',
     'Shame',
     'Jealousy',
-    'Envy',
     'Worthlessness',
-    'Happiness',
-    'Calmness',
-    'Confidence',
-    'Surprise',
+    'Happy',
+    'Calm',
+    'Hopeful',
+    'Grateful',
     'Other:    '
   ];
-
-  /**
-  final List<String> emotionNames = [
-    'Fear/Anxiety/Worry',
-    'Sadness',
-      'Loneliness',
-      'Helplessness/Hopelessness',
-    'Anger/Frustration',
-    'Shame/Guilt/Embarassment',
-    'Jealousy/Envy',
-    'Worthlessness',
-    'Happiness',
-    'Calmness',
-    'Confidence',
-    'Surprise',
-    'Other:    '
-  ];*/
-
   String error = '';
   Set<Emotion> checkedEmotions = {};
   Set<Emotion> emotions = {};
@@ -249,13 +231,15 @@ class _EmotionBodyState extends State<EmotionBody> {
                  }
               if (dataKey == null)
                   dataKey = ref.push().key;
+              try{
               ref.child(user.uid).child("emotion-data:").child(dataKey!).child('before').set(emotionData);
-             ref.child(user.uid).child("emotion-data:").child(dataKey!).child('beforeTime').set(DateTime.now().toString());
+             ref.child(user.uid).child("emotion-data:").child(dataKey!).child('beforeTime').set(DateTime.now().toString());}
+             catch(e){}
 
 
 
                 Navigator.push(context,
-                MaterialPageRoute(builder: (context) => CBTSituation(dataKey!)));
+                MaterialPageRoute(builder: (context) => CBTSensation(dataKey!)));
               },
               color: tertiary)
         ])

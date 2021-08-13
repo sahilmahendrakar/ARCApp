@@ -1,6 +1,6 @@
 import 'package:arc_app/size_config.dart';
 import 'package:flutter/material.dart';
-import 'package:arc_app/screens/CBT/cbt_thoughtdistortions.dart';
+import 'package:arc_app/screens/CBT/cbt_distortioninfo.dart';
 import 'package:arc_app/constants.dart';
 
 class CBTThoughts extends StatelessWidget {
@@ -43,6 +43,7 @@ class _ThoughtsBodyState extends State<ThoughtsBody> {
               vertical: getProportionateScreenHeight(16)),
           child: ListView(
             children: [
+
               Container(
                 child: Text(
                     'What event, daydream, or recollection led to the unpleasant emotion?',
@@ -271,7 +272,7 @@ class _ThoughtsBodyState extends State<ThoughtsBody> {
                            List<String> temp = [];
                             for (Thought t in thoughts)
                                 temp.add(t.controller.text);
-                              return ThoughtDistortions(temp,dataKey);
+                              return CBTDistortionInfo(temp,dataKey);
                          }
                 ))
                   ;

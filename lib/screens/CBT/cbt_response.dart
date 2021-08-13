@@ -92,6 +92,7 @@ class _ResponseBodyState extends State<ResponseBody> {
                     color: Colors.grey,
                     fontSize: getProportionateScreenWidth(14),
                     fontWeight: FontWeight.w600)),
+            Spacer(),
             IconButton(
                 color: Colors.grey,
                 iconSize: (getProportionateScreenHeight(24)),
@@ -127,6 +128,7 @@ class _ResponseBodyState extends State<ResponseBody> {
                   color: Colors.grey,
                   fontSize: getProportionateScreenWidth(14),
                   fontWeight: FontWeight.w600)),
+          Spacer(),
           IconButton(
               color: Colors.grey,
               iconSize: (getProportionateScreenHeight(24)),

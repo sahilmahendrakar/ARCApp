@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:arc_app/constants.dart';
 import '../../size_config.dart';
-import 'cbt_thoughts.dart';
+import 'cbt_situation.dart';
 import 'package:arc_app/screens/CBT/cbt_TIPP.dart';
 
-class CBTSituation extends StatelessWidget {
+class CBTSensation extends StatelessWidget {
   final String dataKey;
-  CBTSituation(this.dataKey, {Key? key}) : super(key: key);
+  CBTSensation(this.dataKey, {Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -226,7 +226,7 @@ class _SensationBody extends State<SensationBody> {
                   Navigator.push(
                       context,
                       MaterialPageRoute(
-                          builder: (context) => CBTThoughts(dataKey)));
+                          builder: (context) => CBTSituation(dataKey)));
               },
               color: tertiary)
         ])
@@ -290,7 +290,7 @@ class _SensationBody extends State<SensationBody> {
               child: TextButton(
                 onPressed: () {
                   Navigator.pop(context);
-                  Navigator.push( context,MaterialPageRoute(builder: (context) => CBTThoughts(dataKey)));
+                  Navigator.push( context,MaterialPageRoute(builder: (context) => CBTSituation(dataKey)));
                 },
                 child: Text('SKIP', style: TextStyle(fontSize: getProportionateScreenWidth(16))),
                 style: TextButton.styleFrom(

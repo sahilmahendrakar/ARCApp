@@ -36,34 +36,17 @@ class _OutcomeBodyState extends State<OutcomeBody> {
   final List<String> emotionNames = [
     'Fear',
     'Sadness',
+    'Loneliness',
     'Anger',
     'Shame',
     'Jealousy',
-    'Envy',
     'Worthlessness',
-    'Happiness',
-    'Calmness',
-    'Confidence',
-    'Surprise',
+    'Happy',
+    'Calm',
+    'Hopeful',
+    'Grateful',
     'Other:    '
   ];
-
-  /**
-      final List<String> emotionNames = [
-      'Fear/Anxiety/Worry',
-      'Sadness',
-      'Loneliness',
-      'Helplessness/Hopelessness',
-      'Anger/Frustration',
-      'Shame/Guilt/Embarassment',
-      'Jealousy/Envy',
-      'Worthlessness',
-      'Happiness',
-      'Calmness',
-      'Confidence',
-      'Surprise',
-      'Other:    '
-      ];*/
 
   String error = '';
   Set<Emotion> checkedEmotions = {};
@@ -87,6 +70,7 @@ class _OutcomeBodyState extends State<OutcomeBody> {
             vertical: getProportionateScreenHeight(16)),
         child: ListView(
           children: [
+            /**
             Container(
               child: Text(
                 'On a scale of 0-10, how much do you now believe each thought?',
@@ -99,7 +83,7 @@ class _OutcomeBodyState extends State<OutcomeBody> {
               padding: EdgeInsets.fromLTRB(0, getProportionateScreenHeight(16),
                   0, getProportionateScreenHeight(16)),
             ),
-            Column(children: buildThoughtSliders()),
+            Column(children: buildThoughtSliders()),*/
             Container(
                 child: Text(
                   'What emotion(s) do you feel now?',

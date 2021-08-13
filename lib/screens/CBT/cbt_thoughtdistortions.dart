@@ -148,7 +148,7 @@ class _Distortions extends State<ThoughtDistortion>{
 
       child: Stack( children: [
         /* new Scaffold(
-           backgroundColor: Colors.blueGrey[900],
+           backgroundColor: Colors.blueGrey[800],
          ), */
         Container(
           padding: EdgeInsets.symmetric(
@@ -173,7 +173,7 @@ class _Distortions extends State<ThoughtDistortion>{
               padding:EdgeInsets.symmetric(horizontal:getProportionateScreenWidth(13)),
               child: Text(
                   "Click on the picture of a cognitive distortion to read its description. "
-              "If you think the distortion applies to your current thoughts, mark the box below it with a check mark."
+              "If you think the distortion applies to your current thoughts, mark the box below it with a check mark. "
               "You can select up to two distortions.",
              style: TextStyle(
                   fontSize:getProportionateScreenWidth(14),
@@ -212,8 +212,8 @@ class _Distortions extends State<ThoughtDistortion>{
                         child: ClipRRect(
                           //borderRadius: BorderRadius.circular(25),
                           child:
-                          Image.asset('assets/images/allornoth.jpg', width: getProportionateScreenWidth(90),
-                              height: getProportionateScreenHeight(90)),
+                          Image.asset('assets/images/allornoth.jpg', width: getProportionateScreenWidth(80),
+                              height: getProportionateScreenHeight(80)),
                         ),),
 
                       GestureDetector(
@@ -230,8 +230,8 @@ class _Distortions extends State<ThoughtDistortion>{
                           );
                         },
                         child:
-                        Image.asset("assets/images/catastroph.jpg", width: getProportionateScreenWidth(90),
-                            height: getProportionateScreenHeight(90)), ),
+                        Image.asset("assets/images/catastroph.jpg", width: getProportionateScreenWidth(80),
+                            height: getProportionateScreenHeight(80)), ),
                       GestureDetector(
                         onTap:(){
                           AlertDialog alert=AlertDialog(
@@ -246,8 +246,8 @@ class _Distortions extends State<ThoughtDistortion>{
                           );
                         },
                         child:
-                        Image.asset("assets/images/mindreader.jpg", width: getProportionateScreenWidth(90),
-                            height: getProportionateScreenHeight(90)),),
+                        Image.asset("assets/images/mindreader.jpg", width: getProportionateScreenWidth(80),
+                            height: getProportionateScreenHeight(80)),),
 
                     ],
                   ),
@@ -288,8 +288,8 @@ class _Distortions extends State<ThoughtDistortion>{
                           );
                         },
                         child:
-                        Image.asset('assets/images/fortuneteller.jpg', width: getProportionateScreenWidth(90),
-                            height: getProportionateScreenHeight(90)),),
+                        Image.asset('assets/images/fortuneteller.jpg', width: getProportionateScreenWidth(80),
+                            height: getProportionateScreenHeight(80)),),
                       GestureDetector(
                         onTap:(){
                           AlertDialog alert=AlertDialog(
@@ -304,8 +304,8 @@ class _Distortions extends State<ThoughtDistortion>{
                           );
                         },
                         child:
-                        Image.asset("assets/images/filterer.jpg", width: getProportionateScreenWidth(90),
-                            height: getProportionateScreenHeight(90)),),
+                        Image.asset("assets/images/filterer.jpg", width: getProportionateScreenWidth(80),
+                            height: getProportionateScreenHeight(80)),),
                       GestureDetector(
                         onTap:(){
                           AlertDialog alert=AlertDialog(
@@ -321,18 +321,26 @@ class _Distortions extends State<ThoughtDistortion>{
                           );
                         },
                         child:
-                        Image.asset("assets/images/downplayer.jpg", width: getProportionateScreenWidth(90),
-                            height: getProportionateScreenHeight(90)),),
+                        Image.asset("assets/images/downplayer.jpg", width: getProportionateScreenWidth(80),
+                            height: getProportionateScreenHeight(80)),),
                     ],
                   ),
                   Row(
                     mainAxisAlignment:MainAxisAlignment.spaceEvenly,
                     //crossAxisAlignment: CrossAxisAlignment.stretch,
                     children:<Widget>[
+                      Column( children:<Widget>[
 
-                      checkbox('fo',fortuneteller ),
-                      checkbox('fi',filterer),
-                      checkbox('d',downplayer),
+                        Text("Fortune Teller", style: TextStyle(fontSize:11,),),checkbox('fo',fortuneteller ),]),
+                      Column( children:<Widget>[
+
+                        Text("Filterer", style: TextStyle(fontSize:11,),),checkbox('fi',filterer),]),
+                      Column( children:<Widget>[
+
+                        Text("Downplayer", style: TextStyle(fontSize:11,),),checkbox('d',downplayer),]),
+
+
+
                     ],
                   ),
                   SizedBox(height: 20),
@@ -354,8 +362,8 @@ class _Distortions extends State<ThoughtDistortion>{
                           );
                         },
                         child:
-                        Image.asset('assets/images/emotionalreas.jpg', width: getProportionateScreenWidth(90),
-                            height: getProportionateScreenHeight(90)),),
+                        Image.asset('assets/images/emotionalreas.jpg', width: getProportionateScreenWidth(80),
+                            height: getProportionateScreenHeight(80)),),
                       GestureDetector(
                         onTap:(){
                           AlertDialog alert=AlertDialog(
@@ -370,8 +378,8 @@ class _Distortions extends State<ThoughtDistortion>{
                           );
                         },
                         child:
-                        Image.asset("assets/images/should.jpg", width: getProportionateScreenWidth(90),
-                            height: getProportionateScreenHeight(90)),),
+                        Image.asset("assets/images/should.jpg", width: getProportionateScreenWidth(80),
+                            height: getProportionateScreenHeight(80)),),
                       GestureDetector(
                         onTap:(){
                           AlertDialog alert=AlertDialog(
@@ -388,17 +396,26 @@ class _Distortions extends State<ThoughtDistortion>{
                           );
                         },
                         child:
-                        Image.asset("assets/images/labeler.jpg", width: getProportionateScreenWidth(90),
-                            height: getProportionateScreenHeight(90)),),
+                        Image.asset("assets/images/labeler.jpg", width: getProportionateScreenWidth(80),
+                            height: getProportionateScreenHeight(80)),),
                     ],
                   ),
                   Row(
                     mainAxisAlignment:MainAxisAlignment.spaceEvenly,
                     //crossAxisAlignment: CrossAxisAlignment.stretch,
                     children:<Widget>[
-                      checkbox('e',emotionalreas),
-                      checkbox('s',should),
-                      checkbox('l',labeler),
+                      Column( children:<Widget>[
+
+                        Text("Emotional Reasoner", style: TextStyle(fontSize:11,),),checkbox('e',emotionalreas),]),
+                      Column( children:<Widget>[
+
+                        Text("\"Should\" Stickler    ", style: TextStyle(fontSize:11,),),checkbox('s',should),]),
+                      Column( children:<Widget>[
+
+                        Text("     Labeler     ", style: TextStyle(fontSize:11,),),checkbox('l',labeler),]),
+
+
+
                     ],
                   ),
                   SizedBox(height: 20),
@@ -426,15 +443,18 @@ class _Distortions extends State<ThoughtDistortion>{
                           );
                         },
                         child:
-                        Image.asset('assets/images/personal.jpg', width: getProportionateScreenWidth(90),
-                            height: getProportionateScreenHeight(90)),),
+                        Image.asset('assets/images/personal.jpg', width: getProportionateScreenWidth(80),
+                            height: getProportionateScreenHeight(80)),),
                     ],
                   ),
                   Row(
                     mainAxisAlignment:MainAxisAlignment.spaceAround,
                     //crossAxisAlignment: CrossAxisAlignment.stretch,
                     children:<Widget>[
-                      checkbox('p',personal),
+                      Column( children:<Widget>[
+
+                        Text("Personalization", style: TextStyle(fontSize:11,),),checkbox('p',personal),]),
+
 
                     ],
                   ),
