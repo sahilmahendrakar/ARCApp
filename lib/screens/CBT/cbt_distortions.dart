@@ -115,7 +115,7 @@ class _Distortions extends State<ThoughtDistortion> {
                           color: primary),
                       textAlign: TextAlign.center),
                 ),
-                SizedBox(height: getProportionateScreenHeight(8)),
+                SizedBox(height: getProportionateScreenHeight(16)),
                 buildDistortions(),
               ],
             ),
@@ -220,6 +220,7 @@ class _Distortions extends State<ThoughtDistortion> {
         if (pos == 3)
           {
             temp.add(Row(mainAxisAlignment: MainAxisAlignment.spaceEvenly,children: currentRow));
+            temp.add(SizedBox(height: getProportionateScreenHeight(8)));
             pos = 0;
             currentRow = [];
           }
