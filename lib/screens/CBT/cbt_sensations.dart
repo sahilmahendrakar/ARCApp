@@ -5,23 +5,23 @@ import 'cbt_situation.dart';
 import 'package:arc_app/screens/CBT/cbt_TIPP.dart';
 
 class CBTSensation extends StatelessWidget {
-  final String dataKey;
-  CBTSensation(this.dataKey, {Key? key}) : super(key: key);
+  final Map<String, double> emotionData;
+  CBTSensation(this.emotionData, {Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: SensationBody(dataKey),
+      body: SensationBody(emotionData),
     );
   }
 }
 
 class SensationBody extends StatefulWidget {
-  final String dataKey;
-  SensationBody(this.dataKey, {Key? key}) : super(key: key);
+  final Map<String, double> emotionData;
+  SensationBody(this.emotionData, {Key? key}) : super(key: key);
 
   @override
-  _SensationBody createState() => _SensationBody(dataKey);
+  _SensationBody createState() => _SensationBody(emotionData);
 }
 
 class _SensationBody extends State<SensationBody> {
@@ -35,12 +35,12 @@ class _SensationBody extends State<SensationBody> {
   ];
   Set<Sensation> checkedSensations = {};
   Set<Sensation> sensations = {};
-  final String dataKey;
+  final Map<String, double> emotionData;
   final formKey = GlobalKey<FormState>();
   final TextEditingController otherController = TextEditingController();
   String error = '';
 
-  _SensationBody(this.dataKey) {
+  _SensationBody(this.emotionData) {
     for (String name in sensationNames) sensations.add(Sensation(name));
   }
 
@@ -94,8 +94,6 @@ class _SensationBody extends State<SensationBody> {
         dense: true,
         onChanged: (bool? value) {
           setState(() {
-
-
             s.isChecked = value!;
             if (s.isChecked)
               checkedSensations.add(s);
@@ -163,20 +161,15 @@ class _SensationBody extends State<SensationBody> {
         ),
         Container(
           alignment: Alignment(-1, 0),
-          padding: EdgeInsets.fromLTRB(
-              getProportionateScreenWidth(16),
-              0,
-              getProportionateScreenWidth(0),
-              getProportionateScreenHeight(24)),
-          child: SensationDropdown(s),)
-      ]
-      ));
+          padding: EdgeInsets.fromLTRB(getProportionateScreenWidth(16), 0,
+              getProportionateScreenWidth(0), getProportionateScreenHeight(24)),
+          child: SensationDropdown(s),
+        )
+      ]));
     }
 
     return dropdowns;
   }
-
-
 
   Widget dropdownInstructions() {
     if (checkedSensations.isEmpty) return Text('');
@@ -226,7 +219,7 @@ class _SensationBody extends State<SensationBody> {
                   Navigator.push(
                       context,
                       MaterialPageRoute(
-                          builder: (context) => CBTSituation(dataKey)));
+                          builder: (context) => CBTSituation(emotionData)));
               },
               color: tertiary)
         ])
@@ -243,63 +236,74 @@ class _SensationBody extends State<SensationBody> {
       }
     }
     setState(() {
-      error ='';
+      error = '';
     });
     for (Sensation s in checkedSensations) {
       if (s.dropdownVal == 4) {
         AlertDialog alert = AlertDialog(
           title: Text(
-              'Did you know that it is important to physically calm your body before being able to think clearly?',textAlign: TextAlign.center , style: TextStyle(fontSize: getProportionateScreenWidth(20))),
-          content: Text('Since you rated at least one physical feeling as \"highly distressing\", '
+              'Did you know that it is important to physically calm your body before being able to think clearly?',
+              textAlign: TextAlign.center,
+              style: TextStyle(fontSize: getProportionateScreenWidth(20))),
+          content: Text(
+              'Since you rated at least one physical feeling as \"highly distressing\", '
               'we recommend that you use something known as TIPP skills to calm yourself physically before continuing.\n\n'
               'Click the button below for help using these skills.'),
           actions: [
             Container(
-              alignment: Alignment(0,0),
+              alignment: Alignment(0, 0),
               child: TextButton(
                 onPressed: () {
                   Navigator.pop(context);
                   Set<String> sensationNames = {};
-                 for(Sensation s in checkedSensations)
-                   {
-                     if(s.name != 'Other:    ')
-                     sensationNames.add(s.name);
-                     else
-                       {
-                         if(otherController.text == '')
-                           sensationNames.add('Other');
-                         else
-                           sensationNames.add(otherController.text);
-                       }
-                   }
-                  Navigator.push( context,MaterialPageRoute(builder: (context) => TIPPSkills(dataKey,sensationNames)));
+                  for (Sensation s in checkedSensations) {
+                    if (s.name != 'Other:    ')
+                      sensationNames.add(s.name);
+                    else {
+                      if (otherController.text == '')
+                        sensationNames.add('Other');
+                      else
+                        sensationNames.add(otherController.text);
+                    }
+                  }
+                  Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) =>
+                              TIPPSkills(emotionData, sensationNames)));
                 },
-                  child: Text('TIPP SKILLS', style: TextStyle(fontSize: getProportionateScreenWidth(16))),
-              style: TextButton.styleFrom(
-                  primary: pureWhite,
-                  backgroundColor: primary,
-                  shape: StadiumBorder(),
-                  fixedSize: Size(getProportionateScreenWidth(130),getProportionateScreenHeight(30))
-                  //minimumSize: Size(getProportionateScreenWidth(150),
-                     // getProportionateScreenHeight(50))
-                  ),
+                child: Text('TIPP SKILLS',
+                    style:
+                        TextStyle(fontSize: getProportionateScreenWidth(16))),
+                style: TextButton.styleFrom(
+                    primary: pureWhite,
+                    backgroundColor: primary,
+                    shape: StadiumBorder(),
+                    fixedSize: Size(getProportionateScreenWidth(130),
+                        getProportionateScreenHeight(30))
+                    //minimumSize: Size(getProportionateScreenWidth(150),
+                    // getProportionateScreenHeight(50))
+                    ),
               ),
             ),
             Container(
-              alignment: Alignment(0,0),
+              alignment: Alignment(0, 0),
               child: TextButton(
-                onPressed: () {
-                  Navigator.pop(context);
-                  Navigator.push( context,MaterialPageRoute(builder: (context) => CBTSituation(dataKey)));
-                },
-                child: Text('SKIP', style: TextStyle(fontSize: getProportionateScreenWidth(16))),
-                style: TextButton.styleFrom(
-                    primary: primary)
+                  onPressed: () {
+                    Navigator.pop(context);
+                    Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => CBTSituation(emotionData)));
+                  },
+                  child: Text('SKIP',
+                      style:
+                          TextStyle(fontSize: getProportionateScreenWidth(16))),
+                  style: TextButton.styleFrom(primary: primary)
                   //minimumSize: Size(getProportionateScreenWidth(150),
                   // getProportionateScreenHeight(50))
-                ),
-              ),
-
+                  ),
+            ),
           ],
         );
         showDialog(
@@ -325,7 +329,7 @@ class Sensation {
 
 class SensationDropdown extends StatefulWidget {
   final Sensation s;
-  SensationDropdown(this.s,{Key? key}) : super(key: key);
+  SensationDropdown(this.s, {Key? key}) : super(key: key);
 
   @override
   State<StatefulWidget> createState() => _SensationDropdownState(s);
@@ -347,10 +351,11 @@ class _SensationDropdownState extends State<SensationDropdown> {
         iconEnabledColor: secondary,
         style: TextStyle(color: secondary),
         items: [
-          DropdownMenuItem<int>( child: Text(
-            'Click to choose',
-            style: TextStyle(fontWeight: FontWeight.bold),
-          ),
+          DropdownMenuItem<int>(
+              child: Text(
+                'Click to choose',
+                style: TextStyle(fontWeight: FontWeight.bold),
+              ),
               value: 0),
           DropdownMenuItem<int>(
               child: Text('Not at all distressing'), value: 1),

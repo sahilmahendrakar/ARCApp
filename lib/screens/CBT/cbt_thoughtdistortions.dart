@@ -6,25 +6,25 @@ import 'cbt_thoughts.dart';
 
 class ThoughtDistortions extends StatelessWidget {
   final List<String> thoughts;
-  final String dataKey;
-  ThoughtDistortions(this.thoughts, this.dataKey,{Key? key}) : super(key: key);
+  final Map<String,double> emotionData;
+  ThoughtDistortions(this.thoughts, this.emotionData,{Key? key}) : super(key: key);
   @override
   Widget build(BuildContext context) {
     return Scaffold(
 
-      body: ThoughtDistortion(thoughts,dataKey),
+      body: ThoughtDistortion(thoughts,emotionData),
 
     );
   }
 }
 class ThoughtDistortion extends StatefulWidget{
   final List<String> thoughts;
-  final String dataKey;
+  final Map<String,double> emotionData;
 
-  const ThoughtDistortion(this.thoughts,this.dataKey, {Key? key}) : super(key: key);
+  const ThoughtDistortion(this.thoughts,this.emotionData, {Key? key}) : super(key: key);
 
   @override
-  _Distortions createState()=>_Distortions(thoughts,dataKey);
+  _Distortions createState()=>_Distortions(thoughts,emotionData);
 }
 class _Distortions extends State<ThoughtDistortion>{
   /*Map<String, bool?> distortions= {
@@ -42,9 +42,9 @@ class _Distortions extends State<ThoughtDistortion>{
     "right":false };  */
   final List<String> thoughts;
   final List<Thought> responses = [];
-  final String dataKey;
+  final Map<String,double> emotionData;
 
-  _Distortions(this.thoughts,this.dataKey) {
+  _Distortions(this.thoughts,this.emotionData) {
     for (String t in thoughts) responses.add(Thought(t));
   }
 
@@ -504,9 +504,11 @@ class _Distortions extends State<ThoughtDistortion>{
                   return;
                 };
 
+                List<String> temp = [];
+                for(String s in checkedDistortions)
+                  temp.add(s);
 
-
-                Navigator.push(context, MaterialPageRoute(builder: (context) => CBTResponse(thoughts,dataKey)));
+                Navigator.push(context, MaterialPageRoute(builder: (context) => CBTResponse(thoughts,emotionData,temp)));
               },
               color: tertiary)
         ])

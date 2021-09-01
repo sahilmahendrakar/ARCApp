@@ -1,5 +1,4 @@
 import 'package:arc_app/size_config.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:arc_app/screens/CBT/cbt_sensations.dart';
 import 'package:arc_app/constants.dart';
@@ -41,7 +40,6 @@ class _EmotionBodyState extends State<EmotionBody> {
   Set<Emotion> emotions = {};
   final TextEditingController otherController = TextEditingController();
   final ref = FirebaseDatabase.instance.reference();
-  String? dataKey;
 
   _EmotionBodyState() {
     for (String name in emotionNames) emotions.add(Emotion(name));
@@ -49,8 +47,6 @@ class _EmotionBodyState extends State<EmotionBody> {
 
   @override
   Widget build(BuildContext context) {
-
-
     return SafeArea(
         child: Stack(children: [
       Container(
@@ -60,13 +56,13 @@ class _EmotionBodyState extends State<EmotionBody> {
         child: ListView(
           children: [
             Text(
-                  'What feeling(s) are you experiencing?',
-                  style: TextStyle(
-                      fontSize: getProportionateScreenWidth(20),
-                      fontWeight: FontWeight.w600,
-                      color: darkestBlue),
-                  textAlign: TextAlign.center,
-                ),
+              'What feeling(s) are you experiencing?',
+              style: TextStyle(
+                  fontSize: getProportionateScreenWidth(20),
+                  fontWeight: FontWeight.w600,
+                  color: darkestBlue),
+              textAlign: TextAlign.center,
+            ),
             Column(children: buildEmotions()),
             Container(
               padding: EdgeInsets.only(top: getProportionateScreenHeight(8)),
@@ -223,23 +219,20 @@ class _EmotionBodyState extends State<EmotionBody> {
                   setState(() {});
                   return;
                 }
-              User user = FirebaseAuth.instance.currentUser!;
-                Map<String,double> emotionData = new Map();
-                for(Emotion e in checkedEmotions)
-                 {
+                Map<String, double> emotionData = new Map();
+                for (Emotion e in checkedEmotions) {
+                  if (e.name == 'Other:    ' && otherController.text == '')
+                    emotionData['Other'] = e.currentEmotionValue;
+                  else if (e.name == 'Other:    ')
+                    emotionData[otherController.text] = e.currentEmotionValue;
+                  else
                     emotionData[e.name] = e.currentEmotionValue;
-                 }
-              if (dataKey == null)
-                  dataKey = ref.push().key;
-              try{
-              ref.child(user.uid).child("emotion-data:").child(dataKey!).child('before').set(emotionData);
-             ref.child(user.uid).child("emotion-data:").child(dataKey!).child('beforeTime').set(DateTime.now().toString());}
-             catch(e){}
+                }
 
-
-
-                Navigator.push(context,
-                MaterialPageRoute(builder: (context) => CBTSensation(dataKey!)));
+                Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) => CBTSensation(emotionData)));
               },
               color: tertiary)
         ])
@@ -248,8 +241,7 @@ class _EmotionBodyState extends State<EmotionBody> {
   }
 
   @override
-  void dispose()
-  {
+  void dispose() {
     otherController.dispose();
     super.dispose();
   }
@@ -277,11 +269,12 @@ class _EmotionSliderState extends State<EmotionSlider> {
 
   @override
   Widget build(BuildContext context) {
-    return Row(
-      children: [
-        Text('0', style: TextStyle(fontSize: getProportionateScreenWidth(14), color: darkestBlue)),
-        Expanded(
-          child: Slider(
+    return Row(children: [
+      Text('0',
+          style: TextStyle(
+              fontSize: getProportionateScreenWidth(14), color: darkestBlue)),
+      Expanded(
+        child: Slider(
           onChanged: (double value) {
             setState(() {
               e.currentEmotionValue = value;
@@ -294,9 +287,11 @@ class _EmotionSliderState extends State<EmotionSlider> {
           label: e.currentEmotionValue.round().toString(),
           activeColor: secondary,
           inactiveColor: Colors.grey[350],
-      ),
         ),
-      Text('10', style: TextStyle(fontSize: getProportionateScreenWidth(14), color: darkestBlue))]
-    );
+      ),
+      Text('10',
+          style: TextStyle(
+              fontSize: getProportionateScreenWidth(14), color: darkestBlue))
+    ]);
   }
 }

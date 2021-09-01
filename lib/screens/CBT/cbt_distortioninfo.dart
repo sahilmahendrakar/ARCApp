@@ -1,13 +1,13 @@
 import 'package:arc_app/constants.dart';
 import 'package:flutter/material.dart';
-import 'package:arc_app/screens/CBT/cbt_thoughtdistortions.dart';
+import 'package:arc_app/screens/CBT/cbt_distortions.dart';
 
 import '../../size_config.dart';
 
 class CBTDistortionInfo extends StatelessWidget {
   final List<String> thoughts;
-  final String dataKey;
-  CBTDistortionInfo(this.thoughts, this.dataKey, {Key? key}) : super(key: key);
+  final Map<String,double> emotionData;
+  CBTDistortionInfo(this.thoughts, this.emotionData, {Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -74,7 +74,7 @@ class CBTDistortionInfo extends StatelessWidget {
                     context,
                     MaterialPageRoute(
                         builder: (context) =>
-                            ThoughtDistortions(thoughts, dataKey)));
+                            ThoughtDistortions(thoughts, emotionData)));
               },
               color: tertiary)
         ])

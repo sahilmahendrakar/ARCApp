@@ -8,29 +8,29 @@ import 'cbt_sensations.dart';
 
 class TIPPSkills extends StatelessWidget {
   Set<String> sensationNames;
-  String dataKey;
+  final Map<String,double> emotionData;
 
-  TIPPSkills(this.dataKey, this.sensationNames, {Key? key}) : super(key: key);
+  TIPPSkills(this.emotionData, this.sensationNames, {Key? key}) : super(key: key);
   @override
   Widget build(BuildContext context) {
-    return Scaffold(body: TIPPBody(dataKey, sensationNames));
+    return Scaffold(body: TIPPBody(emotionData, sensationNames));
   }
 }
 
 class TIPPBody extends StatefulWidget {
   Set<String> sensationNames;
-  final String dataKey;
-  TIPPBody(this.dataKey, this.sensationNames, {Key? key}) : super(key: key);
+  final Map<String,double> emotionData;
+  TIPPBody(this.emotionData, this.sensationNames, {Key? key}) : super(key: key);
 
   @override
-  _TIPPBodyState createState() => _TIPPBodyState(dataKey, sensationNames);
+  _TIPPBodyState createState() => _TIPPBodyState(emotionData, sensationNames);
 }
 
 class _TIPPBodyState extends State<TIPPBody> {
   Set<String> sensationNames;
   String error = '';
   Set<Sensation> sensations = {};
-  final String dataKey;
+  final Map<String,double> emotionData;
   bool canContinue = false;
   List<Sensation> skillOptions = [
     Sensation('Temperature'),
@@ -72,7 +72,7 @@ class _TIPPBodyState extends State<TIPPBody> {
             '• Notice the tension and the difference when the muscle is relaxed'),
   ];
 
-  _TIPPBodyState(this.dataKey, this.sensationNames) {
+  _TIPPBodyState(this.emotionData, this.sensationNames) {
     for (String s in sensationNames) sensations.add(Sensation(s));
   }
 
@@ -220,7 +220,7 @@ class _TIPPBodyState extends State<TIPPBody> {
                       Navigator.push(
                           context,
                           MaterialPageRoute(
-                              builder: (context) => CBTSituation(dataKey)));
+                              builder: (context) => CBTSituation(emotionData)));
                     }
               },
               style: getButtonStyle())

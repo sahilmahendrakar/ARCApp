@@ -7,23 +7,29 @@ import 'cbt_thoughts.dart';
 
 class CBTResponse extends StatelessWidget {
   final List<String> thoughts;
-  final String dataKey;
-  CBTResponse(this.thoughts, this.dataKey, {Key? key}) : super(key: key);
+  final Map<String, double> emotionData;
+  final List<String> distortions;
+  CBTResponse(this.thoughts, this.emotionData, this.distortions, {Key? key})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(body: ResponseBody(thoughts,dataKey));
+    return Scaffold(body: ResponseBody(thoughts, emotionData, distortions));
   }
 }
 
 class ResponseBody extends StatefulWidget {
   final List<String> thoughts;
-  final String dataKey;
+  final Map<String, double> emotionData;
+  final List<String> distortions;
 
-  const ResponseBody(this.thoughts, this.dataKey,{Key? key}) : super(key: key);
+  const ResponseBody(this.thoughts, this.emotionData, this.distortions,
+      {Key? key})
+      : super(key: key);
 
   @override
-  _ResponseBodyState createState() => _ResponseBodyState(thoughts,dataKey);
+  _ResponseBodyState createState() =>
+      _ResponseBodyState(thoughts, emotionData, distortions);
 }
 
 class _ResponseBodyState extends State<ResponseBody> {
@@ -31,9 +37,10 @@ class _ResponseBodyState extends State<ResponseBody> {
   final List<String> thoughts;
   final List<Thought> responses = [];
   bool open = false;
-  final String dataKey;
+  final Map<String, double> emotionData;
+  final List<String> distortions;
 
-  _ResponseBodyState(this.thoughts,this.dataKey) {
+  _ResponseBodyState(this.thoughts, this.emotionData, this.distortions) {
     for (String t in thoughts) responses.add(Thought(t));
   }
 
@@ -110,7 +117,7 @@ class _ResponseBodyState extends State<ResponseBody> {
               '1) What is the evidence that the automatic thought is true? Not true?\n'
               '2) Is there an alternative explanation?\n'
               '3) What’s the worst that could happen? Could I live through it? What’s the best that could happen? '
-                  'What’s the most realistic outcome?\n'
+              'What’s the most realistic outcome?\n'
               '4) What’s the effect of my believing the automatic thought? What could be the effect of changing my thinking?\n'
               '5) What should I do about it?\n'
               '6) If ______ (friend’s name) was in the situation and had this thought, what would I tell them?',
@@ -135,9 +142,9 @@ class _ResponseBodyState extends State<ResponseBody> {
               onPressed: () {
                 //AlertDialog alert=AlertDialog( title:Text('Guiding Questions'), content: Text(
                 //    '•  Insert question here?\n'
-                 //       '•  Insert another question here?\n'
+                //       '•  Insert another question here?\n'
                 //        '•  More questions here?')  );
-               // showDialog(context:context,builder:(BuildContext context){ return alert;}, );
+                // showDialog(context:context,builder:(BuildContext context){ return alert;}, );
                 open = true;
                 setState(() {});
               },
@@ -257,10 +264,13 @@ class _ResponseBodyState extends State<ResponseBody> {
               onPressed: () {
                 //potentially change to handle potential errors on this page, or use text form field for that
                 if (formKey.currentState!.validate()) {
+                  List<String> temp = [];
+                  for (Thought t in responses) temp.add(t.controller.text);
                   Navigator.push(
                       context,
                       MaterialPageRoute(
-                          builder: (context) => CBTOutcome(thoughts,dataKey)));
+                          builder: (context) => CBTOutcome(
+                              thoughts, emotionData, distortions, temp)));
                 }
               },
               color: tertiary)
@@ -270,10 +280,8 @@ class _ResponseBodyState extends State<ResponseBody> {
   }
 
   @override
-  void dispose()
-  {
-    for(Thought t in responses)
-    {
+  void dispose() {
+    for (Thought t in responses) {
       t.dispose();
     }
     super.dispose();

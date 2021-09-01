@@ -11,28 +11,38 @@ import 'cbt_exit.dart';
 
 class CBTOutcome extends StatelessWidget {
   final List<String> thoughts;
-  final String dataKey;
-  CBTOutcome(this.thoughts, this.dataKey,{Key? key}) : super(key: key);
+  final Map<String, double> emotionData;
+  final List<String> distortions;
+  final List<String> responses;
+  CBTOutcome(this.thoughts, this.emotionData, this.distortions, this.responses,
+      {Key? key})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(body: OutcomeBody(thoughts,dataKey));
+    return Scaffold(
+        body: OutcomeBody(thoughts, emotionData, distortions, responses));
   }
 }
 
 class OutcomeBody extends StatefulWidget {
   final List<String> thoughts;
-  final String dataKey;
+  final Map<String, double> emotionData;
+  final List<String> distortions;
+  final List<String> responses;
 
-  const OutcomeBody(this.thoughts, this.dataKey,{Key? key}) : super(key: key);
+  const OutcomeBody(
+      this.thoughts, this.emotionData, this.distortions, this.responses,
+      {Key? key})
+      : super(key: key);
 
   @override
-  _OutcomeBodyState createState() => _OutcomeBodyState(thoughts,dataKey);
+  _OutcomeBodyState createState() =>
+      _OutcomeBodyState(thoughts, emotionData, distortions, responses);
 }
 
 class _OutcomeBodyState extends State<OutcomeBody> {
-  final List<String> thoughtText;
-   final List<Thought> thoughts = [];
+  final List<String> thoughts;
   final List<String> emotionNames = [
     'Fear',
     'Sadness',
@@ -53,11 +63,13 @@ class _OutcomeBodyState extends State<OutcomeBody> {
   Set<Emotion> emotions = {};
   final TextEditingController otherController = TextEditingController();
   final ref = FirebaseDatabase.instance.reference();
-  final String dataKey;
+  final Map<String, double> emotionData;
+  final List<String> distortions;
+  final List<String> responses;
 
-  _OutcomeBodyState(this.thoughtText,this.dataKey) {
+  _OutcomeBodyState(
+      this.thoughts, this.emotionData, this.distortions, this.responses) {
     for (String name in emotionNames) emotions.add(Emotion(name));
-    for (String t in thoughtText) thoughts.add(Thought(t));
   }
 
   @override
@@ -70,20 +82,6 @@ class _OutcomeBodyState extends State<OutcomeBody> {
             vertical: getProportionateScreenHeight(16)),
         child: ListView(
           children: [
-            /**
-            Container(
-              child: Text(
-                'On a scale of 0-10, how much do you now believe each thought?',
-                style: TextStyle(
-                    fontSize: getProportionateScreenWidth(20),
-                    fontWeight: FontWeight.w600,
-                    color: darkestBlue),
-                textAlign: TextAlign.center,
-              ),
-              padding: EdgeInsets.fromLTRB(0, getProportionateScreenHeight(16),
-                  0, getProportionateScreenHeight(16)),
-            ),
-            Column(children: buildThoughtSliders()),*/
             Container(
                 child: Text(
                   'What emotion(s) do you feel now?',
@@ -170,35 +168,6 @@ class _OutcomeBodyState extends State<OutcomeBody> {
     return sliders;
   }
 
-  List<Widget> buildThoughtSliders() {
-    List<Widget> sliders = [];
-    for (Thought t in thoughts) {
-      sliders.add(Column(children: [
-        Container(
-          alignment: Alignment(-1, 0),
-          padding: EdgeInsets.only(left: getProportionateScreenWidth(0)),
-          child: Text(
-            t.thought!,
-            style: TextStyle(
-              fontSize: getProportionateScreenWidth(16),
-              color: primary,
-              fontWeight: FontWeight.bold,
-            ),
-          ),
-        ),
-        Container(
-            padding: EdgeInsets.fromLTRB(
-                getProportionateScreenWidth(0),
-                0,
-                getProportionateScreenWidth(16),
-                getProportionateScreenHeight(8)),
-            child: ThoughtSlider(t)),
-      ]));
-    }
-
-    return sliders;
-  }
-
   Widget checkboxText(Emotion e) {
     if (e.name == 'Other:    ')
       return Row(children: [
@@ -277,8 +246,8 @@ class _OutcomeBodyState extends State<OutcomeBody> {
 
   Widget submitButton() {
     return Padding(
-      padding: EdgeInsets.symmetric(
-          horizontal: getProportionateScreenWidth(100)),
+      padding:
+          EdgeInsets.symmetric(horizontal: getProportionateScreenWidth(100)),
       child: ElevatedButton(
         onPressed: () {
           if (checkedEmotions.isEmpty) {
@@ -288,18 +257,58 @@ class _OutcomeBodyState extends State<OutcomeBody> {
           }
 
           User user = FirebaseAuth.instance.currentUser!;
-          Map<String,double> emotionData = new Map();
-          for(Emotion e in checkedEmotions)
-          {
-           emotionData[e.name] = e.currentEmotionValue;
+          Map<String, double> newEmotionData = new Map();
+          for (Emotion e in checkedEmotions) {
+            if (e.name == 'Other:    ' && otherController.text == '')
+              newEmotionData['Other'] = e.currentEmotionValue;
+            else if (e.name == 'Other:    ')
+              newEmotionData[otherController.text] = e.currentEmotionValue;
+            else
+              newEmotionData[e.name] = e.currentEmotionValue;
           }
-
-          ref.child(user.uid).child("emotion-data:").child(dataKey).child('after').set(emotionData);
-          ref.child(user.uid).child("emotion-data:").child(dataKey).child('afterTime').set(DateTime.now().toString());
+          String key = ref.push().key;
+          try {
+            ref
+                .child(user.uid)
+                .child("cbt-data:")
+                .child(key)
+                .child('time')
+                .set(DateTime.now().toString());
+            ref
+                .child(user.uid)
+                .child("cbt-data:")
+                .child(key)
+                .child('emotionsBefore')
+                .set(emotionData);
+            ref
+                .child(user.uid)
+                .child("cbt-data:")
+                .child(key)
+                .child('emotionsAfter')
+                .set(newEmotionData);
+            ref
+                .child(user.uid)
+                .child("cbt-data:")
+                .child(key)
+                .child('thoughts')
+                .set(thoughts);
+            ref
+                .child(user.uid)
+                .child("cbt-data:")
+                .child(key)
+                .child('responses')
+                .set(responses);
+            ref
+                .child(user.uid)
+                .child("cbt-data:")
+                .child(key)
+                .child('distortions')
+                .set(distortions);
+          } catch (e) {}
           //probably also need some communication with the rest of the app that cbt
           //was completed for timeline
-          Navigator.push(context,
-              MaterialPageRoute(builder: (context) => CBTExit()));
+          Navigator.push(
+              context, MaterialPageRoute(builder: (context) => CBTExit()));
         },
         child: Text(
           'FINISH',
@@ -316,8 +325,7 @@ class _OutcomeBodyState extends State<OutcomeBody> {
   }
 
   @override
-  void dispose()
-  {
+  void dispose() {
     otherController.dispose();
     super.dispose();
   }

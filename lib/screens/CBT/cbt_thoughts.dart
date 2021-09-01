@@ -4,29 +4,29 @@ import 'package:arc_app/screens/CBT/cbt_distortioninfo.dart';
 import 'package:arc_app/constants.dart';
 
 class CBTThoughts extends StatelessWidget {
-  CBTThoughts(this.dataKey, {Key? key}) : super(key: key);
-  final String dataKey;
+  CBTThoughts(this.emotionData, {Key? key}) : super(key: key);
+  final Map<String, double> emotionData;
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(body: ThoughtsBody(dataKey));
+    return Scaffold(body: ThoughtsBody(emotionData));
   }
 }
 
 class ThoughtsBody extends StatefulWidget {
-  final String dataKey;
+  final Map<String, double> emotionData;
 
-  const ThoughtsBody(this.dataKey, {Key? key}) : super(key: key);
+  const ThoughtsBody(this.emotionData, {Key? key}) : super(key: key);
 
   @override
-  _ThoughtsBodyState createState() => _ThoughtsBodyState(dataKey);
+  _ThoughtsBodyState createState() => _ThoughtsBodyState(emotionData);
 }
 
 class _ThoughtsBodyState extends State<ThoughtsBody> {
   final formKey = GlobalKey<FormState>();
-  final String dataKey;
+  final Map<String, double> emotionData;
 
-  _ThoughtsBodyState(this.dataKey);
+  _ThoughtsBodyState(this.emotionData);
 
   String error = '';
   List<Thought> thoughts = [Thought()];
@@ -43,40 +43,6 @@ class _ThoughtsBodyState extends State<ThoughtsBody> {
               vertical: getProportionateScreenHeight(16)),
           child: ListView(
             children: [
-
-              Container(
-                child: Text(
-                    'What event, daydream, or recollection led to the unpleasant emotion?',
-                    style: TextStyle(
-                        fontSize: getProportionateScreenWidth(20),
-                        fontWeight: FontWeight.w600,
-                        color: darkestBlue)),
-              ),
-              SizedBox(height: getProportionateScreenHeight(8)),
-             Container(
-                child: Column(children: [
-                  TextFormField(
-                    decoration: InputDecoration(
-                        labelStyle: TextStyle(
-                            color: secondary, fontWeight: FontWeight.w600),
-                        hintText: 'Enter here...',
-                        hintStyle: TextStyle(color: tertiary)),
-                    validator: (value) {
-                      if (value == null || value.isEmpty)
-                        return 'Please enter the event/daydream etc.';
-                      return null;
-                    },
-                    enableInteractiveSelection: true,
-                    maxLines: null,
-                    onEditingComplete: () {
-                      setState(() {});
-                    },
-                    cursorColor: secondary,
-                    style: TextStyle(color: primary),
-                  ),
-                ]),
-              ),
-              SizedBox(height: getProportionateScreenHeight(40)),
               Container(
                   child: Text(
                     'What automatic thought(s) or image(s) went through your mind?',
@@ -265,17 +231,11 @@ class _ThoughtsBodyState extends State<ThoughtsBody> {
               onPressed: () {
                 //potentially change to handle potential errors on this page, or use text form field for that
                 if (formKey.currentState!.validate()) {
-                 Navigator.push(
-                     context,
-                      MaterialPageRoute(
-                          builder: (context) {
-                           List<String> temp = [];
-                            for (Thought t in thoughts)
-                                temp.add(t.controller.text);
-                              return CBTDistortionInfo(temp,dataKey);
-                         }
-                ))
-                  ;
+                  Navigator.push(context, MaterialPageRoute(builder: (context) {
+                    List<String> temp = [];
+                    for (Thought t in thoughts) temp.add(t.controller.text);
+                    return CBTDistortionInfo(temp, emotionData);
+                  }));
                 }
               },
               color: tertiary)
@@ -285,29 +245,27 @@ class _ThoughtsBodyState extends State<ThoughtsBody> {
   }
 
   Widget plusButton() {
-    if(thoughts.length < 2)
-    return Row(children: [
-      Spacer(),
-      IconButton(
-        iconSize: getProportionateScreenHeight(40),
-        onPressed: () {
-          thoughts.add(Thought());
-          setState(() {});
-        },
-        icon: Icon(Icons.add_circle),
-        color: secondary,
-      )
-    ]);
+    if (thoughts.length < 2)
+      return Row(children: [
+        Spacer(),
+        IconButton(
+          iconSize: getProportionateScreenHeight(40),
+          onPressed: () {
+            thoughts.add(Thought());
+            setState(() {});
+          },
+          icon: Icon(Icons.add_circle),
+          color: secondary,
+        )
+      ]);
     return SizedBox(height: getProportionateScreenHeight(16));
   }
 
   @override
-  void dispose()
-  {
-    for(Thought t in thoughts)
-      {
-        t.dispose();
-      }
+  void dispose() {
+    for (Thought t in thoughts) {
+      t.dispose();
+    }
     super.dispose();
   }
 }
@@ -318,10 +276,9 @@ class Thought {
   double currentThoughtValue = 5;
   String? thought;
 
-  void dispose()
-  {
+  void dispose() {
     controller.dispose();
-}
+  }
 }
 
 class ThoughtSlider extends StatefulWidget {
@@ -338,26 +295,29 @@ class _ThoughtSliderState extends State<ThoughtSlider> {
 
   @override
   Widget build(BuildContext context) {
-    return Row(
-        children: [
-          Text('0', style: TextStyle(fontSize: getProportionateScreenWidth(14), color: darkestBlue)),
-          Expanded(
-            child: Slider(
-              onChanged: (double value) {
-                setState(() {
-                  t.currentThoughtValue = value;
-                });
-              },
-              value: t.currentThoughtValue,
-              min: 0,
-              max: 10,
-              divisions: 10,
-              label: t.currentThoughtValue.round().toString(),
-              activeColor: secondary,
-              inactiveColor: Colors.grey[350],
-            ),
-          ),
-          Text('10', style: TextStyle(fontSize: getProportionateScreenWidth(14), color: darkestBlue))]
-    );
+    return Row(children: [
+      Text('0',
+          style: TextStyle(
+              fontSize: getProportionateScreenWidth(14), color: darkestBlue)),
+      Expanded(
+        child: Slider(
+          onChanged: (double value) {
+            setState(() {
+              t.currentThoughtValue = value;
+            });
+          },
+          value: t.currentThoughtValue,
+          min: 0,
+          max: 10,
+          divisions: 10,
+          label: t.currentThoughtValue.round().toString(),
+          activeColor: secondary,
+          inactiveColor: Colors.grey[350],
+        ),
+      ),
+      Text('10',
+          style: TextStyle(
+              fontSize: getProportionateScreenWidth(14), color: darkestBlue))
+    ]);
   }
 }

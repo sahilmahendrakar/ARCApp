@@ -4,30 +4,30 @@ import '../../size_config.dart';
 import 'cbt_thoughts.dart';
 
 class CBTSituation extends StatelessWidget {
-  final String dataKey;
-  CBTSituation(this.dataKey, {Key? key}) : super(key: key);
+  final Map<String,double> emotionData;
+  CBTSituation(this.emotionData, {Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: SituationBody(dataKey),
+      body: SituationBody(emotionData),
     );
   }
 }
 
 class SituationBody extends StatefulWidget {
-  final String dataKey;
-  SituationBody(this.dataKey, {Key? key}) : super(key: key);
+  final Map<String,double> emotionData;
+  SituationBody(this.emotionData, {Key? key}) : super(key: key);
 
   @override
-  _SituationBody createState() => _SituationBody(dataKey);
+  _SituationBody createState() => _SituationBody(emotionData);
 }
 
 class _SituationBody extends State<SituationBody> {
-  final String dataKey;
+  final Map<String,double> emotionData;
   final formKey = GlobalKey<FormState>();
 
-  _SituationBody(this.dataKey);
+  _SituationBody(this.emotionData);
 
   @override
   Widget build(BuildContext context) {
@@ -105,7 +105,7 @@ class _SituationBody extends State<SituationBody> {
                   Navigator.push(
                       context,
                       MaterialPageRoute(
-                          builder: (context) => CBTThoughts(dataKey)));
+                          builder: (context) => CBTThoughts(emotionData)));
               },
               color: tertiary)
         ])
