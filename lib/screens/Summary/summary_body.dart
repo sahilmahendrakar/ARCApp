@@ -41,8 +41,8 @@ class _SummaryState extends State<SummaryBody> {
           ),
           moodItem(context, 8.5, 1.5),
           stressItem(context, 52, 18),
-          heartItem(context, 71, 0),
-          sleepItem(context, 20460, -9060),
+          depressionItem(context, 0.6, 0),
+          anxietyItem(context, 8.70, -1.60),
         ],
       ),
     );
@@ -244,9 +244,9 @@ GestureDetector stressItem(BuildContext context, double value, double change) {
       changeString, direction, arrowColor);
 }
 
-GestureDetector heartItem(context, double value, double change) {
+GestureDetector depressionItem(context, double value, double change) {
   // Configure value
-  String valueString = value.round().toString() + " bpm";
+  String valueString = value.round().toStringAsPrecision(2) + "/12";
 
   // Set direction and arrowColor if there is no change
   int direction;
@@ -261,31 +261,16 @@ GestureDetector heartItem(context, double value, double change) {
   }
 
   // Set status and arrowColor for when there is change
-  // TODO: check scale for heart rate with Dr. Davis
   String status;
 
-  if (value < 40) {
-    status = "Bad";
-    if (change < 0) {
-      arrowColor = brightPink;
-    } else if (change > 0) {
-      arrowColor = tertiary;
-    }
-  } else if (value < 60) {
-    status = "Okay";
-    if (change < 0) {
-      arrowColor = brightPink;
-    } else if (change > 0) {
-      arrowColor = tertiary;
-    }
-  } else if (value < 80) {
+  if (value <= 4) {
     status = "Good";
     if (change < 0) {
       arrowColor = tertiary;
     } else if (change > 0) {
-      arrowColor = tertiary;
+      arrowColor = brightPink;
     }
-  } else if (value < 100) {
+  } else if (value <= 8) {
     status = "Okay";
     if (change < 0) {
       arrowColor = tertiary;
@@ -302,17 +287,15 @@ GestureDetector heartItem(context, double value, double change) {
   }
 
   // Set change
-  String changeString = change.abs().round().toString();
+  String changeString = change.abs().round().toStringAsPrecision(2);
 
-  return summaryItem(context, darkestBlue, "Heart", valueString, status,
+  return summaryItem(context, darkestBlue, "Depression", valueString, status,
       changeString, direction, arrowColor);
 }
 
-GestureDetector sleepItem(context, double value, double change) {
+GestureDetector anxietyItem(context, double value, double change) {
   // Configure value
-  int hours = (value / 3600).floor();
-  int minutes = ((value % 3600) / 60).round();
-  String valueString = hours.toString() + "h " + minutes.toString() + "m";
+  String valueString = value.round().toStringAsPrecision(2) + "/12";
 
   // Set direction and arrowColor if there is no change
   int direction;
@@ -327,35 +310,16 @@ GestureDetector sleepItem(context, double value, double change) {
   }
 
   // Set status and arrowColor for when there is change
-  // TODO: check scale for sleep with Dr. Davis
   String status;
 
-  if (value < 25200) {
-    // Less than 7 hours of sleep
-    status = "Bad";
-    if (change < 0) {
-      arrowColor = brightPink;
-    } else if (change > 0) {
-      arrowColor = tertiary;
-    }
-  } else if (value < 28800) {
-    // Between 7 and 8 hours of sleep
-    status = "Okay";
-    if (change < 0) {
-      arrowColor = brightPink;
-    } else if (change > 0) {
-      arrowColor = tertiary;
-    }
-  } else if (value < 36000) {
-    // Between 8 to 10 hours of sleep
+  if (value < 4) {
     status = "Good";
     if (change < 0) {
       arrowColor = tertiary;
     } else if (change > 0) {
-      arrowColor = tertiary;
+      arrowColor = brightPink;
     }
-  } else if (value < 43200) {
-    // Between 10 to 12 hours of sleep
+  } else if (value < 8) {
     status = "Okay";
     if (change < 0) {
       arrowColor = tertiary;
@@ -363,7 +327,6 @@ GestureDetector sleepItem(context, double value, double change) {
       arrowColor = brightPink;
     }
   } else {
-    // More than 12 hours of sleep
     status = "Bad";
     if (change < 0) {
       arrowColor = tertiary;
@@ -373,11 +336,8 @@ GestureDetector sleepItem(context, double value, double change) {
   }
 
   // Set change
-  int deltaHours = (change.abs() / 3600).floor();
-  int deltaMinutes = ((change.abs() % 3600) / 60).round();
-  String changeString =
-      deltaHours.toString() + "h " + deltaMinutes.toString() + "m";
+  String changeString = change.abs().round().toStringAsPrecision(2);
 
-  return summaryItem(context, secondary, "Sleep", valueString, status,
+  return summaryItem(context, secondary, "Anxiety", valueString, status,
       changeString, direction, arrowColor);
 }
