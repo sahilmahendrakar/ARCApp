@@ -1,7 +1,10 @@
 import 'dart:core';
 
 import 'package:arc_app/constants.dart';
-import 'package:arc_app/screens/Dashboard/dashboard_screen.dart';
+import 'package:arc_app/screens/Summary_Extended/anxiety_screen.dart';
+import 'package:arc_app/screens/Summary_Extended/depression_screen.dart';
+import 'package:arc_app/screens/Summary_Extended/mood_screen.dart';
+import 'package:arc_app/screens/Summary_Extended/stress_screen.dart';
 import 'package:flutter/material.dart';
 
 import '../../size_config.dart';
@@ -89,8 +92,19 @@ GestureDetector summaryItem(
   // Create the page
   return GestureDetector(
       onTap: () {
-        //TODO: Change the destination page
-        Navigator.pushNamed(context, Dashboard.routeName);
+        if (title == 'Mood') {
+          Navigator.push(
+              context, MaterialPageRoute(builder: (context) => MoodScreen()));
+        } else if (title == 'Stress') {
+          Navigator.push(
+              context, MaterialPageRoute(builder: (context) => StressScreen()));
+        } else if (title == 'Depression') {
+          Navigator.push(context,
+              MaterialPageRoute(builder: (context) => DepressionScreen()));
+        } else {
+          Navigator.push(context,
+              MaterialPageRoute(builder: (context) => AnxietyScreen()));
+        }
       },
       child: Padding(
         padding: EdgeInsets.fromLTRB(
@@ -203,7 +217,7 @@ GestureDetector moodItem(BuildContext context, double value, double change) {
     arrowColor = brightYellow;
   }
 
-  return summaryItem(context, darkestBlue, "Mood", valueString, status,
+  return summaryItem(context, darkestBlue, 'Mood', valueString, status,
       changeString, direction, arrowColor);
 }
 
