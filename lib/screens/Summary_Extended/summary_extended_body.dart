@@ -76,8 +76,8 @@ Container summaryDetailedBody(String title) {
 }
 
 SingleChildScrollView pageView(String title) {
-  // TextStyle detailsTextStyle =
-  //     TextStyle(color: pureWhite, fontWeight: FontWeight.bold, fontSize: 20);
+  TextStyle tabTextStyle =
+      TextStyle(color: pureWhite, fontWeight: FontWeight.w500, fontSize: 22);
   return SingleChildScrollView(
       child: Column(children: <Widget>[
     Center(
@@ -92,10 +92,65 @@ SingleChildScrollView pageView(String title) {
               getProportionateScreenHeight(50),
               getProportionateScreenWidth(0),
               getProportionateScreenHeight(40.0)),
-          child: Container(
-              width: getProportionateScreenWidth(330),
-              height: getProportionateScreenHeight(350),
-              color: primary)),
+          child: DefaultTabController(
+            length: 3,
+            child: Container(
+                width: getProportionateScreenWidth(330),
+                height: getProportionateScreenHeight(350),
+                child: Scaffold(
+                  backgroundColor: darkestBlue,
+                  appBar: PreferredSize(
+                      preferredSize: Size.fromHeight(kToolbarHeight - 20),
+                      child: new Container(
+                          decoration: BoxDecoration(
+                              color: primary,
+                              borderRadius: BorderRadius.only(
+                                  topLeft: Radius.circular(30),
+                                  topRight: Radius.circular(30))),
+                          child: new SafeArea(
+                              child: Column(children: <Widget>[
+                            new Expanded(child: new Container()),
+                            TabBar(
+                                indicatorSize: TabBarIndicatorSize.label,
+                                indicator: BoxDecoration(
+                                    borderRadius: BorderRadius.circular(20),
+                                    color: tertiary),
+                                tabs: <Widget>[
+                                  Align(
+                                      alignment: Alignment.center,
+                                      child: Text(
+                                        'Week',
+                                        style: tabTextStyle,
+                                      )),
+                                  Align(
+                                      alignment: Alignment.center,
+                                      child: Text(
+                                        'Month',
+                                        style: tabTextStyle,
+                                      )),
+                                  Align(
+                                      alignment: Alignment.center,
+                                      child: Text(
+                                        'Year',
+                                        style: tabTextStyle,
+                                      )),
+                                ])
+                          ])))),
+                  body: TabBarView(
+                    children: <Widget>[
+                      Center(
+                        child: Text("It's cloudy here"),
+                      ),
+                      Center(
+                        child: Text("It's rainy here"),
+                      ),
+                      Center(
+                        child: Text("It's sunny here"),
+                      ),
+                    ],
+                  ),
+                )),
+          )),
     ),
     Align(
       alignment: Alignment.bottomLeft,
