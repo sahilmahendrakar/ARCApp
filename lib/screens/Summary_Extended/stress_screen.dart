@@ -7,6 +7,6 @@ class StressScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     SizeConfig().init(context);
-    return SummaryExtendedBody();
+    return StressExtendedBody();
   }
 }
