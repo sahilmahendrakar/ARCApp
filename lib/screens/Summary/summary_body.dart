@@ -17,7 +17,8 @@ class SummaryBody extends StatefulWidget {
 class _SummaryState extends State<SummaryBody> {
   @override
   Widget build(BuildContext context) {
-    return Container(
+    return Card(
+      color: pureWhite,
       child: ListView(
         padding: EdgeInsets.fromLTRB(
             getProportionateScreenWidth(10),
@@ -223,6 +224,7 @@ GestureDetector moodItem(BuildContext context, double value, double change) {
 GestureDetector stressItem(BuildContext context, double value, double change) {
   // Configure value
   String valueString = value.round().toStringAsPrecision(2) + "/12";
+
 
   // Set status
   String status;
