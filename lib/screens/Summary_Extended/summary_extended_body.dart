@@ -1,6 +1,7 @@
 import 'dart:core';
 
 import 'package:arc_app/constants.dart';
+import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
 
 import '../../size_config.dart';
@@ -78,6 +79,29 @@ Container summaryDetailedBody(String title) {
 SingleChildScrollView pageView(String title) {
   TextStyle tabTextStyle =
       TextStyle(color: pureWhite, fontWeight: FontWeight.w500, fontSize: 22);
+
+  List<FlSpot> graphData = [
+    FlSpot(1, 7),
+    FlSpot(2, 6),
+    FlSpot(3, 9),
+    FlSpot(4, 7),
+    FlSpot(5, 2),
+    FlSpot(6, 6),
+    FlSpot(7, 7),
+  ];
+
+  List<Color> gradientColors = [];
+
+  for (FlSpot spot in graphData) {
+    if (spot.y < 4) {
+      gradientColors.add(brightPink);
+    } else if (spot.y < 7) {
+      gradientColors.add(brightYellow);
+    } else {
+      gradientColors.add(tertiary);
+    }
+  }
+
   return SingleChildScrollView(
       child: Column(children: <Widget>[
     Center(
@@ -96,7 +120,7 @@ SingleChildScrollView pageView(String title) {
             length: 3,
             child: Container(
                 width: getProportionateScreenWidth(330),
-                height: getProportionateScreenHeight(350),
+                height: getProportionateScreenHeight(370),
                 child: Scaffold(
                   backgroundColor: darkestBlue,
                   appBar: PreferredSize(
@@ -139,8 +163,109 @@ SingleChildScrollView pageView(String title) {
                   body: TabBarView(
                     children: <Widget>[
                       Center(
-                        child: Text("It's cloudy here"),
-                      ),
+                          child: Padding(
+                        padding: EdgeInsets.fromLTRB(
+                            getProportionateScreenHeight(0),
+                            getProportionateScreenHeight(30),
+                            getProportionateScreenHeight(30),
+                            getProportionateScreenHeight(20)),
+                        child: LineChart(LineChartData(
+                          gridData: FlGridData(show: false),
+                          titlesData: FlTitlesData(
+                            show: true,
+                            rightTitles: SideTitles(showTitles: false),
+                            topTitles: SideTitles(showTitles: false),
+                            bottomTitles: SideTitles(
+                              showTitles: true,
+                              reservedSize: 22,
+                              interval: 1,
+                              getTextStyles: (context, value) =>
+                                  const TextStyle(
+                                      color: tertiary,
+                                      fontWeight: FontWeight.bold,
+                                      fontSize: 16),
+                              getTitles: (value) {
+                                switch (value.toInt()) {
+                                  case 1:
+                                    return 'mon';
+                                  case 2:
+                                    return 'tues';
+                                  case 3:
+                                    return 'wed';
+                                  case 4:
+                                    return 'thurs';
+                                  case 5:
+                                    return 'fri';
+                                  case 6:
+                                    return 'sat';
+                                  case 7:
+                                    return 'sun';
+                                }
+                                return '';
+                              },
+                              margin: 8,
+                            ),
+                            leftTitles: SideTitles(
+                              showTitles: true,
+                              interval: 1,
+                              getTextStyles: (context, value) =>
+                                  const TextStyle(
+                                color: tertiary,
+                                fontWeight: FontWeight.bold,
+                                fontSize: 15,
+                              ),
+                              getTitles: (value) {
+                                switch (value.toInt()) {
+                                  case 0:
+                                    return '0';
+                                  case 1:
+                                    return '1';
+                                  case 2:
+                                    return '2';
+                                  case 3:
+                                    return '3';
+                                  case 4:
+                                    return '4';
+                                  case 5:
+                                    return '5';
+                                  case 6:
+                                    return '6';
+                                  case 7:
+                                    return '7';
+                                  case 8:
+                                    return '8';
+                                  case 9:
+                                    return '9';
+                                  case 10:
+                                    return '10';
+                                }
+                                return '';
+                              },
+                              reservedSize: 32,
+                              margin: 12,
+                            ),
+                          ),
+                          borderData: FlBorderData(
+                            show: true,
+                            border: const Border(
+                              bottom: BorderSide(color: quarternary, width: 4),
+                              left: BorderSide(color: quarternary, width: 4),
+                              right: BorderSide(color: Colors.transparent),
+                              top: BorderSide(color: Colors.transparent),
+                            ),
+                          ),
+                          minX: 1,
+                          maxX: 7,
+                          minY: 0,
+                          maxY: 10,
+                          lineBarsData: [
+                            LineChartBarData(
+                                spots: graphData,
+                                isCurved: true,
+                                colors: gradientColors)
+                          ],
+                        )),
+                      )),
                       Center(
                         child: Text("It's rainy here"),
                       ),
