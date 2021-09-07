@@ -1,7 +1,10 @@
 import 'dart:core';
 
 import 'package:arc_app/constants.dart';
-import 'package:arc_app/screens/Dashboard/dashboard_screen.dart';
+import 'package:arc_app/screens/Summary_Extended/anxiety_screen.dart';
+import 'package:arc_app/screens/Summary_Extended/depression_screen.dart';
+import 'package:arc_app/screens/Summary_Extended/mood_screen.dart';
+import 'package:arc_app/screens/Summary_Extended/stress_screen.dart';
 import 'package:flutter/material.dart';
 
 import '../../size_config.dart';
@@ -19,16 +22,16 @@ class _SummaryState extends State<SummaryBody> {
       child: ListView(
         padding: EdgeInsets.fromLTRB(
             getProportionateScreenWidth(10),
-            getProportionateScreenHeight(100.0),
+            getProportionateScreenHeight(45.0),
             getProportionateScreenWidth(10),
-            getProportionateScreenHeight(20.0)),
+            getProportionateScreenHeight(0.0)),
         children: <Widget>[
           Padding(
             padding: EdgeInsets.fromLTRB(
                 getProportionateScreenWidth(10),
                 getProportionateScreenHeight(0),
                 getProportionateScreenWidth(10),
-                getProportionateScreenHeight(50.0)),
+                getProportionateScreenHeight(25.0)),
             child: Align(
               alignment: Alignment.topLeft,
               child: Text(
@@ -41,9 +44,9 @@ class _SummaryState extends State<SummaryBody> {
             ),
           ),
           moodItem(context, 8.5, 1.5),
-          stressItem(context, 52, 18),
-          heartItem(context, 71, 0),
-          sleepItem(context, 20460, -9060),
+          stressItem(context, 5.2, 1.8),
+          depressionItem(context, 0.6, 0),
+          anxietyItem(context, 8.70, -1.60),
         ],
       ),
     );
@@ -90,8 +93,19 @@ GestureDetector summaryItem(
   // Create the page
   return GestureDetector(
       onTap: () {
-        //TODO: Change the destination page
-        Navigator.pushNamed(context, Dashboard.routeName);
+        if (title == 'Mood') {
+          Navigator.push(
+              context, MaterialPageRoute(builder: (context) => MoodScreen()));
+        } else if (title == 'Stress') {
+          Navigator.push(
+              context, MaterialPageRoute(builder: (context) => StressScreen()));
+        } else if (title == 'Depression') {
+          Navigator.push(context,
+              MaterialPageRoute(builder: (context) => DepressionScreen()));
+        } else {
+          Navigator.push(context,
+              MaterialPageRoute(builder: (context) => AnxietyScreen()));
+        }
       },
       child: Padding(
         padding: EdgeInsets.fromLTRB(
@@ -101,7 +115,7 @@ GestureDetector summaryItem(
             getProportionateScreenHeight(5)),
         child: SizedBox(
             width: getProportionateScreenWidth(350),
-            height: getProportionateScreenHeight(130),
+            height: getProportionateScreenHeight(120),
             child: Card(
                 elevation: 2,
                 shape: RoundedRectangleBorder(
@@ -115,14 +129,14 @@ GestureDetector summaryItem(
                       Padding(
                         padding: EdgeInsets.fromLTRB(
                             0,
-                            getProportionateScreenHeight(10),
+                            getProportionateScreenHeight(0),
                             0,
                             getProportionateScreenHeight(10)),
                         child: Text(
                           title,
                           style: TextStyle(
                             color: pureWhite,
-                            fontSize: 36,
+                            fontSize: 30,
                             fontWeight: FontWeight.bold,
                           ),
                         ),
@@ -176,7 +190,6 @@ GestureDetector moodItem(BuildContext context, double value, double change) {
   String valueString = value.toStringAsFixed(1) + "/10";
 
   // Set status
-  // TODO: check scale for mood with Dr. Davis
   String status;
   if (value < 4.0) {
     status = "Bad";
@@ -204,26 +217,27 @@ GestureDetector moodItem(BuildContext context, double value, double change) {
     arrowColor = brightYellow;
   }
 
-  return summaryItem(context, darkestBlue, "Mood", valueString, status,
+  return summaryItem(context, darkestBlue, 'Mood', valueString, status,
       changeString, direction, arrowColor);
 }
 
 GestureDetector stressItem(BuildContext context, double value, double change) {
   // Configure value
-  String valueString = value.round().toString() + " units";
+  String valueString = value.round().toStringAsPrecision(2) + "/12";
+
 
   // Set status
   String status;
-  if (value < 50) {
+  if (value < 4) {
     status = "Good";
-  } else if (value < 75) {
+  } else if (value < 8) {
     status = "Okay";
   } else {
     status = "Bad";
   }
 
   // Set change
-  String changeString = change.abs().round().toString();
+  String changeString = change.abs().round().toStringAsPrecision(2);
 
   // Set direction and arrowColor
   int direction;
@@ -244,140 +258,74 @@ GestureDetector stressItem(BuildContext context, double value, double change) {
       changeString, direction, arrowColor);
 }
 
-GestureDetector heartItem(context, double value, double change) {
+GestureDetector depressionItem(context, double value, double change) {
   // Configure value
-  String valueString = value.round().toString() + " bpm";
+  String valueString = value.round().toStringAsPrecision(2) + "/12";
 
-  // Set direction and arrowColor if there is no change
-  int direction;
-  Color arrowColor = brightYellow;
-
-  if (change < 0) {
-    direction = -1;
-  } else if (change > 0) {
-    direction = 1;
-  } else {
-    direction = 0;
-  }
-
-  // Set status and arrowColor for when there is change
-  // TODO: check scale for heart rate with Dr. Davis
+  // Set status
   String status;
-
-  if (value < 40) {
-    status = "Bad";
-    if (change < 0) {
-      arrowColor = brightPink;
-    } else if (change > 0) {
-      arrowColor = tertiary;
-    }
-  } else if (value < 60) {
-    status = "Okay";
-    if (change < 0) {
-      arrowColor = brightPink;
-    } else if (change > 0) {
-      arrowColor = tertiary;
-    }
-  } else if (value < 80) {
+  if (value < 4) {
     status = "Good";
-    if (change < 0) {
-      arrowColor = tertiary;
-    } else if (change > 0) {
-      arrowColor = tertiary;
-    }
-  } else if (value < 100) {
+  } else if (value < 8) {
     status = "Okay";
-    if (change < 0) {
-      arrowColor = tertiary;
-    } else if (change > 0) {
-      arrowColor = brightPink;
-    }
   } else {
     status = "Bad";
-    if (change < 0) {
-      arrowColor = tertiary;
-    } else if (change > 0) {
-      arrowColor = brightPink;
-    }
   }
 
   // Set change
-  String changeString = change.abs().round().toString();
+  String changeString = change.abs().round().toStringAsPrecision(2);
 
-  return summaryItem(context, darkestBlue, "Heart", valueString, status,
+  // Set direction and arrowColor
+  int direction;
+  Color arrowColor;
+
+  if (change < 0) {
+    direction = -1;
+    arrowColor = tertiary;
+  } else if (change > 0) {
+    direction = 1;
+    arrowColor = brightPink;
+  } else {
+    direction = 0;
+    arrowColor = brightYellow;
+  }
+
+  return summaryItem(context, darkestBlue, "Depression", valueString, status,
       changeString, direction, arrowColor);
 }
 
-GestureDetector sleepItem(context, double value, double change) {
+GestureDetector anxietyItem(context, double value, double change) {
   // Configure value
-  int hours = (value / 3600).floor();
-  int minutes = ((value % 3600) / 60).round();
-  String valueString = hours.toString() + "h " + minutes.toString() + "m";
+  String valueString = value.round().toStringAsPrecision(2) + "/12";
 
-  // Set direction and arrowColor if there is no change
-  int direction;
-  Color arrowColor = brightYellow;
-
-  if (change < 0) {
-    direction = -1;
-  } else if (change > 0) {
-    direction = 1;
-  } else {
-    direction = 0;
-  }
-
-  // Set status and arrowColor for when there is change
-  // TODO: check scale for sleep with Dr. Davis
+  // Set status
   String status;
-
-  if (value < 25200) {
-    // Less than 7 hours of sleep
-    status = "Bad";
-    if (change < 0) {
-      arrowColor = brightPink;
-    } else if (change > 0) {
-      arrowColor = tertiary;
-    }
-  } else if (value < 28800) {
-    // Between 7 and 8 hours of sleep
-    status = "Okay";
-    if (change < 0) {
-      arrowColor = brightPink;
-    } else if (change > 0) {
-      arrowColor = tertiary;
-    }
-  } else if (value < 36000) {
-    // Between 8 to 10 hours of sleep
+  if (value < 4) {
     status = "Good";
-    if (change < 0) {
-      arrowColor = tertiary;
-    } else if (change > 0) {
-      arrowColor = tertiary;
-    }
-  } else if (value < 43200) {
-    // Between 10 to 12 hours of sleep
+  } else if (value < 8) {
     status = "Okay";
-    if (change < 0) {
-      arrowColor = tertiary;
-    } else if (change > 0) {
-      arrowColor = brightPink;
-    }
   } else {
-    // More than 12 hours of sleep
     status = "Bad";
-    if (change < 0) {
-      arrowColor = tertiary;
-    } else if (change > 0) {
-      arrowColor = brightPink;
-    }
   }
 
   // Set change
-  int deltaHours = (change.abs() / 3600).floor();
-  int deltaMinutes = ((change.abs() % 3600) / 60).round();
-  String changeString =
-      deltaHours.toString() + "h " + deltaMinutes.toString() + "m";
+  String changeString = change.abs().round().toStringAsPrecision(2);
 
-  return summaryItem(context, secondary, "Sleep", valueString, status,
+  // Set direction and arrowColor
+  int direction;
+  Color arrowColor;
+
+  if (change < 0) {
+    direction = -1;
+    arrowColor = tertiary;
+  } else if (change > 0) {
+    direction = 1;
+    arrowColor = brightPink;
+  } else {
+    direction = 0;
+    arrowColor = brightYellow;
+  }
+
+  return summaryItem(context, secondary, "Anxiety", valueString, status,
       changeString, direction, arrowColor);
 }
