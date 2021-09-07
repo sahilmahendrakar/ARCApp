@@ -1,4 +1,5 @@
 import 'dart:core';
+import 'dart:math';
 
 import 'package:arc_app/constants.dart';
 import 'package:fl_chart/fl_chart.dart';
@@ -15,7 +16,7 @@ class MoodExtendedBody extends StatefulWidget {
 class _MoodExtendedState extends State<MoodExtendedBody> {
   @override
   Widget build(BuildContext context) {
-    return summaryDetailedBody('Mood Summary');
+    return summaryDetailedBody('Mood Summary', 10);
   }
 }
 
@@ -28,7 +29,7 @@ class StressExtendedBody extends StatefulWidget {
 class _StressExtendedState extends State<StressExtendedBody> {
   @override
   Widget build(BuildContext context) {
-    return summaryDetailedBody('Stress Summary');
+    return summaryDetailedBody('Stress Summary', 12);
   }
 }
 
@@ -41,7 +42,7 @@ class DepressionExtendedBody extends StatefulWidget {
 class _DepressionExtendedState extends State<DepressionExtendedBody> {
   @override
   Widget build(BuildContext context) {
-    return summaryDetailedBody('Depression Summary');
+    return summaryDetailedBody('Depression Summary', 12);
   }
 }
 
@@ -54,11 +55,11 @@ class AnxietyExtendedBody extends StatefulWidget {
 class _AnxietyExtendedState extends State<AnxietyExtendedBody> {
   @override
   Widget build(BuildContext context) {
-    return summaryDetailedBody('Anxiety Summary');
+    return summaryDetailedBody('Anxiety Summary', 12);
   }
 }
 
-Container summaryDetailedBody(String title) {
+Container summaryDetailedBody(String title, double maxY) {
   return Container(
       color: darkestBlue,
       child: Scaffold(
@@ -73,12 +74,34 @@ Container summaryDetailedBody(String title) {
                   getProportionateScreenHeight(10.0),
                   getProportionateScreenWidth(30),
                   getProportionateScreenHeight(20.0)),
-              child: pageView(title))));
+              child: pageView(title, maxY))));
 }
 
-SingleChildScrollView pageView(String title) {
+SingleChildScrollView pageView(String title, double maxY) {
   TextStyle tabTextStyle =
       TextStyle(color: pureWhite, fontWeight: FontWeight.w500, fontSize: 22);
+
+  List<FlSpot> weekData = [
+    FlSpot(1, 7),
+    FlSpot(2, 6),
+    FlSpot(3, 9),
+    FlSpot(4, 7),
+    FlSpot(5, 2),
+    FlSpot(6, 6),
+    FlSpot(7, 7),
+  ];
+
+  List<FlSpot> monthData = [];
+  for (int i = 1; i < 30; i++) {
+    int random = Random().nextInt(maxY.toInt() - 1) + 2;
+    monthData.add(FlSpot(i.toDouble(), random.toDouble()));
+  }
+
+  List<FlSpot> yearData = [];
+  for (int i = 1; i < 13; i++) {
+    int random = Random().nextInt(maxY.toInt() - 1) + 2;
+    yearData.add(FlSpot(i.toDouble(), random.toDouble()));
+  }
 
   return SingleChildScrollView(
       child: Column(children: <Widget>[
@@ -147,7 +170,25 @@ SingleChildScrollView pageView(String title) {
                                   getProportionateScreenHeight(30),
                                   getProportionateScreenHeight(30),
                                   getProportionateScreenHeight(20)),
-                              child: graph())),
+                              child: graph(weekData, 7, maxY, (value) {
+                                switch (value.toInt()) {
+                                  case 1:
+                                    return 'mon';
+                                  case 2:
+                                    return 'tues';
+                                  case 3:
+                                    return 'wed';
+                                  case 4:
+                                    return 'thurs';
+                                  case 5:
+                                    return 'fri';
+                                  case 6:
+                                    return 'sat';
+                                  case 7:
+                                    return 'sun';
+                                }
+                                return '';
+                              }))),
                       Center(
                           child: Padding(
                               padding: EdgeInsets.fromLTRB(
@@ -155,7 +196,17 @@ SingleChildScrollView pageView(String title) {
                                   getProportionateScreenHeight(30),
                                   getProportionateScreenHeight(30),
                                   getProportionateScreenHeight(20)),
-                              child: graph())),
+                              child: graph(
+                                monthData,
+                                31,
+                                maxY,
+                                (value) {
+                                  if (value % 5 == 0) {
+                                    return value.toInt().toString();
+                                  }
+                                  return "";
+                                },
+                              ))),
                       Center(
                           child: Padding(
                               padding: EdgeInsets.fromLTRB(
@@ -163,7 +214,35 @@ SingleChildScrollView pageView(String title) {
                                   getProportionateScreenHeight(30),
                                   getProportionateScreenHeight(30),
                                   getProportionateScreenHeight(20)),
-                              child: graph())),
+                              child: graph(yearData, 12, maxY, (value) {
+                                switch (value.toInt()) {
+                                  case 1:
+                                    return 'j';
+                                  case 2:
+                                    return 'f';
+                                  case 3:
+                                    return 'm';
+                                  case 4:
+                                    return 'a';
+                                  case 5:
+                                    return 'm';
+                                  case 6:
+                                    return 'j';
+                                  case 7:
+                                    return 'j';
+                                  case 8:
+                                    return 'a';
+                                  case 9:
+                                    return 's';
+                                  case 10:
+                                    return 'o';
+                                  case 11:
+                                    return 'n';
+                                  case 12:
+                                    return 'd';
+                                }
+                                return '';
+                              }))),
                     ],
                   ),
                 )),
@@ -240,17 +319,8 @@ tableRowDetailsItem(String activity, int direction, num change) {
   );
 }
 
-LineChart graph() {
-  List<FlSpot> graphData = [
-    FlSpot(1, 7),
-    FlSpot(2, 6),
-    FlSpot(3, 9),
-    FlSpot(4, 7),
-    FlSpot(5, 2),
-    FlSpot(6, 6),
-    FlSpot(7, 7),
-  ];
-
+LineChart graph(List<FlSpot> graphData, double maxX, double maxY,
+    String Function(double) xAxis) {
   List<Color> gradientColors = [];
 
   for (FlSpot spot in graphData) {
@@ -275,25 +345,7 @@ LineChart graph() {
         interval: 1,
         getTextStyles: (context, value) => const TextStyle(
             color: tertiary, fontWeight: FontWeight.bold, fontSize: 16),
-        getTitles: (value) {
-          switch (value.toInt()) {
-            case 1:
-              return 'mon';
-            case 2:
-              return 'tues';
-            case 3:
-              return 'wed';
-            case 4:
-              return 'thurs';
-            case 5:
-              return 'fri';
-            case 6:
-              return 'sat';
-            case 7:
-              return 'sun';
-          }
-          return '';
-        },
+        getTitles: xAxis,
         margin: 8,
       ),
       leftTitles: SideTitles(
@@ -305,31 +357,7 @@ LineChart graph() {
           fontSize: 15,
         ),
         getTitles: (value) {
-          switch (value.toInt()) {
-            case 0:
-              return '0';
-            case 1:
-              return '1';
-            case 2:
-              return '2';
-            case 3:
-              return '3';
-            case 4:
-              return '4';
-            case 5:
-              return '5';
-            case 6:
-              return '6';
-            case 7:
-              return '7';
-            case 8:
-              return '8';
-            case 9:
-              return '9';
-            case 10:
-              return '10';
-          }
-          return '';
+          return value.toInt().toString();
         },
         reservedSize: 32,
         margin: 12,
@@ -345,9 +373,9 @@ LineChart graph() {
       ),
     ),
     minX: 1,
-    maxX: 7,
+    maxX: maxX,
     minY: 0,
-    maxY: 10,
+    maxY: maxY,
     lineBarsData: [
       LineChartBarData(spots: graphData, isCurved: true, colors: gradientColors)
     ],
