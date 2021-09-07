@@ -21,16 +21,16 @@ class _SummaryState extends State<SummaryBody> {
       child: ListView(
         padding: EdgeInsets.fromLTRB(
             getProportionateScreenWidth(10),
-            getProportionateScreenHeight(100.0),
+            getProportionateScreenHeight(45.0),
             getProportionateScreenWidth(10),
-            getProportionateScreenHeight(20.0)),
+            getProportionateScreenHeight(0.0)),
         children: <Widget>[
           Padding(
             padding: EdgeInsets.fromLTRB(
                 getProportionateScreenWidth(10),
                 getProportionateScreenHeight(0),
                 getProportionateScreenWidth(10),
-                getProportionateScreenHeight(50.0)),
+                getProportionateScreenHeight(25.0)),
             child: Align(
               alignment: Alignment.topLeft,
               child: Text(
@@ -114,7 +114,7 @@ GestureDetector summaryItem(
             getProportionateScreenHeight(5)),
         child: SizedBox(
             width: getProportionateScreenWidth(350),
-            height: getProportionateScreenHeight(130),
+            height: getProportionateScreenHeight(120),
             child: Card(
                 elevation: 2,
                 shape: RoundedRectangleBorder(
@@ -128,14 +128,14 @@ GestureDetector summaryItem(
                       Padding(
                         padding: EdgeInsets.fromLTRB(
                             0,
-                            getProportionateScreenHeight(10),
+                            getProportionateScreenHeight(0),
                             0,
                             getProportionateScreenHeight(10)),
                         child: Text(
                           title,
                           style: TextStyle(
                             color: pureWhite,
-                            fontSize: 36,
+                            fontSize: 30,
                             fontWeight: FontWeight.bold,
                           ),
                         ),

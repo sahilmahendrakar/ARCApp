@@ -43,6 +43,7 @@ class _HomeState extends State<Home> {
           style: TextStyle(fontSize: 20.0),
         ),
         centerTitle: false,
+        backgroundColor: primary,
         actions: [
           IconButton(
               onPressed: () {
