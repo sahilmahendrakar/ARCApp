@@ -43,7 +43,7 @@ class _SummaryState extends State<SummaryBody> {
             ),
           ),
           moodItem(context, 8.5, 1.5),
-          stressItem(context, 52, 18),
+          stressItem(context, 5.2, 1.8),
           depressionItem(context, 0.6, 0),
           anxietyItem(context, 8.70, -1.60),
         ],
@@ -189,7 +189,6 @@ GestureDetector moodItem(BuildContext context, double value, double change) {
   String valueString = value.toStringAsFixed(1) + "/10";
 
   // Set status
-  // TODO: check scale for mood with Dr. Davis
   String status;
   if (value < 4.0) {
     status = "Bad";
@@ -224,20 +223,20 @@ GestureDetector moodItem(BuildContext context, double value, double change) {
 GestureDetector stressItem(BuildContext context, double value, double change) {
   // Configure value
   // TODO: Change processing of stress data when more information is known
-  String valueString = value.round().toString() + " units";
+  String valueString = value.round().toStringAsPrecision(2) + "/12";
 
   // Set status
   String status;
-  if (value < 50) {
+  if (value < 4) {
     status = "Good";
-  } else if (value < 75) {
+  } else if (value < 8) {
     status = "Okay";
   } else {
     status = "Bad";
   }
 
   // Set change
-  String changeString = change.abs().round().toString();
+  String changeString = change.abs().round().toStringAsPrecision(2);
 
   // Set direction and arrowColor
   int direction;
@@ -262,46 +261,33 @@ GestureDetector depressionItem(context, double value, double change) {
   // Configure value
   String valueString = value.round().toStringAsPrecision(2) + "/12";
 
-  // Set direction and arrowColor if there is no change
-  int direction;
-  Color arrowColor = brightYellow;
-
-  if (change < 0) {
-    direction = -1;
-  } else if (change > 0) {
-    direction = 1;
-  } else {
-    direction = 0;
-  }
-
-  // Set status and arrowColor for when there is change
+  // Set status
   String status;
-
-  if (value <= 4) {
+  if (value < 4) {
     status = "Good";
-    if (change < 0) {
-      arrowColor = tertiary;
-    } else if (change > 0) {
-      arrowColor = brightPink;
-    }
-  } else if (value <= 8) {
+  } else if (value < 8) {
     status = "Okay";
-    if (change < 0) {
-      arrowColor = tertiary;
-    } else if (change > 0) {
-      arrowColor = brightPink;
-    }
   } else {
     status = "Bad";
-    if (change < 0) {
-      arrowColor = tertiary;
-    } else if (change > 0) {
-      arrowColor = brightPink;
-    }
   }
 
   // Set change
   String changeString = change.abs().round().toStringAsPrecision(2);
+
+  // Set direction and arrowColor
+  int direction;
+  Color arrowColor;
+
+  if (change < 0) {
+    direction = -1;
+    arrowColor = tertiary;
+  } else if (change > 0) {
+    direction = 1;
+    arrowColor = brightPink;
+  } else {
+    direction = 0;
+    arrowColor = brightYellow;
+  }
 
   return summaryItem(context, darkestBlue, "Depression", valueString, status,
       changeString, direction, arrowColor);
@@ -311,46 +297,33 @@ GestureDetector anxietyItem(context, double value, double change) {
   // Configure value
   String valueString = value.round().toStringAsPrecision(2) + "/12";
 
-  // Set direction and arrowColor if there is no change
-  int direction;
-  Color arrowColor = brightYellow;
-
-  if (change < 0) {
-    direction = -1;
-  } else if (change > 0) {
-    direction = 1;
-  } else {
-    direction = 0;
-  }
-
-  // Set status and arrowColor for when there is change
+  // Set status
   String status;
-
   if (value < 4) {
     status = "Good";
-    if (change < 0) {
-      arrowColor = tertiary;
-    } else if (change > 0) {
-      arrowColor = brightPink;
-    }
   } else if (value < 8) {
     status = "Okay";
-    if (change < 0) {
-      arrowColor = tertiary;
-    } else if (change > 0) {
-      arrowColor = brightPink;
-    }
   } else {
     status = "Bad";
-    if (change < 0) {
-      arrowColor = tertiary;
-    } else if (change > 0) {
-      arrowColor = brightPink;
-    }
   }
 
   // Set change
   String changeString = change.abs().round().toStringAsPrecision(2);
+
+  // Set direction and arrowColor
+  int direction;
+  Color arrowColor;
+
+  if (change < 0) {
+    direction = -1;
+    arrowColor = tertiary;
+  } else if (change > 0) {
+    direction = 1;
+    arrowColor = brightPink;
+  } else {
+    direction = 0;
+    arrowColor = brightYellow;
+  }
 
   return summaryItem(context, secondary, "Anxiety", valueString, status,
       changeString, direction, arrowColor);
