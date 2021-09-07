@@ -12,23 +12,26 @@ class LandingScreenBody extends StatefulWidget {
 class _LandingScreenBodyState extends State<LandingScreenBody> {
   @override
   Widget build(BuildContext context) {
+    const TextStyle buttonTextStyle =
+        TextStyle(fontSize: 23, fontWeight: FontWeight.bold, color: pureWhite);
+
     final ButtonStyle style = ElevatedButton.styleFrom(
-        primary: brightYellow,
+        primary: darkestPink,
         minimumSize: Size(
-            getProportionateScreenWidth(235), getProportionateScreenHeight(70)),
-        textStyle: TextStyle(
-            fontSize: getProportionateScreenWidth(20),
-            fontWeight: FontWeight.bold,
-            color: pureWhite),
-        shadowColor: Colors.black,
-        elevation: 15,
+            getProportionateScreenWidth(235), getProportionateScreenHeight(80)),
+        shadowColor: darkestBlue,
+        elevation: 20,
         shape: RoundedRectangleBorder(
+            side: BorderSide(
+              color: brightPink,
+              width: 6.0,
+            ),
             borderRadius:
-                BorderRadius.circular(getProportionateScreenWidth(30))));
+                BorderRadius.circular(getProportionateScreenWidth(50))));
     return Container(
         decoration: BoxDecoration(
             image: DecorationImage(
-                image: AssetImage('assets/images/background.jpg'),
+                image: AssetImage('assets/images/new_background.jpg'),
                 fit: BoxFit.cover)),
         child: SafeArea(
             child: SizedBox(
@@ -63,7 +66,8 @@ class _LandingScreenBodyState extends State<LandingScreenBody> {
                                   Navigator.pushNamed(
                                       context, LogInScreen.routeName);
                                 },
-                                child: const Text("LOG IN")),
+                                child: const Text("LOG IN",
+                                    style: buttonTextStyle)),
                             SizedBox(
                               height: getProportionateScreenHeight(30),
                             ),
@@ -73,7 +77,8 @@ class _LandingScreenBodyState extends State<LandingScreenBody> {
                                   Navigator.pushNamed(
                                       context, SignUpScreen.routeName);
                                 },
-                                child: const Text("SIGN UP"))
+                                child: const Text("SIGN UP",
+                                    style: buttonTextStyle))
                           ],
                         ),
                         Spacer()
