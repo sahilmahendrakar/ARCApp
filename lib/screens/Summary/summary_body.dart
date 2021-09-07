@@ -222,7 +222,6 @@ GestureDetector moodItem(BuildContext context, double value, double change) {
 
 GestureDetector stressItem(BuildContext context, double value, double change) {
   // Configure value
-  // TODO: Change processing of stress data when more information is known
   String valueString = value.round().toStringAsPrecision(2) + "/12";
 
   // Set status
