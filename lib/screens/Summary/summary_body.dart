@@ -5,7 +5,10 @@ import 'package:arc_app/screens/Summary_Extended/anxiety_screen.dart';
 import 'package:arc_app/screens/Summary_Extended/depression_screen.dart';
 import 'package:arc_app/screens/Summary_Extended/mood_screen.dart';
 import 'package:arc_app/screens/Summary_Extended/stress_screen.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 
 import '../../size_config.dart';
 
@@ -15,6 +18,68 @@ class SummaryBody extends StatefulWidget {
 }
 
 class _SummaryState extends State<SummaryBody> {
+  final fb = FirebaseDatabase.instance;
+
+  double moodAvg = 0;
+  double moodLastAvg = 0;
+
+  @override
+  void initState() {
+    super.initState();
+    final ref = fb.reference();
+    User user = FirebaseAuth.instance.currentUser!;
+
+    DateFormat format = DateFormat('yyyy-MM-dd HH:mm:ss');
+    DateTime end = DateTime.now();
+    DateTime start = end.subtract(new Duration(days: 7));
+    DateTime start2 = start.subtract(new Duration(days: 7));
+
+    //mood data
+    ref
+        .child(user.uid)
+        .child("mood_data")
+        .orderByKey()
+        .startAt(format.format(start))
+        .endAt(format.format(end))
+        .onValue
+        .listen((event) {
+      DataSnapshot data = event.snapshot;
+      int counter = 0;
+
+      print(data.value);
+      data.value.forEach((k, v) {
+        moodAvg += v;
+        counter++;
+      });
+      setState(() {
+        moodAvg /= counter;
+        print(moodAvg);
+      });
+    });
+
+    ref
+        .child(user.uid)
+        .child("mood_data")
+        .orderByKey()
+        .startAt(format.format(start2))
+        .endAt(format.format(start))
+        .onValue
+        .listen((event) {
+      DataSnapshot data = event.snapshot;
+      int counter = 0;
+
+      print(data.value);
+      data.value.forEach((k, v) {
+        moodLastAvg += v;
+        counter++;
+      });
+      setState(() {
+        moodLastAvg /= counter;
+        print(moodLastAvg);
+      });
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Card(
@@ -43,7 +108,7 @@ class _SummaryState extends State<SummaryBody> {
               ),
             ),
           ),
-          moodItem(context, 8.5, 1.5),
+          moodItem(context, moodAvg, moodAvg - moodLastAvg),
           stressItem(context, 5.2, 1.8),
           depressionItem(context, 0.6, 0),
           anxietyItem(context, 8.70, -1.60),
@@ -224,7 +289,6 @@ GestureDetector moodItem(BuildContext context, double value, double change) {
 GestureDetector stressItem(BuildContext context, double value, double change) {
   // Configure value
   String valueString = value.round().toStringAsPrecision(2) + "/12";
-
 
   // Set status
   String status;
