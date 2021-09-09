@@ -16,22 +16,18 @@ class _LandingScreenBodyState extends State<LandingScreenBody> {
         TextStyle(fontSize: 23, fontWeight: FontWeight.bold, color: pureWhite);
 
     final ButtonStyle style = ElevatedButton.styleFrom(
-        primary: darkestPink,
+        primary: brightPink,
         minimumSize: Size(
-            getProportionateScreenWidth(235), getProportionateScreenHeight(80)),
+            getProportionateScreenWidth(235), getProportionateScreenHeight(70)),
         shadowColor: darkestBlue,
         elevation: 20,
         shape: RoundedRectangleBorder(
-            side: BorderSide(
-              color: brightPink,
-              width: 6.0,
-            ),
             borderRadius:
-                BorderRadius.circular(getProportionateScreenWidth(50))));
+                BorderRadius.circular(getProportionateScreenWidth(30))));
     return Container(
         decoration: BoxDecoration(
             image: DecorationImage(
-                image: AssetImage('assets/images/new_background.jpg'),
+                image: AssetImage('assets/images/new_background_2.jpg'),
                 fit: BoxFit.cover)),
         child: SafeArea(
             child: SizedBox(
