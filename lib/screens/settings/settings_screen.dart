@@ -44,6 +44,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
         trustedSupport = data.value["trusted-support"] ?? "None";
       });
     });
+    
   }
 
   @override
