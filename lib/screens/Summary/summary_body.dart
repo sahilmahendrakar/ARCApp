@@ -29,6 +29,9 @@ class _SummaryState extends State<SummaryBody> {
   double depressionAvg = 0;
   double depressionLastAvg = 0;
 
+  double anxietyAvg = 0;
+  double anxietyLastAvg = 0;
+
   @override
   void initState() {
     super.initState();
@@ -174,6 +177,51 @@ class _SummaryState extends State<SummaryBody> {
         print(depressionLastAvg);
       });
     });
+
+    //anxiety data
+    ref
+        .child(user.uid)
+        .child("anxiety_data")
+        .orderByKey()
+        .startAt(format.format(start))
+        .endAt(format.format(end))
+        .onValue
+        .listen((event) {
+      DataSnapshot data = event.snapshot;
+      int counter = 0;
+
+      print(data.value);
+      data.value.forEach((k, v) {
+        anxietyAvg += v;
+        counter++;
+      });
+      setState(() {
+        anxietyAvg /= counter;
+        print(anxietyAvg);
+      });
+    });
+
+    ref
+        .child(user.uid)
+        .child("anxiety_data")
+        .orderByKey()
+        .startAt(format.format(start2))
+        .endAt(format.format(start))
+        .onValue
+        .listen((event) {
+      DataSnapshot data = event.snapshot;
+      int counter = 0;
+
+      print(data.value);
+      data.value.forEach((k, v) {
+        depressionLastAvg += v;
+        counter++;
+      });
+      setState(() {
+        anxietyLastAvg /= counter;
+        print(anxietyLastAvg);
+      });
+    });
   }
 
   @override
@@ -208,7 +256,8 @@ class _SummaryState extends State<SummaryBody> {
           stressItem(context, stressAvg, stressAvg - stressLastAvg),
           depressionItem(
               context, depressionAvg, depressionAvg - depressionLastAvg),
-          anxietyItem(context, 8.70, -1.60),
+          anxietyItem(
+              context, depressionAvg, depressionAvg - depressionLastAvg),
         ],
       ),
     );
