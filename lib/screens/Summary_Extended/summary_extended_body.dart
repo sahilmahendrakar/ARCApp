@@ -32,13 +32,15 @@ class _MoodExtendedState extends State<MoodExtendedBody> {
 
     DateFormat format = DateFormat('yyyy-MM-dd HH:mm:ss');
     DateTime today = DateTime.now();
+    String currentDay = DateFormat('EEEE').format(today);
 
     // weekData
     ref
         .child(user.uid)
         .child("mood_data")
         .orderByKey()
-        .startAt(format.format(today.subtract(new Duration(days: 7))))
+        .startAt(format.format(today
+            .subtract(new Duration(days: weekProcess(currentDay).toInt()))))
         .endAt(format.format(today))
         .onValue
         .listen((event) {
