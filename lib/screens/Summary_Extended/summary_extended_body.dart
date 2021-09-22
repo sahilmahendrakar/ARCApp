@@ -2,8 +2,12 @@ import 'dart:core';
 import 'dart:math';
 
 import 'package:arc_app/constants.dart';
+import 'package:firebase_core/firebase_core.dart';
+import 'package:firebase_database/firebase_database.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 
 import '../../size_config.dart';
 
@@ -14,9 +18,54 @@ class MoodExtendedBody extends StatefulWidget {
 }
 
 class _MoodExtendedState extends State<MoodExtendedBody> {
+  final fb = FirebaseDatabase.instance;
+
+  List<FlSpot> weekData = [];
+  List<FlSpot> monthData = [];
+  List<FlSpot> yearData = [];
+
+  @override
+  void initState() {
+    super.initState();
+    final ref = fb.reference();
+    User user = FirebaseAuth.instance.currentUser!;
+
+    DateFormat format = DateFormat('yyyy-MM-dd HH:mm:ss');
+    DateTime today = DateTime.now();
+
+    // weekData
+    ref
+        .child(user.uid)
+        .child("mood_data")
+        .orderByKey()
+        .startAt(format.format(today.subtract(new Duration(days: 7))))
+        .endAt(format.format(today))
+        .onValue
+        .listen((event) {
+      DataSnapshot data = event.snapshot;
+      print(data.value);
+      data.value.forEach((k, v) {
+        weekData.add(FlSpot(weekProcess(DateFormat('EEEE').format(k)), v));
+      });
+    });
+
+    monthData = [];
+    for (int i = 1; i < 30; i++) {
+      int random = Random().nextInt(10.toInt() - 1) + 2;
+      monthData.add(FlSpot(i.toDouble(), random.toDouble()));
+    }
+
+    yearData = [];
+    for (int i = 1; i < 13; i++) {
+      int random = Random().nextInt(10.toInt() - 1) + 2;
+      yearData.add(FlSpot(i.toDouble(), random.toDouble()));
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
-    return summaryDetailedBody('Mood Summary', 10);
+    return summaryDetailedBody(
+        'Mood Summary', 10, weekData, monthData, yearData);
   }
 }
 
@@ -27,9 +76,54 @@ class StressExtendedBody extends StatefulWidget {
 }
 
 class _StressExtendedState extends State<StressExtendedBody> {
+  final fb = FirebaseDatabase.instance;
+
+  List<FlSpot> weekData = [];
+  List<FlSpot> monthData = [];
+  List<FlSpot> yearData = [];
+
+  @override
+  void initState() {
+    super.initState();
+    final ref = fb.reference();
+    User user = FirebaseAuth.instance.currentUser!;
+
+    DateFormat format = DateFormat('yyyy-MM-dd HH:mm:ss');
+    DateTime today = DateTime.now();
+
+    // weekData
+    ref
+        .child(user.uid)
+        .child("mood_data")
+        .orderByKey()
+        .startAt(format.format(today.subtract(new Duration(days: 7))))
+        .endAt(format.format(today))
+        .onValue
+        .listen((event) {
+      DataSnapshot data = event.snapshot;
+      print(data.value);
+      data.value.forEach((k, v) {
+        weekData.add(FlSpot(weekProcess(DateFormat('EEEE').format(k)), v));
+      });
+    });
+
+    monthData = [];
+    for (int i = 1; i < 30; i++) {
+      int random = Random().nextInt(10.toInt() - 1) + 2;
+      monthData.add(FlSpot(i.toDouble(), random.toDouble()));
+    }
+
+    yearData = [];
+    for (int i = 1; i < 13; i++) {
+      int random = Random().nextInt(10.toInt() - 1) + 2;
+      yearData.add(FlSpot(i.toDouble(), random.toDouble()));
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
-    return summaryDetailedBody('Stress Summary', 12);
+    return summaryDetailedBody(
+        'Stress Summary', 12, weekData, monthData, yearData);
   }
 }
 
@@ -40,9 +134,54 @@ class DepressionExtendedBody extends StatefulWidget {
 }
 
 class _DepressionExtendedState extends State<DepressionExtendedBody> {
+  final fb = FirebaseDatabase.instance;
+
+  List<FlSpot> weekData = [];
+  List<FlSpot> monthData = [];
+  List<FlSpot> yearData = [];
+
+  @override
+  void initState() {
+    super.initState();
+    final ref = fb.reference();
+    User user = FirebaseAuth.instance.currentUser!;
+
+    DateFormat format = DateFormat('yyyy-MM-dd HH:mm:ss');
+    DateTime today = DateTime.now();
+
+    // weekData
+    ref
+        .child(user.uid)
+        .child("mood_data")
+        .orderByKey()
+        .startAt(format.format(today.subtract(new Duration(days: 7))))
+        .endAt(format.format(today))
+        .onValue
+        .listen((event) {
+      DataSnapshot data = event.snapshot;
+      print(data.value);
+      data.value.forEach((k, v) {
+        weekData.add(FlSpot(weekProcess(DateFormat('EEEE').format(k)), v));
+      });
+    });
+
+    monthData = [];
+    for (int i = 1; i < 30; i++) {
+      int random = Random().nextInt(10.toInt() - 1) + 2;
+      monthData.add(FlSpot(i.toDouble(), random.toDouble()));
+    }
+
+    yearData = [];
+    for (int i = 1; i < 13; i++) {
+      int random = Random().nextInt(10.toInt() - 1) + 2;
+      yearData.add(FlSpot(i.toDouble(), random.toDouble()));
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
-    return summaryDetailedBody('Depression Summary', 12);
+    return summaryDetailedBody(
+        'Depression Summary', 12, weekData, monthData, yearData);
   }
 }
 
@@ -53,13 +192,59 @@ class AnxietyExtendedBody extends StatefulWidget {
 }
 
 class _AnxietyExtendedState extends State<AnxietyExtendedBody> {
+  final fb = FirebaseDatabase.instance;
+
+  List<FlSpot> weekData = [];
+  List<FlSpot> monthData = [];
+  List<FlSpot> yearData = [];
+
+  @override
+  void initState() {
+    super.initState();
+    final ref = fb.reference();
+    User user = FirebaseAuth.instance.currentUser!;
+
+    DateFormat format = DateFormat('yyyy-MM-dd HH:mm:ss');
+    DateTime today = DateTime.now();
+
+    // weekData
+    ref
+        .child(user.uid)
+        .child("mood_data")
+        .orderByKey()
+        .startAt(format.format(today.subtract(new Duration(days: 7))))
+        .endAt(format.format(today))
+        .onValue
+        .listen((event) {
+      DataSnapshot data = event.snapshot;
+      print(data.value);
+      data.value.forEach((k, v) {
+        weekData.add(FlSpot(weekProcess(DateFormat('EEEE').format(k)), v));
+      });
+    });
+
+    monthData = [];
+    for (int i = 1; i < 30; i++) {
+      int random = Random().nextInt(10.toInt() - 1) + 2;
+      monthData.add(FlSpot(i.toDouble(), random.toDouble()));
+    }
+
+    yearData = [];
+    for (int i = 1; i < 13; i++) {
+      int random = Random().nextInt(10.toInt() - 1) + 2;
+      yearData.add(FlSpot(i.toDouble(), random.toDouble()));
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
-    return summaryDetailedBody('Anxiety Summary', 12);
+    return summaryDetailedBody(
+        'Anxiety Summary', 12, weekData, monthData, yearData);
   }
 }
 
-Container summaryDetailedBody(String title, double maxY) {
+Container summaryDetailedBody(String title, double maxY, List<FlSpot> weekData,
+    List<FlSpot> monthData, List<FlSpot> yearData) {
   return Container(
       color: darkestBlue,
       child: Scaffold(
@@ -74,34 +259,13 @@ Container summaryDetailedBody(String title, double maxY) {
                   getProportionateScreenHeight(10.0),
                   getProportionateScreenWidth(30),
                   getProportionateScreenHeight(20.0)),
-              child: pageView(title, maxY))));
+              child: pageView(title, maxY, weekData, monthData, yearData))));
 }
 
-SingleChildScrollView pageView(String title, double maxY) {
+SingleChildScrollView pageView(
+    String title, double maxY, weekData, monthData, yearData) {
   TextStyle tabTextStyle =
       TextStyle(color: pureWhite, fontWeight: FontWeight.w500, fontSize: 22);
-
-  List<FlSpot> weekData = [
-    FlSpot(1, 7),
-    FlSpot(2, 6),
-    FlSpot(3, 9),
-    FlSpot(4, 7),
-    FlSpot(5, 2),
-    FlSpot(6, 6),
-    FlSpot(7, 7),
-  ];
-
-  List<FlSpot> monthData = [];
-  for (int i = 1; i < 30; i++) {
-    int random = Random().nextInt(maxY.toInt() - 1) + 2;
-    monthData.add(FlSpot(i.toDouble(), random.toDouble()));
-  }
-
-  List<FlSpot> yearData = [];
-  for (int i = 1; i < 13; i++) {
-    int random = Random().nextInt(maxY.toInt() - 1) + 2;
-    yearData.add(FlSpot(i.toDouble(), random.toDouble()));
-  }
 
   return SingleChildScrollView(
       child: Column(children: <Widget>[
@@ -380,4 +544,22 @@ LineChart graph(List<FlSpot> graphData, double maxX, double maxY,
       LineChartBarData(spots: graphData, isCurved: true, colors: gradientColors)
     ],
   ));
+}
+
+double weekProcess(String day) {
+  if (day == 'Monday') {
+    return 1;
+  } else if (day == 'Tuesday') {
+    return 2;
+  } else if (day == 'Wednesday') {
+    return 3;
+  } else if (day == 'Thursday') {
+    return 4;
+  } else if (day == 'Friday') {
+    return 5;
+  } else if (day == 'Saturday') {
+    return 6;
+  } else {
+    return 7;
+  }
 }
