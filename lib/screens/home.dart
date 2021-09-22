@@ -2,6 +2,7 @@
 import 'package:arc_app/constants.dart';
 import 'package:arc_app/screens/Dashboard/dashboard_screen.dart';
 import 'package:arc_app/screens/Summary/summary_screen.dart';
+import 'package:arc_app/screens/Surveys/survey_screen.dart';
 import 'package:arc_app/screens/settings/settings_screen.dart';
 import 'package:flutter/material.dart';
 
@@ -54,7 +55,7 @@ class _HomeState extends State<Home> {
       ),
       body: PageView(
         controller: _pageController,
-        children: [Placeholder(Colors.blue), Dashboard(), SummaryScreen()],
+        children: [Placeholder(Colors.blue), Dashboard(), SummaryScreen(), SurveyScreen()],
         onPageChanged: (index) {
           setState(() {
             _selectedIndex = index;
@@ -83,7 +84,9 @@ class _HomeState extends State<Home> {
               label: 'Home',
             ),
             new BottomNavigationBarItem(
-                icon: Icon(Icons.history), label: 'Summary')
+                icon: Icon(Icons.history), label: 'Summary'),
+            new BottomNavigationBarItem(
+                icon: Icon(Icons.assessment_outlined), label: 'Survey')
           ],
         ),
       ),
