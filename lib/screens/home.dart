@@ -73,6 +73,7 @@ class _HomeState extends State<Home> {
           onTap: onTabTapped,
           currentIndex: _selectedIndex,
           selectedItemColor: darkestBlue,
+          unselectedItemColor: darkestBlue,
           elevation: 50.0,
           items: [
             new BottomNavigationBarItem(
