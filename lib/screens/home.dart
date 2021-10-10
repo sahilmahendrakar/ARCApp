@@ -6,6 +6,7 @@ import 'package:arc_app/screens/settings/settings_screen.dart';
 import 'package:flutter/material.dart';
 
 class Home extends StatefulWidget {
+  static final String routeName = 'home';
   @override
   _HomeState createState() => _HomeState();
 }

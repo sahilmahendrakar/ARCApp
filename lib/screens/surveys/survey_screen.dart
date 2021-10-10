@@ -1,8 +1,11 @@
 import 'package:arc_app/constants.dart';
+import 'package:arc_app/screens/Dashboard/dashboard_screen.dart';
+import 'package:arc_app/screens/Landing/landing_screen.dart';
 import 'package:arc_app/screens/Surveys/anxiety_survey.dart';
 import 'package:arc_app/screens/Surveys/depression_survey.dart';
 import 'package:arc_app/screens/Surveys/mood_survey.dart';
 import 'package:arc_app/screens/Surveys/stress_survey.dart';
+import 'package:arc_app/screens/home.dart';
 import 'package:arc_app/size_config.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_database/firebase_database.dart';
@@ -108,7 +111,7 @@ class _SurveyScreenState extends State<SurveyScreen> {
             // on final page, submit survey
             final ref = fb.reference();
             User user = FirebaseAuth.instance.currentUser!;
-            DateTime now = DateTime.now().subtract(Duration(days: 5));
+            DateTime now = DateTime.now();
             String currentDate = DateFormat('yyyy-MM-dd HH:mm:ss').format(now);
             ref
                 .child(user.uid)
@@ -130,6 +133,7 @@ class _SurveyScreenState extends State<SurveyScreen> {
                 .child("depression_data")
                 .child(currentDate)
                 .set(depressionValue);
+            Navigator.popAndPushNamed(context, Home.routeName);
           }
         },
       )

@@ -3,6 +3,7 @@ import 'package:arc_app/screens/CBT/cbt_start_screen.dart';
 import 'package:arc_app/screens/Dashboard/dashboard_screen.dart';
 import 'package:arc_app/screens/Landing/landing_screen.dart';
 import 'package:arc_app/screens/Summary/summary_screen.dart';
+import 'package:arc_app/screens/home.dart';
 import 'package:arc_app/screens/settings/settings_screen.dart';
 import 'package:flutter/widgets.dart';
 import 'package:arc_app/screens/Login/log_in_screen.dart';
@@ -13,6 +14,7 @@ import 'package:arc_app/screens/Sign up/sign_up_screen.dart';
 
 final Map<String, WidgetBuilder> routes = {
   LandingScreen.routeName: (context) => LandingScreen(),
+  Home.routeName:  (context) => Home(),
   SignUpScreen.routeName: (context) => SignUpScreen(),
   LogInScreen.routeName: (context) => LogInScreen(),
   Dashboard.routeName: (context) => Dashboard(),

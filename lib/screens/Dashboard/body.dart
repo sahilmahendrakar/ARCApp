@@ -2,6 +2,7 @@ import 'package:arc_app/constants.dart';
 import 'package:arc_app/screens/CBT/cbt_start_screen.dart';
 import 'package:arc_app/screens/Dashboard/dashboard_screen.dart';
 import 'package:arc_app/screens/Summary/summary_screen.dart';
+import 'package:arc_app/screens/activities/activities_screen.dart';
 import 'package:flutter/material.dart';
 
 class DashboardBody extends StatefulWidget {
@@ -69,11 +70,20 @@ class _DashboardState extends State<DashboardBody> {
                 SingleChildScrollView(
                   scrollDirection: Axis.horizontal,
                   child: Row(children: <Widget>[
-                    activities("Deep Breathing", primary, pureWhite),
+                    GestureDetector(
+                      child: activities("Deep Breathing", primary, pureWhite),
+                      onTap: () => Navigator.push(context, MaterialPageRoute(builder: (context) => ActivityScreen(name: "deep breathing"))),
+                      ),
                     SizedBox(width: 10),
-                    activities("Walk", primary, pureWhite),
+                    GestureDetector(
+                      child: activities("Walk", primary, pureWhite),
+                      onTap: () => Navigator.push(context, MaterialPageRoute(builder: (context) => ActivityScreen(name: "walk"))),
+                      ),
                     SizedBox(width: 10),
-                    activities("Meditate", primary, pureWhite),
+                    GestureDetector(
+                      child: activities("Meditate", primary, pureWhite),
+                      onTap: () => Navigator.push(context, MaterialPageRoute(builder: (context) => ActivityScreen(name: "meditation"))),
+                      ),
                     SizedBox(width: 10),
                     GestureDetector(
                         onTap: () {
