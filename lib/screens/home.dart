@@ -2,7 +2,6 @@
 import 'package:arc_app/constants.dart';
 import 'package:arc_app/screens/Dashboard/dashboard_screen.dart';
 import 'package:arc_app/screens/Summary/summary_screen.dart';
-import 'package:arc_app/screens/Surveys/survey_screen.dart';
 import 'package:arc_app/screens/settings/settings_screen.dart';
 import 'package:flutter/material.dart';
 
@@ -44,7 +43,6 @@ class _HomeState extends State<Home> {
           style: TextStyle(fontSize: 20.0),
         ),
         centerTitle: false,
-        backgroundColor: primary,
         actions: [
           IconButton(
               onPressed: () {
@@ -55,7 +53,7 @@ class _HomeState extends State<Home> {
       ),
       body: PageView(
         controller: _pageController,
-        children: [Placeholder(Colors.blue), Dashboard(), SummaryScreen(), SurveyScreen()],
+        children: [Placeholder(Colors.blue), Dashboard(), SummaryScreen()],
         onPageChanged: (index) {
           setState(() {
             _selectedIndex = index;
@@ -63,16 +61,17 @@ class _HomeState extends State<Home> {
         },
       ),
       bottomNavigationBar: Container(
-        decoration: BoxDecoration(boxShadow: [
-          BoxShadow(
-            color: Colors.black12,
-            blurRadius: 5.0,
-          )
-        ]),
+        decoration: BoxDecoration(color: pureWhite,
+            borderRadius: BorderRadius.only(
+              topLeft: Radius.circular(18),
+              topRight: Radius.circular(18),
+            ),
+            boxShadow: [
+            BoxShadow(color: pureBlack, spreadRadius: 0, blurRadius: 10),]),
         child: BottomNavigationBar(
           onTap: onTabTapped,
           currentIndex: _selectedIndex,
-          selectedItemColor: secondary,
+          selectedItemColor: darkestBlue,
           elevation: 50.0,
           items: [
             new BottomNavigationBarItem(
@@ -80,16 +79,22 @@ class _HomeState extends State<Home> {
               label: 'Timeline',
             ),
             new BottomNavigationBarItem(
-              icon: Icon(Icons.home),
-              label: 'Home',
+              icon: Icon(Icons.history), //Summary
+              label: 'Summary',
             ),
             new BottomNavigationBarItem(
-                icon: Icon(Icons.history), label: 'Summary'),
+                icon: Icon(Icons.assignment), label: 'Survey'),
             new BottomNavigationBarItem(
-                icon: Icon(Icons.assessment_outlined), label: 'Survey')
+                icon: Icon(Icons.settings), label: 'Settings')
           ],
         ),
       ),
+      floatingActionButton: FloatingActionButton(
+          child: Icon(Icons.home),
+          onPressed: () {
+            Navigator.pushNamed(context, Dashboard.routeName);
+          }),
+      floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
     );
   }
 }
