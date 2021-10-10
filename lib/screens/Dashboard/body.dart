@@ -52,39 +52,6 @@ class _DashboardState extends State<DashboardBody> {
         backgroundColor: pureWhite,
         brightness: Brightness.dark,
       ),
-      bottomNavigationBar: Container(
-        decoration: BoxDecoration(
-          color: pureWhite,
-          borderRadius: BorderRadius.only(
-            topLeft: Radius.circular(18),
-            topRight: Radius.circular(18),
-          ),
-          boxShadow: [
-            BoxShadow(color: pureBlack, spreadRadius: 0, blurRadius: 10),
-          ],
-        ),
-        child: Row(mainAxisAlignment: MainAxisAlignment.spaceEvenly, children: [
-          IconButton(
-              icon: Icon(Icons.help), color: darkestBlue, onPressed: () {}),
-          IconButton(
-              icon: Icon(Icons.alarm), color: darkestBlue, onPressed: () {}),
-          Text(" "),
-          IconButton(
-              icon: Icon(Icons.assignment),
-              color: darkestBlue,
-              onPressed: () {
-                Navigator.pushNamed(context, SummaryScreen.routeName);
-              }),
-          IconButton(
-              icon: Icon(Icons.settings), color: darkestBlue, onPressed: () {})
-        ]),
-      ),
-      floatingActionButton: FloatingActionButton(
-          child: Icon(Icons.home),
-          onPressed: () {
-            Navigator.pushNamed(context, Dashboard.routeName);
-          }),
-      floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
       body: SingleChildScrollView(
           child: Container(
               margin: EdgeInsets.symmetric(vertical: 20.0),
@@ -163,3 +130,5 @@ class _DashboardState extends State<DashboardBody> {
     );
   }
 }
+
+
