@@ -28,20 +28,6 @@ class _TimelineState extends State<TimelineBody> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        centerTitle: false,
-        title: Align(
-            alignment: Alignment.topLeft,
-            child: Container(
-                color: pureWhite,
-                child: Text("Timeline",
-                    style: TextStyle(
-                      color: darkestBlue,
-                      fontSize: 20,
-                    )))),
-        backgroundColor: pureWhite,
-        brightness: Brightness.dark,
-      ),
       bottomNavigationBar: Container(
         decoration: BoxDecoration(color: pureWhite,
             borderRadius: BorderRadius.only(
@@ -83,8 +69,7 @@ class _TimelineState extends State<TimelineBody> {
     begin: Alignment.topLeft,
     end: Alignment.bottomRight,
     colors: [
-    Color(0xFF004E92),
-    Color(0xFF000428),
+    Colors.white, primary
     ],
     ),
     ),
@@ -96,10 +81,10 @@ class _TimelineState extends State<TimelineBody> {
     children: <Widget>[
     const SizedBox(height: 16),
     const Text(
-    'TimelineTile Showcase',
+    'Activity Timeline',
     style: TextStyle(
     fontSize: 32,
-    color: Colors.white,
+    color: darkestBlue,
     ),
     ),
     const SizedBox(height: 16),
@@ -121,7 +106,7 @@ class _TimelineState extends State<TimelineBody> {
     drawGap: true,
     ),
     beforeLineStyle: LineStyle(
-    color: Colors.white.withOpacity(0.2),
+    color: darkestBlue,
     ),
     );
     },
@@ -148,18 +133,12 @@ class _IndicatorExample extends StatelessWidget {
         shape: BoxShape.circle,
         border: Border.fromBorderSide(
           BorderSide(
-            color: Colors.white.withOpacity(0.2),
+            color: darkestBlue,
             width: 4,
           ),
         ),
       ),
-      child: Center(
-        child: Text(
-          number,
-          style: const TextStyle(fontSize: 30),
-        ),
-      ),
-    );
+      );
   }
 }
 
