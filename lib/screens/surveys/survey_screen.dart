@@ -17,7 +17,7 @@ import 'package:intl/intl.dart';
 
 class SurveyScreen extends StatefulWidget {
   const SurveyScreen({Key? key}) : super(key: key);
-  static String routeName = "/surveyScreen";
+  static String routeName = "/surveys";
 
 
   @override

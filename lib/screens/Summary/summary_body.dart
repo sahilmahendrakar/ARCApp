@@ -25,20 +25,6 @@ class _SummaryState extends State<SummaryBody> {
   @override
   Widget build(BuildContext context) {
       return Scaffold(
-        appBar: AppBar(
-          centerTitle: false,
-          title: Align(
-              alignment: Alignment.topLeft,
-              child: Container(
-                  color: pureWhite,
-                  child: Text("ARC",
-                      style: TextStyle(
-                        color: darkestBlue,
-                        fontSize: 20,
-                      )))),
-          backgroundColor: pureWhite,
-          brightness: Brightness.dark,
-        ),
         bottomNavigationBar: Container(
           decoration: BoxDecoration(color: pureWhite,
               borderRadius: BorderRadius.only(
