@@ -1,11 +1,17 @@
 import 'dart:core';
 
 import 'package:arc_app/constants.dart';
+import 'package:arc_app/screens/Dashboard/dashboard_screen.dart';
+import 'package:arc_app/screens/Summary/summary_screen.dart';
 import 'package:arc_app/screens/Summary_Extended/anxiety_screen.dart';
 import 'package:arc_app/screens/Summary_Extended/depression_screen.dart';
 import 'package:arc_app/screens/Summary_Extended/mood_screen.dart';
 import 'package:arc_app/screens/Summary_Extended/stress_screen.dart';
+import 'package:arc_app/screens/Timeline/timeline_screen.dart';
+import 'package:arc_app/screens/settings/settings_screen.dart';
+import 'package:arc_app/screens/surveys/survey_screen.dart';
 import 'package:flutter/material.dart';
+import 'package:arc_app/screens/home.dart';
 
 import '../../size_config.dart';
 
@@ -14,10 +20,63 @@ class SummaryBody extends StatefulWidget {
   _SummaryState createState() => _SummaryState();
 }
 
+
 class _SummaryState extends State<SummaryBody> {
   @override
   Widget build(BuildContext context) {
-    return Card(
+      return Scaffold(
+        appBar: AppBar(
+          centerTitle: false,
+          title: Align(
+              alignment: Alignment.topLeft,
+              child: Container(
+                  color: pureWhite,
+                  child: Text("ARC",
+                      style: TextStyle(
+                        color: darkestBlue,
+                        fontSize: 20,
+                      )))),
+          backgroundColor: pureWhite,
+          brightness: Brightness.dark,
+        ),
+        bottomNavigationBar: Container(
+          decoration: BoxDecoration(color: pureWhite,
+              borderRadius: BorderRadius.only(
+                topLeft: Radius.circular(18),
+                topRight: Radius.circular(18),
+              ),
+              boxShadow: [
+                BoxShadow(color: pureBlack, spreadRadius: 0, blurRadius: 10),]),
+          child: Row(mainAxisAlignment: MainAxisAlignment.spaceEvenly, children: [
+          IconButton(
+              icon: Icon(Icons.timeline), color: darkestBlue, onPressed: () {
+            Navigator.pushNamed(context, TimelineScreen.routeName);
+          }),
+          IconButton(
+              icon: Icon(Icons.history), color: darkestBlue, onPressed: () {
+            Navigator.pushNamed(context, SummaryScreen.routeName);
+          }),
+          Text(" "),
+          IconButton(
+              icon: Icon(Icons.assignment),
+              color: darkestBlue,
+              onPressed: () {
+                Navigator.pushNamed(context, SurveyScreen.routeName);
+              }),
+          IconButton(
+              icon: Icon(Icons.settings), color: darkestBlue, onPressed: () {
+            Navigator.pushNamed(context, SettingsScreen.routeName);
+          }),
+        ]),
+        ),
+        floatingActionButton: FloatingActionButton(
+            child: Icon(Icons.home),
+            onPressed: () {
+              Navigator.pushNamed(context, Dashboard.routeName);
+            }),
+        floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
+      body:
+        Card(
       color: pureWhite,
       child: ListView(
         padding: EdgeInsets.fromLTRB(
@@ -49,8 +108,12 @@ class _SummaryState extends State<SummaryBody> {
           anxietyItem(context, 8.70, -1.60),
         ],
       ),
+
+    ),
+
     );
   }
+
 }
 
 GestureDetector summaryItem(

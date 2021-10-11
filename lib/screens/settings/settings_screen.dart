@@ -1,10 +1,14 @@
 import 'package:arc_app/auth/authentication_service.dart';
 import 'package:arc_app/constants.dart';
+import 'package:arc_app/screens/Dashboard/dashboard_screen.dart';
+import 'package:arc_app/screens/Summary/summary_screen.dart';
+import 'package:arc_app/screens/Timeline/timeline_screen.dart';
 import 'package:arc_app/screens/settings/emergency_contact_screen.dart';
 import 'package:arc_app/screens/settings/password_screen.dart';
 import 'package:arc_app/screens/settings/studyid_screen.dart';
 import 'package:arc_app/screens/settings/trusted_support_screen.dart';
 import 'package:arc_app/screens/settings/username_screen.dart';
+import 'package:arc_app/screens/surveys/survey_screen.dart';
 import 'package:arc_app/size_config.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_database/firebase_database.dart';
@@ -52,16 +56,55 @@ class _SettingsScreenState extends State<SettingsScreen> {
     User user = FirebaseAuth.instance.currentUser!;
     return Scaffold(
         appBar: AppBar(
-          title: Text("Settings"),
-          actions: [
-            IconButton(
-                onPressed: () {
-                  //Replace with help page
-                  Navigator.pushNamed(context, SettingsScreen.routeName);
-                },
-                icon: Icon(Icons.help))
-          ],
+          centerTitle: false,
+          title: Align(
+              alignment: Alignment.topLeft,
+              child: Container(
+                  color: pureWhite,
+                  child: Text("Settings",
+                      style: TextStyle(
+                        color: darkestBlue,
+                        fontSize: 20,
+                      )))),
+          backgroundColor: pureWhite,
+          brightness: Brightness.dark,
         ),
+        bottomNavigationBar: Container(
+          decoration: BoxDecoration(color: pureWhite,
+              borderRadius: BorderRadius.only(
+                topLeft: Radius.circular(18),
+                topRight: Radius.circular(18),
+              ),
+              boxShadow: [
+                BoxShadow(color: pureBlack, spreadRadius: 0, blurRadius: 10),]),
+          child: Row(mainAxisAlignment: MainAxisAlignment.spaceEvenly, children: [
+            IconButton(
+                icon: Icon(Icons.timeline), color: darkestBlue, onPressed: () {
+              Navigator.pushNamed(context, TimelineScreen.routeName);
+            }),
+            IconButton(
+                icon: Icon(Icons.history), color: darkestBlue, onPressed: () {
+              Navigator.pushNamed(context, SummaryScreen.routeName);
+            }),
+            Text(" "),
+            IconButton(
+                icon: Icon(Icons.assignment),
+                color: darkestBlue,
+                onPressed: () {
+                  Navigator.pushNamed(context, SurveyScreen.routeName);
+                }),
+            IconButton(
+                icon: Icon(Icons.settings), color: darkestBlue, onPressed: () {
+              Navigator.pushNamed(context, SettingsScreen.routeName);
+            }),
+          ]),
+        ),
+        floatingActionButton: FloatingActionButton(
+            child: Icon(Icons.home),
+            onPressed: () {
+              Navigator.pushNamed(context, Dashboard.routeName);
+            }),
+        floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
         body: Column(
           children: [
             Expanded(

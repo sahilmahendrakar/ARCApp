@@ -3,6 +3,8 @@ import 'package:arc_app/screens/CBT/cbt_start_screen.dart';
 import 'package:arc_app/screens/Dashboard/dashboard_screen.dart';
 import 'package:arc_app/screens/Summary/summary_screen.dart';
 import 'package:arc_app/screens/activities/activities_screen.dart';
+import 'package:arc_app/screens/settings/settings_screen.dart';
+import 'package:arc_app/screens/surveys/survey_screen.dart';
 import 'package:flutter/material.dart';
 
 class DashboardBody extends StatefulWidget {
@@ -42,7 +44,7 @@ class _DashboardState extends State<DashboardBody> {
       appBar: AppBar(
         centerTitle: false,
         title: Align(
-            alignment: Alignment.centerLeft,
+            alignment: Alignment.topLeft,
             child: Container(
                 color: pureWhite,
                 child: Text("ARC",
@@ -53,6 +55,40 @@ class _DashboardState extends State<DashboardBody> {
         backgroundColor: pureWhite,
         brightness: Brightness.dark,
       ),
+      bottomNavigationBar: Container(
+        decoration: BoxDecoration(color: pureWhite,
+            borderRadius: BorderRadius.only(
+              topLeft: Radius.circular(18),
+              topRight: Radius.circular(18),
+            ),
+            boxShadow: [
+              BoxShadow(color: pureBlack, spreadRadius: 0, blurRadius: 10),]),
+        child: Row(mainAxisAlignment: MainAxisAlignment.spaceEvenly, children: [
+          IconButton(
+              icon: Icon(Icons.timeline), color: darkestBlue, onPressed: () {} ),
+          IconButton(
+              icon: Icon(Icons.history), color: darkestBlue, onPressed: () {
+            Navigator.pushNamed(context, SummaryScreen.routeName);
+          }),
+          Text(" "),
+          IconButton(
+              icon: Icon(Icons.assignment),
+              color: darkestBlue,
+              onPressed: () {
+                Navigator.pushNamed(context, SurveyScreen.routeName);
+              }),
+          IconButton(
+              icon: Icon(Icons.settings), color: darkestBlue, onPressed: () {
+            Navigator.pushNamed(context, SettingsScreen.routeName);
+          }),
+        ]),
+      ),
+      floatingActionButton: FloatingActionButton(
+          child: Icon(Icons.home),
+          onPressed: () {
+            Navigator.pushNamed(context, Dashboard.routeName);
+          }),
+      floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
       body: SingleChildScrollView(
           child: Container(
               margin: EdgeInsets.symmetric(vertical: 20.0),
@@ -116,26 +152,6 @@ class _DashboardState extends State<DashboardBody> {
                     activities("Contact a Professional", quarternary, primary)
                   ]),
                 ),
-                SizedBox(height: 30),
-                Align(
-                    alignment: Alignment.topLeft,
-                    child: RichText(
-                      text: TextSpan(
-                        children: [
-                          TextSpan(
-                              text: "View Today's Data ",
-                              style: TextStyle(
-                                color: secondary,
-                                fontSize: 20,
-                                fontWeight: FontWeight.bold,
-                              )),
-                          WidgetSpan(
-                            child: Icon(Icons.arrow_right_alt_sharp,
-                                size: 20, color: secondary),
-                          ),
-                        ],
-                      ),
-                    ))
               ]))),
     );
   }

@@ -1,11 +1,14 @@
 import 'package:arc_app/constants.dart';
 import 'package:arc_app/screens/Dashboard/dashboard_screen.dart';
 import 'package:arc_app/screens/Landing/landing_screen.dart';
+import 'package:arc_app/screens/Summary/summary_screen.dart';
 import 'package:arc_app/screens/Surveys/anxiety_survey.dart';
 import 'package:arc_app/screens/Surveys/depression_survey.dart';
 import 'package:arc_app/screens/Surveys/mood_survey.dart';
 import 'package:arc_app/screens/Surveys/stress_survey.dart';
+import 'package:arc_app/screens/Timeline/timeline_screen.dart';
 import 'package:arc_app/screens/home.dart';
+import 'package:arc_app/screens/settings/settings_screen.dart';
 import 'package:arc_app/size_config.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_database/firebase_database.dart';
@@ -14,6 +17,8 @@ import 'package:intl/intl.dart';
 
 class SurveyScreen extends StatefulWidget {
   const SurveyScreen({Key? key}) : super(key: key);
+  static String routeName = "/surveyScreen";
+
 
   @override
   _SurveyScreenState createState() => _SurveyScreenState();
@@ -136,7 +141,7 @@ class _SurveyScreenState extends State<SurveyScreen> {
             Navigator.popAndPushNamed(context, Home.routeName);
           }
         },
-      )
+      ),
     ]);
   }
 }
